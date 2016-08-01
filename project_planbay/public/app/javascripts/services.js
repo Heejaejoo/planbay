@@ -1,6 +1,5 @@
 'use strict';
-angular.module('planBay')
-    .constant("baseURL","http://localhost:3000/");
+angular.module('planBay');
 // example
 //        .service('menuFactory', ['$resource','baseURL', function($resource,baseURL){
 //
