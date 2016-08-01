@@ -1,0 +1,39 @@
+{
+  "name": "planbay",
+  "version": "1.0.0",
+  "description": "website for sharing plans",
+  "main": "index.html",
+  "moduleType": [],
+  "keywords": [
+    "planbay",
+    "plan",
+    "share"
+  ],
+  "authors": [
+    "Heejae Joo",
+    "Sungbin Doo",
+    "Jaegwan Kim", 
+    "Se-eun Choi"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "font-awesome": "~4.4.0",
+    "angular": "~1.4.7",
+    "angular-route": "^1.5.6",
+    "angular-ui-router": "^0.3.1",
+    "angular-resource": "^1.5.6",
+    "angular-mocks": "^1.5.6"
+  },
+  "resolutions": {
+    "angular": "~1.4.7"
+  }
+}
