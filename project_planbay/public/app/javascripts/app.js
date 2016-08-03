@@ -51,6 +51,17 @@ angular.module('planBay', ['ui.router','ngResource'])
                 }
             })
 
+            //route for the search
+            .state('app.search', {
+                url:'search',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/search.html',
+                        controller  : 'MoreController'
+                    }
+                }
+            })
+
         ;
 
         $urlRouterProvider.otherwise('/');
