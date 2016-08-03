@@ -1,9 +1,33 @@
+<br><br>
+
 <div class="container row center-block">
     
     <div class="col-md-8 col-md-offset-2">
-    
-    
-    
+        <div class="panel" ng-controller="LoginController">
+        <div class="panel-body">
+        
+            <form name="login-form">
+            
+                <div class="form-group form-material">
+                    <label class="control-label" for="email">이메일</label>
+                    <input type="email" class="form-control" id="email" name="email" ng-model="loginForm.email"></input>
+                </div>
+            
+                <div class="form-group form-material">
+                    <label class="control-label" for="password">비밀번호</label>
+                    <input type="email" class="form-control" id="email" name="email" ng-model="loginForm.email"></input>
+                </div>
+                <button type="submit" class="btn btn-warning btn-block"><b>로그인</b></button>
+                
+            </form>
+            <div><hr></div>
+            <div class="landing-button"> <button class="btn btn-primary btn-block"><b>Facebook 계정으로 로그인</b></button> </div>
+            <div class="landing-button"> <button class="btn btn-default btn-block"><b>Google 계정으로 로그인</b></button> </div>
+<br>
+        <p class="text-center">계정이 없으신가요? <a>지금 가입하세요!</a></p>
+            
+        </div>
+        </div>
     </div>
     
 </div>
