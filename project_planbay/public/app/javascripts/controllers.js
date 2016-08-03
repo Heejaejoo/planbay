@@ -6,7 +6,14 @@ angular.module('planBay')
 
     .controller('LandingController', ['$scope',function($scope) {
         
-    };
+        $scope.registerForm = {
+            name:"",
+            email:"",
+            password:"",
+            confirmPassword:""            
+        };
+        
+    }]);
 //example
 //.controller('MenuController', ['$scope', 'menuFactory', function($scope, menuFactory) {
 
