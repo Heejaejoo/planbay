@@ -1,3 +1,25 @@
+/* Landing Page */
+
+.jumbotron {
+    background-color: #4caf50 !important;
+}
+
+.jumbotron h3 {
+    color: #FFFFFF !important;
+}
+
+.landing-button {
+    margin-top: 15px;
+}
+
+@media screen and (min-width:480px) {
+
+    .landing-panel {
+        height: 580px;
+    }
+    
+}
+
 .footer-distributed{
   background-color: #292c2f;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
