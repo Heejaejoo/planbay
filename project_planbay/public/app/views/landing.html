@@ -14,24 +14,24 @@
                 <div class="panel landing-panel">
                 <div class="panel-body">
                     <h3 class="text-center">지금 가입하세요!</h3>
-                    <form>
-                        <div class="form-group form-material">
+                    <form name="registerForm">
+                        <div class="form-group form-material" ng-class="{'has-error': registerForm.name.$error.required && !registerForm.name.$pristine}">
                             <label class="control-label" for="signupName">이름</label>
-                            <input type="text" class="form-control" id="signupName" name="signupName">
+                            <input type="text" class="form-control" id="name" name="name" ng-model="registerForm.name" required>
                         </div>
-                        <div class="form-group form-material">
+                        <div class="form-group form-material" ng-class="{'has-error': registerForm.email.$invalid && !registerForm.email.$pristine}">
                             <label class="control-label" for="signupEmail">이메일</label>
-                            <input type="email" class="form-control" id="signupEmail" name="signupEmail">
+                            <input type="email" class="form-control" id="email" name="email" ng-model="registerForm.email" required>
                         </div>
-                        <div class="form-group form-material">
+                        <div class="form-group form-material" ng-class="{'has-error': registerForm.password.$error.required && !registerForm.name.$pristine}">
                             <label class="control-label" for="signupPassword">비밀번호</label>
-                            <input type="password" class="form-control" id="signupPassword" name="signupPassword">
+                            <input type="password" class="form-control" id="password" name="password" ng-model="registerForm.password" required>
                         </div>
-                        <div class="form-group form-material">
+                        <div class="form-group form-material" ng-class="{'has-error': registerForm.password != registerForm.confirmPassword}">
                             <label class="control-label" for="signupConfirmPassword">비밀번호 확인</label>
-                            <input type="password" class="form-control" id="signupConfirmPassword" name="signupConfirmPassword">
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" ng-model="registerForm.confirmPassword" required>
                         </div>
-                        <button type="submit" class="btn btn-warning btn-block"><b>가입하기</b></button>
+                        <button type="submit" class="btn btn-warning btn-block" ng-disabled="registerForm.$invalid"><b>가입하기</b></button>
                     </form>
                     <div><hr></div>
                     <div class="landing-button"> <button class="btn btn-primary btn-block"><b>Facebook 계정으로 가입하기</b></button> </div>
