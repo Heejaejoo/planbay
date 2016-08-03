@@ -4,7 +4,8 @@ angular.module('planBay')
 
     }])
 
-    .controller('LandingController', ['$scope',function($scope) {
+    .controller('RegistrationController', ['$scope',function($scope) {
+
         $scope.registerForm = {
             name:"",
             email:"",

@@ -11,7 +11,7 @@ angular.module('planBay', ['ui.router','ngResource'])
                     },
                     'content': {
                         templateUrl: 'views/landing.html',
-                        controller  : 'LandingController'
+                        controller: 'RegistrationController'
                     },
                     'footer': {
                         templateUrl: 'views/footer.html'
