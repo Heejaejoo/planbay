@@ -29,6 +29,17 @@ angular.module('planBay', ['ui.router','ngResource'])
                 }
             })
 
+            //route for the category
+            .state('app.category', {
+                url:'category',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/category.html',
+                        controller  : 'HomeController'
+                    }
+                }
+            })
+
             //route for the more
             .state('app.more', {
                 url:'more',
