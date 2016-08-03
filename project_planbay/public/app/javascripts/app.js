@@ -29,6 +29,17 @@ angular.module('planBay', ['ui.router','ngResource'])
                 }
             })
 
+            //route for the category
+            .state('app.category', {
+                url:'category',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/category.html',
+                        controller  : 'HomeController'
+                    }
+                }
+            })
+
             //route for the more
             .state('app.more', {
                 url:'more',
@@ -47,6 +58,17 @@ angular.module('planBay', ['ui.router','ngResource'])
                     'content@': {
                         templateUrl: 'views/login.html',
                         controller: 'LoginController'
+                    }
+                }
+            })
+
+            //route for the search
+            .state('app.search', {
+                url:'search',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/search.html',
+                        controller  : 'MoreController'
                     }
                 }
             })
