@@ -1,12 +1,14 @@
-<div class="container" ng-controller="IndexController">
+<div class="container" ng-controller="HomeController">
     <div class="row">
         <div class="page-header">
             <h2>가장 인기있는 Plan!
-            <span>
-                <button type="button" class="btn btn-sm btn-primary waves-effect waves-light" data-toggle="button" data-more="#exampleMoreless">
-                    더 보기
-                </button>
-            </span>
+                <span>
+                    <a ui-sref="app.more">
+                        <button type="button" class="btn btn-sm btn-primary">
+                            더 보기
+                        </button>
+                    </a>
+                </span>
             </h2>
         </div>
         <div class="page-content">
@@ -253,7 +255,6 @@
                                         <span>120</span>
                                     </a>
                                 </div>
-
                             </div>
                         </div>
                     </div>

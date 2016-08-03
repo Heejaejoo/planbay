@@ -6,7 +6,16 @@ angular.module('planBay')
 
     .controller('LandingController', ['$scope',function($scope) {
         
-    };
+    }])
+
+    .controller('HomeController',  ['$scope',function($scope) {
+
+    }])
+
+    .controller('MoreController',  ['$scope',function($scope) {
+
+    }])
+;
 //example
 //.controller('MenuController', ['$scope', 'menuFactory', function($scope, menuFactory) {
 
