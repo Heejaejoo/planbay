@@ -39,6 +39,17 @@ angular.module('planBay', ['ui.router','ngResource'])
                     }
                 }
             })
+        
+            //route for the login page
+            .state('app.login', {
+                url:'login',
+                views: {
+                    'content@': {
+                        templateUrl: 'views/login.html',
+                        controller: 'LoginController'
+                    }
+                }
+            })
 
         ;
 

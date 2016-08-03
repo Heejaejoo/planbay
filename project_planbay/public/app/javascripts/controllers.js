@@ -24,6 +24,15 @@ angular.module('planBay')
     .controller('MoreController',  ['$scope',function($scope) {
         
     }])
+
+    .controller('LoginController', ['$scope',function($scope) {
+        
+        $scope.loginForm = {
+            email:"",
+            password:""
+        }
+        
+    }])
 ;
 //example
 //.controller('MenuController', ['$scope', 'menuFactory', function($scope, menuFactory) {
