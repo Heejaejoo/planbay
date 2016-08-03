@@ -5,8 +5,12 @@ angular.module('planBay')
     }])
 
     .controller('LandingController', ['$scope',function($scope) {
-        
-<<<<<<< HEAD
+        $scope.registerForm = {
+            name:"",
+            email:"",
+            password:"",
+            confirmPassword:""
+        }
     }])
 
     .controller('HomeController',  ['$scope',function($scope) {
@@ -14,21 +18,9 @@ angular.module('planBay')
     }])
 
     .controller('MoreController',  ['$scope',function($scope) {
-
+        
     }])
 ;
-||||||| merged common ancestors
-    };
-=======
-        $scope.registerForm = {
-            name:"",
-            email:"",
-            password:"",
-            confirmPassword:""            
-        };
-        
-    }]);
->>>>>>> master
 //example
 //.controller('MenuController', ['$scope', 'menuFactory', function($scope, menuFactory) {
 
