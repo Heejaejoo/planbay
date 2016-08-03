@@ -1,16 +1,8 @@
-<html>
+<br><br>
 
-    <head>
-        <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../../assets/css/bootstrap-extend.min.css">
-        <link rel="stylesheet" href="../../assets/css/site.min.css">
-    </head>
-
-    <body>
-    
-        <div class="container row center-block">
+        <div class="container row center-block" ng-controller="LandingController">
             <div class="col-md-8">
-                <div class="panel">
+                <div class="panel landing-panel">
                 <div class="panel-body">
                     <h3 class="text-center">계획 직접 짜기 번거로우셨나요?</h3>
                     <img class="img-responsive center-block" src="" alt="image">
@@ -19,7 +11,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="panel">
+                <div class="panel landing-panel">
                 <div class="panel-body">
                     <h3 class="text-center">지금 가입하세요!</h3>
                     <form>
@@ -39,10 +31,11 @@
                             <label class="control-label" for="signupConfirmPassword">비밀번호 확인</label>
                             <input type="password" class="form-control" id="signupConfirmPassword" name="signupConfirmPassword">
                         </div>
-                        <button type="submit" class="btn btn-warning btn-block">가입하기</button>
+                        <button type="submit" class="btn btn-warning btn-block"><b>가입하기</b></button>
                     </form>
-                    <button class="btn btn-primary btn-block">Facebook 계정으로 가입하기</button>
-                    <button class="btn btn-default btn-block">Google 계정으로 가입하기</button>
+                    <div><hr></div>
+                    <div class="landing-button"> <button class="btn btn-primary btn-block"><b>Facebook 계정으로 가입하기</b></button> </div>
+                    <div class="landing-button"> <button class="btn btn-default btn-block"><b>Google 계정으로 가입하기</b></button> </div>
                 </div>
                 </div>
             </div>
@@ -72,6 +65,8 @@
                 </div>
             </div>
         </div>
+
+<br>
         
         <div class="container row center-block">
             <div class="col-md-6">
@@ -93,6 +88,3 @@
             </div>    
         </div>
         
-    </body>
-
-</html>
