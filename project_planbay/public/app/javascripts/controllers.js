@@ -5,15 +5,23 @@ angular.module('planBay')
     }])
 
     .controller('RegistrationController', ['$scope',function($scope) {
-        
+
         $scope.registerForm = {
             name:"",
             email:"",
             password:"",
-            confirmPassword:""            
-        };
+            confirmPassword:""
+        }
+    }])
+
+    .controller('HomeController',  ['$scope',function($scope) {
+
+    }])
+
+    .controller('MoreController',  ['$scope',function($scope) {
         
-    }]);
+    }])
+;
 //example
 //.controller('MenuController', ['$scope', 'menuFactory', function($scope, menuFactory) {
 
