@@ -10,7 +10,7 @@ angular.module('planBay', ['ui.router','ngResource'])
                         templateUrl: 'views/header.html'
                     },
                     'content': {
-                        templateUrl: 'views/home.html',
+                        templateUrl: 'views/plandetail.html',
                         controller: 'IndexController'
                     },
                     'footer': {
