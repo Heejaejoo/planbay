@@ -24,7 +24,7 @@
             <!-- Navbar Toolbar -->
             <ul class="nav navbar-toolbar">
                 <li class="hidden-float" id="toggleMenubar">
-                    <a data-toggle="menubar" href="#" role="button">
+                    <a data-toggle="menubar" role="button">
                         <i class="icon hamburger hamburger-arrow-left">
                             <span class="sr-only">Toggle menubar</span>
                             <span class="hamburger-bar"></span>
@@ -67,9 +67,12 @@
                     </ul>
                 </li>
             </ul>
+
+            <a ui-sref="app.login"><button class="btn btn-warning navbar-right navbar-btn waves-effect waves-light">Login</button></a>
+            
             <!-- End Navbar Toolbar Right -->
             <div class="navbar-brand navbar-brand-center">
-                <a href="index.html">
+                <a ui-sref="app.home">
                     <img class="navbar-brand-logo" src="../assets/images/logo.png" title="Remark">
                 </a>
             </div>
@@ -115,15 +118,15 @@
             <div>
                 <ul class="site-menu">
                     <li class="site-menu-item active">
-                        <a class="animsition-link" ui-sref="index.html">
+                        <a class="animsition-link" ui-sref="app.category">
                             <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
-                            <span class="site-menu-title">Category 1</span>
+                            <span class="site-menu-title">Category 1(EXAMPLE)</span>
                         </a>
                     </li>
                     <li class="site-menu-item">
-                        <a class="animsition-link" href="index.html">
+                        <a class="animsition-link" ui-sref="app.search">
                             <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
-                            <span class="site-menu-title">Category 2</span>
+                            <span class="site-menu-title">Category 2(SEARCH)</span>
                         </a>
                     </li>
                     <li class="site-menu-item">

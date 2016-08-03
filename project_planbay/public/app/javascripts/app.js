@@ -2,7 +2,7 @@
 angular.module('planBay', ['ui.router','ngResource','pageslide-directive'])
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
-        // route for the home page
+            // route for the landing page
             .state('app', {
                 url: '/',
                 views: {
@@ -11,7 +11,7 @@ angular.module('planBay', ['ui.router','ngResource','pageslide-directive'])
                     },
                     'content': {
                         templateUrl: 'views/landing.html',
-                        controller: 'LandingController'
+                        controller: 'RegistrationController'
                     },
                     'footer': {
                         templateUrl: 'views/footer.html'
@@ -30,9 +30,64 @@ angular.module('planBay', ['ui.router','ngResource','pageslide-directive'])
                         controller: 'DetailController'
                     }
                 }
-            });
+            })
+            //route for the home page
+            .state('app.home', {
+                url:'home',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/home.html',
+                        controller  : 'HomeController'
+                    }
+                }
+            })
+
+            //route for the category
+            .state('app.category', {
+                url:'category',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/category.html',
+                        controller  : 'HomeController'
+                    }
+                }
+            })
+
+            //route for the more
+            .state('app.more', {
+                url:'more',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/more.html',
+                        controller  : 'MoreController'
+                    }
+                }
+            })
+        
+            //route for the login page
+            .state('app.login', {
+                url:'login',
+                views: {
+                    'content@': {
+                        templateUrl: 'views/login.html',
+                        controller: 'LoginController'
+                    }
+                }
+            })
+
+            //route for the search
+            .state('app.search', {
+                url:'search',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/search.html',
+                        controller  : 'MoreController'
+                    }
+                }
+            })
+
+        ;
 
         $urlRouterProvider.otherwise('/');
 
-    })
-;
+    });
