@@ -1,290 +1,484 @@
-<div class="container" ng-controller="HomeController">
-    <div class="page-header">
-        <ol class="breadcrumb">
-            <li><a ui-sref="../index.html">Home</a></li>
-        </ol>
-        <h1 class="page-title">Gallery</h1>
-        <div class="page-header-actions">
-            <a class="btn btn-sm btn-primary btn-round waves-effect waves-light waves-round" href="https://github.com/metafizzy/isotope" target="_blank">
-                <i class="icon md-link" aria-hidden="true"></i>
-                <span class="hidden-xs">Official Website</span>
-            </a>
+<div class="app-media">
+    <div class="page bg-white animsition" style="animation-duration: 800ms; opacity: 1;">
+        <!-- Media Sidebar -->
+        <div class="page-aside">
+            <div class="page-aside-switch">
+                <i class="icon md-chevron-left" aria-hidden="true"></i>
+                <i class="icon md-chevron-right" aria-hidden="true"></i>
+            </div>
+            <div class="page-aside-inner scrollable scrollable-vertical is-disabled" data-plugin="pageAsideScroll" style="position: relative;">
+                <div data-role="container" class="scrollable-container" style="">
+                    <div data-role="content" class="scrollable-content">
+                        <section class="page-aside-section">
+                            <h5 class="page-aside-title">Main</h5>
+                            <div class="list-group">
+                                <a class="list-group-item active" href="javascript:void(0)"><i class="icon md-view-dashboard" aria-hidden="true"></i>Overview</a>
+                                <a class="list-group-item" href="javascript:void(0)"><i class="icon md-image-o" aria-hidden="true"></i>Activity</a>
+                                <a class="list-group-item" href="javascript:void(0)"><i class="icon md-favorite" aria-hidden="true"></i>Dearest</a>
+                                <a class="list-group-item" href="javascript:void(0)"><i class="icon md-folder" aria-hidden="true"></i>Folders</a>
+                            </div>
+                        </section>
+                        <section class="page-aside-section">
+                            <h5 class="page-aside-title">Filter</h5>
+                            <div class="list-group">
+                                <a class="list-group-item" href="javascript:void(0)"><i class="icon md-image" aria-hidden="true"></i>Images</a>
+                                <a class="list-group-item" href="javascript:void(0)"><i class="icon md-volume-up" aria-hidden="true"></i>Audio</a>
+                                <a class="list-group-item" href="javascript:void(0)"><i class="icon md-videocam" aria-hidden="true"></i>Video</a>
+                                <a class="list-group-item" href="javascript:void(0)"><i class="icon md-file" aria-hidden="true"></i>Notes</a>
+                                <a class="list-group-item" href="javascript:void(0)"><i class="icon md-link" aria-hidden="true"></i>Links</a>
+                                <a class="list-group-item" href="javascript:void(0)"><i class="icon md-receipt" aria-hidden="true"></i>Files</a>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="scrollable-bar scrollable-bar-vertical is-disabled scrollable-bar-hide" draggable="false"><div class="scrollable-bar-handle"></div></div></div>
         </div>
-        <ul class="nav nav-tabs nav-tabs-line" role="tablist" data-plugin="nav-tabs">
-            <li class="active" role="presentation">
-                <a href="#exampleList" aria-controls="exampleList" aria-expanded="true" role="tab" data-toggle="tab" data-filter="*">All</a>
-            </li>
-            <li role="presentation">
-                <a href="#exampleList" aria-expanded="false" role="tab" data-toggle="tab" data-filter="object">Object</a>
-            </li>
-            <li role="presentation">
-                <a href="#exampleList" aria-expanded="false" role="tab" data-toggle="tab" data-filter="city">City</a>
-            </li>
-            <li role="presentation">
-                <a href="#exampleList" aria-expanded="false" role="tab" data-toggle="tab" data-filter="animal">Animal</a>
-            </li>
-            <li class="nav-tabs-autoline" style="transition-duration: 0.5s, 1s; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1), cubic-bezier(0.4, 0, 0.2, 1); left: 0px; width: 59px;"></li></ul>
-    </div>
-    <div class="page-header">
-        <h2>가장 인기있는 Plan!
-            <span>
-                    <a ui-sref="app.more">
-                        <button type="button" class="btn btn-sm btn-primary">
-                            더 보기
-                        </button>
-                    </a>
-                </span>
-        </h2>
-    </div>
-    <div class="page-content">
-        <ul class="blocks blocks-100 blocks-xlg-4 blocks-md-3 blocks-sm-2" data-plugin="masonry" style="position: relative;">
-            <li class="masonry-item" style="width: 275px">
-                <div class="widget widget-article widget-shadow">
-                    <div class="widget-header cover">
-                        <img class="cover-image" src="../assets/photos/placeholder.png" alt="...">
+        <!-- Media Content -->
+        <div class="page-main">
+            <!-- Media Content Header -->
+            <div class="page-header">
+                <h1 class="page-title">Overview</h1>
+                <div class="page-header-actions">
+                    <form>
+                        <div class="input-search input-search-dark">
+                            <i class="input-search-icon md-search" aria-hidden="true"></i>
+                            <input type="text" class="form-control" name="" placeholder="Search...">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Media Content -->
+            <div class="page-content page-content-table" data-selectable="selectable">
+                <!-- Actions -->
+                <div class="page-content-actions">
+                    <div class="pull-right">
+                        <div class="btn-group media-arrangement" role="group">
+                            <button class="btn btn-default active waves-effect waves-light" id="arrangement-grid" type="button"><i class="icon md-view-module" aria-hidden="true"></i></button>
+                            <button class="btn btn-default waves-effect waves-light" id="arrangement-list" type="button"><i class="icon md-view-list" aria-hidden="true"></i></button>
+                        </div>
                     </div>
-                    <div class="widget-body">
-                        <h4 class="widget-title">열혈 C 30일 완성</h4>
-                        <p class="widget-metas type-link">
-                            By
-                            <a href="javascript:void(0)">Nathan Watts</a>
-                            <a href="javascript:void(0)">05, 2016</a>
-                        </p>
-                        <p>Dolemus late utriusque fore eveniet provincia spernat dissentiet.
-                            Fit intemperantes.</p>
-                        <div class="widget-body-footer">
-                            <div class="widget-actions pull-right">
-                                <a href="javascript:void(0)">
-                                    <span>3</span> Comments</a>
-                                <a href="javascript:void(0)">
-                                    <i class="icon md-favorite" aria-hidden="true"></i>
-                                    <span>108</span>
-                                </a>
-                            </div>
-
+                    <div class="actions-inner">
+                        <div class="checkbox-custom checkbox-primary checkbox-lg">
+                            <input type="checkbox" id="media_all" class="selectable-all">
+                            <label for="media_all"></label>
                         </div>
                     </div>
                 </div>
-            </li>
-            <li class="masonry-item" style="width: 275px">
-                <div class="widget widget-article widget-shadow">
-                    <div class="widget-header cover">
-                        <img class="cover-image" src="../assets/photos/placeholder.png" alt="...">
-                    </div>
-                    <div class="widget-body">
-                        <h4 class="widget-title">Beatus Nature</h4>
-                        <p class="widget-metas type-link">
-                            By
-                            <a href="javascript:void(0)">Heather Harper</a>
-                            <a href="javascript:void(0)">04, 2016</a>
-
-                        </p>
-                        <p>Antipatrum autem aegritudine, torquate seque etiam iucunditatem bello
-                            multa feramus.</p>
-                        <div class="widget-body-footer">
-                            <div class="widget-actions pull-right">
-                                <a href="javascript:void(0)">
-                                    <span>2</span> Comments</a>
-                                <a href="javascript:void(0)">
-                                    <i class="icon md-favorite" aria-hidden="true"></i>
-                                    <span>120</span>
-                                </a>
+                <!-- Media -->
+                <div class="media-list is-grid padding-bottom-50">
+                    <ul class="blocks blocks-100 blocks-xlg-4 blocks-lg-3 blocks-md-3 blocks-ms-2 blocks-xs-2" data-plugin="animateList" data-child=">li">
+                        <li class="animation-scale-up" style="animation-fill-mode: backwards; animation-duration: 250ms; animation-delay: 0ms;">
+                            <div class="media-item" data-toggle="slidePanel" data-url="panel.tpl">
+                                <div class="checkbox-custom checkbox-primary checkbox-lg">
+                                    <input type="checkbox" class="selectable-item" id="media_1">
+                                    <label for="media_1"></label>
+                                </div>
+                                <div class="image-wrap">
+                                    <img class="image img-rounded" src="../assets/photos/placeholder.png" alt="...">
+                                </div>
+                                <div class="info-wrap">
+                                    <div class="dropdown">
+                                        <span class="icon md-settings dropdown-toggle" role="button" data-toggle="dropdown" data-animation="scale-up"></span>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li><a href="javascript:void(0)"><i class="icon md-edit" aria-hidden="true"></i>Edit</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-download" aria-hidden="true"></i>Download</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-delete" aria-hidden="true"></i>Delete</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="title">Lorem ipsum</div>
+                                    <div class="description">place holder를 두라고 해서 두는 건데 뭘 써야할지 모르겠지만 일단 아무거나 주저리주저리 써보자!</div>
+                                    <div class="time">1 minutes ago</div>
+                                    <div class="media-item-actions btn-group">
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Edit" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Download" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-download" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Delete" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-delete" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-
-                        </div>
-                    </div>
-                </div>
-            </li>
-
-            <li class="masonry-item" style="width: 275px">
-                <div class="widget widget-article widget-shadow">
-                    <div class="widget-header cover">
-                        <img class="cover-image" src="../assets/photos/placeholder.png" alt="...">
-                    </div>
-                    <div class="widget-body">
-                        <h4 class="widget-title">Restincto Multi</h4>
-                        <p class="widget-metas type-link">
-                            By
-                            <a href="javascript:void(0)">Edward Fletcher</a>
-                            <a href="javascript:void(0)">05, 2016</a>
-
-                        </p>
-                        <p>Modice accuratius physicis supplicii divinum pariatur graviter horribiles
-                            sunt, genus.</p>
-                        <div class="widget-body-footer">
-                            <div class="widget-actions pull-right">
-                                <a href="javascript:void(0)">
-                                    <span>2</span> Comments</a>
-                                <a href="javascript:void(0)">
-                                    <i class="icon md-favorite" aria-hidden="true"></i>
-                                    <span>130</span>
-                                </a>
+                        </li>
+                        <li class="animation-scale-up" style="animation-fill-mode: backwards; animation-duration: 250ms; animation-delay: 50ms;">
+                            <div class="media-item" data-toggle="slidePanel" data-url="panel.tpl">
+                                <div class="checkbox-custom checkbox-primary checkbox-lg">
+                                    <input type="checkbox" class="selectable-item" id="media_2">
+                                    <label for="media_2"></label>
+                                </div>
+                                <div class="image-wrap">
+                                    <img class="image img-rounded" src="../assets/photos/placeholder.png" alt="...">
+                                </div>
+                                <div class="info-wrap">
+                                    <div class="dropdown">
+                                        <span class="icon md-settings dropdown-toggle" role="button" data-toggle="dropdown" data-animation="scale-up"></span>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li><a href="javascript:void(0)"><i class="icon md-edit" aria-hidden="true"></i>Edit</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-download" aria-hidden="true"></i>Download</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-delete" aria-hidden="true"></i>Delete</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="title">Voluptate pariatur</div>
+                                    <div class="time">20 minutes ago</div>
+                                    <div class="media-item-actions btn-group">
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Edit" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Download" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-download" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Delete" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-delete" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="masonry-item" style="width: 275px">
-                <div class="widget widget-article widget-shadow">
-                    <div class="widget-header cover">
-                        <img class="cover-image" src="../assets/photos/placeholder.png" alt="...">
-                    </div>
-                    <div class="widget-body">
-                        <h4 class="widget-title">Contentam Sumus</h4>
-                        <p class="widget-metas type-link">
-                            By
-                            <a href="javascript:void(0)">June Lane</a>
-                            <a href="javascript:void(0)">05, 2016</a>
-
-                        </p>
-                        <p>Sit doctus adoptionem nudus voluptatem fugiendum assentior, copulationes
-                            consedit poetis.</p>
-                        <div class="widget-body-footer">
-                            <div class="widget-actions pull-right">
-                                <a href="javascript:void(0)">
-                                    <span>2</span> Comments</a>
-                                <a href="javascript:void(0)">
-                                    <i class="icon md-favorite" aria-hidden="true"></i>
-                                    <span>120</span>
-                                </a>
+                        </li>
+                        <li class="animation-scale-up" style="animation-fill-mode: backwards; animation-duration: 250ms; animation-delay: 100ms;">
+                            <div class="media-item" data-toggle="slidePanel" data-url="panel.tpl">
+                                <div class="checkbox-custom checkbox-primary checkbox-lg">
+                                    <input type="checkbox" class="selectable-item" id="media_3">
+                                    <label for="media_3"></label>
+                                </div>
+                                <div class="image-wrap">
+                                    <img class="image img-rounded" src="../assets/photos/placeholder.png" alt="...">
+                                </div>
+                                <div class="info-wrap">
+                                    <div class="dropdown">
+                                        <span class="icon md-settings dropdown-toggle" role="button" data-toggle="dropdown" data-animation="scale-up"></span>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li><a href="javascript:void(0)"><i class="icon md-edit" aria-hidden="true"></i>Edit</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-download" aria-hidden="true"></i>Download</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-delete" aria-hidden="true"></i>Delete</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="title">Laboris Excepteur</div>
+                                    <div class="time">1 hour ago</div>
+                                    <div class="media-item-actions btn-group">
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Edit" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Download" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-download" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Delete" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-delete" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
-</div>
-<div class="row">
-    <div class="page-header">
-        <h2>가장 평가가 좋은 Plan!
-            <span>
-                <button type="button" class="btn btn-sm btn-primary waves-effect waves-light" data-toggle="button" data-more="#exampleMoreless">
-                    더 보기
-                </button>
-            </span>
-        </h2>
-    </div>
-    <div class="page-content">
-        <ul class="blocks blocks-100 blocks-xlg-4 blocks-md-3 blocks-sm-2" data-plugin="masonry" style="position: relative;">
-            <li class="masonry-item" style="width: 275px">
-                <div class="widget widget-article widget-shadow">
-                    <div class="widget-header cover">
-                        <img class="cover-image" src="../assets/photos/placeholder.png" alt="...">
-                    </div>
-                    <div class="widget-body">
-                        <h4 class="widget-title">열혈 C 30일 완성</h4>
-                        <p class="widget-metas type-link">
-                            By
-                            <a href="javascript:void(0)">Nathan Watts</a>
-                            <a href="javascript:void(0)">05, 2016</a>
-                        </p>
-                        <p>Dolemus late utriusque fore eveniet provincia spernat dissentiet.
-                            Fit intemperantes.</p>
-                        <div class="widget-body-footer">
-                            <div class="widget-actions pull-right">
-                                <a href="javascript:void(0)">
-                                    <span>3</span> Comments</a>
-                                <a href="javascript:void(0)">
-                                    <i class="icon md-favorite" aria-hidden="true"></i>
-                                    <span>108</span>
-                                </a>
+                        </li>
+                        <li class="animation-scale-up" style="animation-fill-mode: backwards; animation-duration: 250ms; animation-delay: 150ms;">
+                            <div class="media-item" data-toggle="slidePanel" data-url="panel.tpl">
+                                <div class="checkbox-custom checkbox-primary checkbox-lg">
+                                    <input type="checkbox" class="selectable-item" id="media_4">
+                                    <label for="media_4"></label>
+                                </div>
+                                <div class="image-wrap">
+                                    <img class="image img-rounded" src="../assets/photos/placeholder.png" alt="...">
+                                </div>
+                                <div class="info-wrap">
+                                    <div class="dropdown">
+                                        <span class="icon md-settings dropdown-toggle" role="button" data-toggle="dropdown" data-animation="scale-up"></span>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li><a href="javascript:void(0)"><i class="icon md-edit" aria-hidden="true"></i>Edit</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-download" aria-hidden="true"></i>Download</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-delete" aria-hidden="true"></i>Delete</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="title">Consequat ullamco</div>
+                                    <div class="time">3 hours ago</div>
+                                    <div class="media-item-actions btn-group">
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Edit" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Download" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-download" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Delete" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-delete" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="masonry-item" style="width: 275px">
-                <div class="widget widget-article widget-shadow">
-                    <div class="widget-header cover">
-                        <img class="cover-image" src="../assets/photos/placeholder.png" alt="...">
-                    </div>
-                    <div class="widget-body">
-                        <h4 class="widget-title">Beatus Nature</h4>
-                        <p class="widget-metas type-link">
-                            By
-                            <a href="javascript:void(0)">Heather Harper</a>
-                            <a href="javascript:void(0)">04, 2016</a>
-
-                        </p>
-                        <p>Antipatrum autem aegritudine, torquate seque etiam iucunditatem bello
-                            multa feramus.</p>
-                        <div class="widget-body-footer">
-                            <div class="widget-actions pull-right">
-                                <a href="javascript:void(0)">
-                                    <span>2</span> Comments</a>
-                                <a href="javascript:void(0)">
-                                    <i class="icon md-favorite" aria-hidden="true"></i>
-                                    <span>120</span>
-                                </a>
+                        </li>
+                        <li class="animation-scale-up" style="animation-fill-mode: backwards; animation-duration: 250ms; animation-delay: 200ms;">
+                            <div class="media-item" data-toggle="slidePanel" data-url="panel.tpl">
+                                <div class="checkbox-custom checkbox-primary checkbox-lg">
+                                    <input type="checkbox" class="selectable-item" id="media_5">
+                                    <label for="media_5"></label>
+                                </div>
+                                <div class="image-wrap">
+                                    <img class="image img-rounded" src="../assets/photos/placeholder.png" alt="...">
+                                </div>
+                                <div class="info-wrap">
+                                    <div class="dropdown">
+                                        <span class="icon md-settings dropdown-toggle" role="button" data-toggle="dropdown" data-animation="scale-up"></span>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li><a href="javascript:void(0)"><i class="icon md-edit" aria-hidden="true"></i>Edit</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-download" aria-hidden="true"></i>Download</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-delete" aria-hidden="true"></i>Delete</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="title">Eiusmod amet</div>
+                                    <div class="time">7 hours ago</div>
+                                    <div class="media-item-actions btn-group">
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Edit" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Download" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-download" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Delete" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-delete" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-
-                        </div>
-                    </div>
-                </div>
-            </li>
-
-            <li class="masonry-item" style="width: 275px">
-                <div class="widget widget-article widget-shadow">
-                    <div class="widget-header cover">
-                        <img class="cover-image" src="../assets/photos/placeholder.png" alt="...">
-                    </div>
-                    <div class="widget-body">
-                        <h4 class="widget-title">Restincto Multi</h4>
-                        <p class="widget-metas type-link">
-                            By
-                            <a href="javascript:void(0)">Edward Fletcher</a>
-                            <a href="javascript:void(0)">05, 2016</a>
-
-                        </p>
-                        <p>Modice accuratius physicis supplicii divinum pariatur graviter horribiles
-                            sunt, genus.</p>
-                        <div class="widget-body-footer">
-                            <div class="widget-actions pull-right">
-                                <a href="javascript:void(0)">
-                                    <span>2</span> Comments</a>
-                                <a href="javascript:void(0)">
-                                    <i class="icon md-favorite" aria-hidden="true"></i>
-                                    <span>130</span>
-                                </a>
+                        </li>
+                        <li class="animation-scale-up" style="animation-fill-mode: backwards; animation-duration: 250ms; animation-delay: 250ms;">
+                            <div class="media-item" data-toggle="slidePanel" data-url="panel.tpl">
+                                <div class="checkbox-custom checkbox-primary checkbox-lg">
+                                    <input type="checkbox" class="selectable-item" id="media_6">
+                                    <label for="media_6"></label>
+                                </div>
+                                <div class="image-wrap">
+                                    <img class="image img-rounded" src="../assets/photos/placeholder.png" alt="...">
+                                </div>
+                                <div class="info-wrap">
+                                    <div class="dropdown">
+                                        <span class="icon md-settings dropdown-toggle" role="button" data-toggle="dropdown" data-animation="scale-up"></span>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li><a href="javascript:void(0)"><i class="icon md-edit" aria-hidden="true"></i>Edit</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-download" aria-hidden="true"></i>Download</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-delete" aria-hidden="true"></i>Delete</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="title">ullamco quis</div>
+                                    <div class="time">16 hours ago</div>
+                                    <div class="media-item-actions btn-group">
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Edit" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Download" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-download" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Delete" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-delete" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="masonry-item" style="width: 275px">
-                <div class="widget widget-article widget-shadow">
-                    <div class="widget-header cover">
-                        <img class="cover-image" src="../assets/photos/placeholder.png" alt="...">
-                    </div>
-                    <div class="widget-body">
-                        <h4 class="widget-title">Contentam Sumus</h4>
-                        <p class="widget-metas type-link">
-                            By
-                            <a href="javascript:void(0)">June Lane</a>
-                            <a href="javascript:void(0)">05, 2016</a>
-
-                        </p>
-                        <p>Sit doctus adoptionem nudus voluptatem fugiendum assentior, copulationes
-                            consedit poetis.</p>
-                        <div class="widget-body-footer">
-                            <div class="widget-actions pull-right">
-                                <a href="javascript:void(0)">
-                                    <span>2</span> Comments</a>
-                                <a href="javascript:void(0)">
-                                    <i class="icon md-favorite" aria-hidden="true"></i>
-                                    <span>120</span>
-                                </a>
+                        </li>
+                        <li class="animation-scale-up" style="animation-fill-mode: backwards; animation-duration: 250ms; animation-delay: 300ms;">
+                            <div class="media-item" data-toggle="slidePanel" data-url="panel.tpl">
+                                <div class="checkbox-custom checkbox-primary checkbox-lg">
+                                    <input type="checkbox" class="selectable-item" id="media_7">
+                                    <label for="media_7"></label>
+                                </div>
+                                <div class="image-wrap">
+                                    <img class="image img-rounded" src="../assets/photos/placeholder.png" alt="...">
+                                </div>
+                                <div class="info-wrap">
+                                    <div class="dropdown">
+                                        <span class="icon md-settings dropdown-toggle" role="button" data-toggle="dropdown" data-animation="scale-up"></span>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li><a href="javascript:void(0)"><i class="icon md-edit" aria-hidden="true"></i>Edit</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-download" aria-hidden="true"></i>Download</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-delete" aria-hidden="true"></i>Delete</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="title">Reprehenderit</div>
+                                    <div class="time">1 day ago</div>
+                                    <div class="media-item-actions btn-group">
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Edit" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Download" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-download" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Delete" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-delete" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </li>
+                        <li class="animation-scale-up" style="animation-fill-mode: backwards; animation-duration: 250ms; animation-delay: 350ms;">
+                            <div class="media-item" data-toggle="slidePanel" data-url="panel.tpl">
+                                <div class="checkbox-custom checkbox-primary checkbox-lg">
+                                    <input type="checkbox" class="selectable-item" id="media_8">
+                                    <label for="media_8"></label>
+                                </div>
+                                <div class="image-wrap">
+                                    <img class="image img-rounded" src="../assets/photos/placeholder.png" alt="...">
+                                </div>
+                                <div class="info-wrap">
+                                    <div class="dropdown">
+                                        <span class="icon md-settings dropdown-toggle" role="button" data-toggle="dropdown" data-animation="scale-up"></span>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li><a href="javascript:void(0)"><i class="icon md-edit" aria-hidden="true"></i>Edit</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-download" aria-hidden="true"></i>Download</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-delete" aria-hidden="true"></i>Delete</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="title">Ullamco fugiat</div>
+                                    <div class="time">2 days ago</div>
+                                    <div class="media-item-actions btn-group">
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Edit" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Download" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-download" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Delete" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-delete" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="animation-scale-up" style="animation-fill-mode: backwards; animation-duration: 250ms; animation-delay: 400ms;">
+                            <div class="media-item" data-toggle="slidePanel" data-url="panel.tpl">
+                                <div class="checkbox-custom checkbox-primary checkbox-lg">
+                                    <input type="checkbox" class="selectable-item" id="media_9">
+                                    <label for="media_9"></label>
+                                </div>
+                                <div class="image-wrap">
+                                    <img class="image img-rounded" src="../assets/photos/placeholder.png" alt="...">
+                                </div>
+                                <div class="info-wrap">
+                                    <div class="dropdown">
+                                        <span class="icon md-settings dropdown-toggle" role="button" data-toggle="dropdown" data-animation="scale-up"></span>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li><a href="javascript:void(0)"><i class="icon md-edit" aria-hidden="true"></i>Edit</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-download" aria-hidden="true"></i>Download</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-delete" aria-hidden="true"></i>Delete</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="title">Dolor veniam</div>
+                                    <div class="time">3 days ago</div>
+                                    <div class="media-item-actions btn-group">
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Edit" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Download" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-download" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Delete" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-delete" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="animation-scale-up" style="animation-fill-mode: backwards; animation-duration: 250ms; animation-delay: 450ms;">
+                            <div class="media-item" data-toggle="slidePanel" data-url="panel.tpl">
+                                <div class="checkbox-custom checkbox-primary checkbox-lg">
+                                    <input type="checkbox" class="selectable-item" id="media_10">
+                                    <label for="media_10"></label>
+                                </div>
+                                <div class="image-wrap">
+                                    <img class="image img-rounded" src="../assets/photos/placeholder.png" alt="...">
+                                </div>
+                                <div class="info-wrap">
+                                    <div class="dropdown">
+                                        <span class="icon md-settings dropdown-toggle" role="button" data-toggle="dropdown" data-animation="scale-up"></span>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li><a href="javascript:void(0)"><i class="icon md-edit" aria-hidden="true"></i>Edit</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-download" aria-hidden="true"></i>Download</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-delete" aria-hidden="true"></i>Delete</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="title">Minim officia</div>
+                                    <div class="time">7 days ago</div>
+                                    <div class="media-item-actions btn-group">
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Edit" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Download" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-download" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Delete" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-delete" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="animation-scale-up" style="animation-fill-mode: backwards; animation-duration: 250ms; animation-delay: 500ms;">
+                            <div class="media-item" data-toggle="slidePanel" data-url="panel.tpl">
+                                <div class="checkbox-custom checkbox-primary checkbox-lg">
+                                    <input type="checkbox" class="selectable-item" id="media_11">
+                                    <label for="media_11"></label>
+                                </div>
+                                <div class="image-wrap">
+                                    <img class="image img-rounded" src="../assets/photos/placeholder.png" alt="...">
+                                </div>
+                                <div class="info-wrap">
+                                    <div class="dropdown">
+                                        <span class="icon md-settings dropdown-toggle" role="button" data-toggle="dropdown" data-animation="scale-up"></span>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li><a href="javascript:void(0)"><i class="icon md-edit" aria-hidden="true"></i>Edit</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-download" aria-hidden="true"></i>Download</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-delete" aria-hidden="true"></i>Delete</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="title">cupidatat fugiat</div>
+                                    <div class="time">1 week ago</div>
+                                    <div class="media-item-actions btn-group">
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Edit" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Download" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-download" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Delete" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-delete" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="animation-scale-up" style="animation-fill-mode: backwards; animation-duration: 250ms; animation-delay: 550ms;">
+                            <div class="media-item" data-toggle="slidePanel" data-url="panel.tpl">
+                                <div class="checkbox-custom checkbox-primary checkbox-lg">
+                                    <input type="checkbox" class="selectable-item" id="media_12">
+                                    <label for="media_12"></label>
+                                </div>
+                                <div class="image-wrap">
+                                    <img class="image img-rounded" src="../assets/photos/placeholder.png" alt="...">
+                                </div>
+                                <div class="info-wrap">
+                                    <div class="dropdown">
+                                        <span class="icon md-settings dropdown-toggle" role="button" data-toggle="dropdown" data-animation="scale-up"></span>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li><a href="javascript:void(0)"><i class="icon md-edit" aria-hidden="true"></i>Edit</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-download" aria-hidden="true"></i>Download</a></li>
+                                            <li><a href="javascript:void(0)"><i class="icon md-delete" aria-hidden="true"></i>Delete</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="title">Fugiat nisi</div>
+                                    <div class="time">2 weeks ago</div>
+                                    <div class="media-item-actions btn-group">
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Edit" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Download" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-download" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-icon btn-pure btn-default waves-effect waves-classic" data-original-title="Delete" data-toggle="tooltip" data-container="body" data-placement="top" data-trigger="hover" type="button">
+                                            <i class="icon md-delete" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 </div>
