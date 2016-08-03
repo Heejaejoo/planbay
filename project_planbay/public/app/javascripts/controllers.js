@@ -11,7 +11,10 @@ angular.module('planBay')
             email:"",
             password:"",
             confirmPassword:""
-        }
+        };
+        
+        $scope.re= /[a-zA-Z][0-9]/;
+        
     }])
 
     .controller('HomeController',  ['$scope',function($scope) {

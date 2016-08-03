@@ -44,5 +44,4 @@ angular.module('planBay', ['ui.router','ngResource'])
 
         $urlRouterProvider.otherwise('/');
 
-    })
-;
+    });
