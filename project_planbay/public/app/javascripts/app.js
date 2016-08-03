@@ -1,5 +1,5 @@
 'use strict';
-angular.module('planBay', ['ui.router','ngResource'])
+angular.module('planBay', ['ui.router','ngResource','pageslide-directive'])
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
         // route for the home page
@@ -15,6 +15,19 @@ angular.module('planBay', ['ui.router','ngResource'])
                     },
                     'footer': {
                         templateUrl: 'views/footer.html'
+                    },
+                    'detail': {
+                        templateUrl: 'views/detail.html',
+                        controller: 'DetailController'
+                    }
+                }
+            })
+            .state('app.detail', {
+                url: 'detail',
+                views: {
+                    'content@' : {
+                        templateUrl:'views/plandetail.html',
+                        controller: 'DetailController'
                     }
                 }
             });

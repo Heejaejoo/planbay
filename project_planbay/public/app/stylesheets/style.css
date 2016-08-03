@@ -188,3 +188,8 @@
   }
 
 }
+
+  .page-slide {
+    height: 100%;
+    overflow: scroll;
+  }
