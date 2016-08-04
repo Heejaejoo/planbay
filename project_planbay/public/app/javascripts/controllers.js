@@ -1,9 +1,15 @@
 'use strict';
 angular.module('planBay')
-    .controller('IndexController', ['$scope',function($scope) {
+    .controller('DetailController', ['$scope',function($scope) {
+        $scope.checked = false;
+        $scope.size = '100px';
 
+        $scope.toggle = function() {
+            $scope.checked = !$scope.checked
+        }
     }])
-
+    .controller('LandingController', ['$scope',function($scope) {
+    }])
     .controller('RegistrationController', ['$scope',function($scope) {
 
         $scope.registerForm = {
@@ -14,9 +20,7 @@ angular.module('planBay')
         };
         
         $scope.re= /[a-zA-Z][0-9]/;
-        
     }])
-
     .controller('HomeController',  ['$scope',function($scope) {
 
     }])
@@ -32,8 +36,5 @@ angular.module('planBay')
             password:""
         }
         
-    }])
-;
-//example
-//.controller('MenuController', ['$scope', 'menuFactory', function($scope, menuFactory) {
+    }]);
 
