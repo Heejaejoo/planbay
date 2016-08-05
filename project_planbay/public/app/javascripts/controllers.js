@@ -44,7 +44,5 @@ angular.module('planBay')
         
     .controller('MyplanController',  ['$scope',function($scope) {
         
-    }])
-        
     }]);
 
