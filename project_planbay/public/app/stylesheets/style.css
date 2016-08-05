@@ -188,7 +188,248 @@
   }
 
 }
-  .page-slide {
-          height: 100%;
-          overflow: scroll;
+.view-side-panel .side-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1500;
+}
+.view-side-panel .content {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  right: 0;
+  width: 80%;
+  height: 100%;
+  overflow: auto;
+  background: #fff;
+}
+
+.view-side-panel .background {
+  background: #000;
+  opacity: .8;
+  width: 100%;
+  height: 100%;
+}
+.ng-enter {
+  transition: .5s;
+}
+.ng-leave {
+   /* transition on enter and leave for .5s */
+   transition: .5s;
+ }
+
+/* start 'enter' transition */
+.ng-enter .side-panel .content {
+  /* start with content 80% off the right of the page */
+  right: -80%;
+}
+
+.ng-enter .side-panel .background {
+  /* start with background opacity 0 (invisible) */
+  opacity: 0;
+}
+
+/* end 'enter' transition */
+.ng-enter-active .side-panel .content {
+  /* transition the right position which
+     slides the content into view */
+  transition: right .5s;
+
+  /* end with content aligned to the right of the page */
+  right: 0;
+}
+
+.ng-enter-active .side-panel .background {
+  /* transition the background opacity to fades it in */
+  transition: opacity .5s;
+
+  /* end with background opacity 0.8 to give the overlay effect */
+  opacity: .8;
+}
+
+
+/* end 'leave' transition */
+.ng-leave-active .side-panel .content {
+  /* transition the right position which
+     slides the content out of view */
+  transition: right .5s;
+
+  /* end transition with the content completely off the page */
+  right: -100%;
+}
+
+.ng-leave-active .side-panel .background {
+  /* transition the background opacity to fades it out */
+  transition: opacity .5s;
+
+  /* end with background opacity 0 to hide it */
+  opacity: 0;
+}
+
+.side-panel-right,
+.side-panel-left {
+  top: 66px;
+  bottom: 0;
+  width: 700px;
+}
+@media (max-width: 1199px) {
+  .side-panel-right,
+  .side-panel-left {
+    width: -webkit-calc(100% - 230px);
+    width:         calc(100% - 230px);
   }
+}
+@media (max-width: 767px) {
+  .side-panel-right,
+  .side-panel-left {
+    width: 100%;
+  }
+}
+.side-panel-top,
+.side-panel-bottom {
+  width: 100%;
+  height: 500px;
+}
+@media (max-width: 1199px) {
+  .side-panel-top,
+  .side-panel-bottom {
+    top: 0;
+    bottom: 0;
+    height: auto;
+  }
+}
+.side-panel-left {
+  left: 0;
+}
+.side-panel-right {
+  right: 0;
+}
+.side-panel-top {
+  top: 0;
+  left: 0;
+}
+.side-panel-bottom {
+  bottom: 0;
+  left: 0;
+}
+.side-panel .scrollable-container {
+  height: 100%;
+}
+.side-panel-show {
+  visibility: visible;
+}
+.side-panel-handler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 100%;
+  cursor: e-resize;
+  background-color: transparent;
+}
+.side-panel-loading {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 0;
+  text-align: center;
+  visibility: hidden;
+}
+.side-panel-loading:before {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  content: "";
+}
+.side-panel-loading .loader {
+  vertical-align: middle;
+}
+.side-panel-loading-show {
+  visibility: visible;
+}
+.side-panel-scrollable {
+  height: 100%;
+}
+.side-panel-header {
+  position: relative;
+  padding: 40px 30px;
+  padding-right: 120px;
+  color: #fff;
+}
+.side-panel-header h1 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 33px;
+  color: #fff;
+}
+.side-panel-actions {
+  float: right;
+  min-height: 67px;
+  margin: 0;
+  margin-left: 15px;
+  text-align: right;
+  list-style: none;
+}
+.side-panel-actions .btn {
+  line-height: 33px;
+}
+.side-panel-action {
+  border: 1px solid transparent;
+  border-radius: 3px;
+  -webkit-transition: border .25s linear;
+  -o-transition: border .25s linear;
+  transition: border .25s linear;
+}
+.side-panel-action:last-child {
+  margin-right: 0;
+}
+.side-panel-action.dropdown.open {
+  border-color: #fff;
+}
+.side-panel-action .icon {
+  cursor: pointer;
+}
+.side-panel-action .icon:hover {
+  color: #ecf0f3;
+}
+.side-panel-action .dropdown-menu {
+  right: 0;
+  left: auto;
+  margin-top: 10px;
+}
+.side-panel-action .dropdown-menu .icon {
+  margin-right: 10px;
+}
+.side-panel-inner {
+  padding: 0 30px;
+}
+.side-panel-inner-section {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #e0e0e0;
+}
+.side-panel-comment {
+  position: relative;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.side-panel-comment textarea {
+  margin-bottom: 5px;
+}
+.side-panel-comment .reply {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.detail-photo {
+  position: relative;
+  margin-top: 20px;
+  padding: 20px;
+  height: 300px;
+}
+
