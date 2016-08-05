@@ -85,6 +85,17 @@ angular.module('planBay', ['ui.router','ngResource','pageslide-directive'])
                     }
                 }
             })
+        
+            //route for the registration page
+            .state('app.register', {
+                url:'register',
+                views: {
+                    'content@': {
+                        templateUrl:'views/register.html',
+                        controller:'RegistrationController'
+                    }
+                }
+            })
 
         ;
 
