@@ -1,12 +1,13 @@
 'use strict';
 angular.module('planBay')
-    .controller('DetailController', ['$scope',function($scope) {
-        $scope.checked = false;
-        $scope.size = '100px';
-
-        $scope.toggle = function() {
-            $scope.checked = !$scope.checked
+    .controller('DetailController', ['$scope','$location', function($scope, $location) {
+        $scope.abc = true;
+        $scope.goback = function(before) {
+            $location.path(before);
         }
+    }])
+    .controller('AnimateController', ['$scope', function($scope){
+        $scope.pageClass = 'Detail';
     }])
     .controller('LandingController', ['$scope',function($scope) {
     }])
