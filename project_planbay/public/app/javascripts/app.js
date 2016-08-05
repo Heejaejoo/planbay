@@ -97,6 +97,25 @@ angular.module('planBay', ['ui.router','ngResource','pageslide-directive'])
                 }
             })
 
+            .state('app.mypage', {
+                url:'mypage',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/mypage.html',
+                        controller  : 'MypageController'
+                    }
+                }
+            })
+        
+            .state('app.myplan', {
+                url:'myplan',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/myplan.html',
+                        controller  : 'MyplanController'
+                    }
+                }
+            })
         ;
 
         $urlRouterProvider.otherwise('/');

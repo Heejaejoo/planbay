@@ -36,5 +36,13 @@ angular.module('planBay')
             password:""
         }
         
+    .controller('MypageController',  ['$scope',function($scope) {
+        
+    }])
+        
+    .controller('MyplanController',  ['$scope',function($scope) {
+        
+    }])
+        
     }]);
 
