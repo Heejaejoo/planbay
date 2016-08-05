@@ -52,7 +52,6 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate'])
                     }
                 }
             })
-
             //route for the more
             .state('app.more', {
                 url:'more',
@@ -84,8 +83,38 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate'])
                         controller  : 'MoreController'
                     }
                 }
-            });
+            })
+        
+            //route for the registration page
+            .state('app.register', {
+                url:'register',
+                views: {
+                    'content@': {
+                        templateUrl:'views/register.html',
+                        controller:'RegistrationController'
+                    }
+                }
+            })
 
+            .state('app.mypage', {
+                url:'mypage',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/mypage.html',
+                        controller  : 'MypageController'
+                    }
+                }
+            })
+        
+            .state('app.myplan', {
+                url:'myplan',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/myplan.html',
+                        controller  : 'MyplanController'
+                    }
+                }
+            });
         $urlRouterProvider.otherwise('/');
 
     });
