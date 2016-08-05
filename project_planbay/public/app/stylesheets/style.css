@@ -207,6 +207,12 @@
   background: #fff;
 }
 
+@media screen and (max-width:767px) {
+    .view-side-panel .content {
+        width: 100%;
+    }
+}
+
 .view-side-panel .background {
   background: #000;
   opacity: .8;

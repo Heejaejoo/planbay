@@ -36,6 +36,7 @@ angular.module('planBay')
             email:"",
             password:""
         }
+    }])
         
     .controller('MypageController',  ['$scope',function($scope) {
         
