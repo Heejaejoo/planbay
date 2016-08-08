@@ -196,6 +196,7 @@
   bottom: 0;
   z-index: 1500;
 }
+
 .view-side-panel .content {
   position: absolute;
   z-index: 100;
@@ -206,7 +207,11 @@
   overflow: auto;
   background: #fff;
 }
-
+@media screen and (max-width:768px){
+  .view-side-panel .content{
+    width:100%;
+  }
+}
 .view-side-panel .background {
   background: #000;
   opacity: .8;
@@ -433,3 +438,10 @@
   height: 300px;
 }
 
+.row .row-height-category{
+  height: 40px;
+}
+.star-text-size{
+  margin-left:3px;
+  font-size:15px;
+}

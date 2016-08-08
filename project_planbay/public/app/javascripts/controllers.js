@@ -5,6 +5,7 @@ angular.module('planBay')
         $scope.goback = function(before) {
             $location.path(before);
         }
+        $scope.stars  =0;
     }])
     .controller('AnimateController', ['$scope', function($scope){
         $scope.pageClass = 'Detail';

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <div class="side-panel">
     <div class="content">
         <header class="side-panel-header">
@@ -13,19 +14,29 @@
         </header>
         <div class="side-panel-inner">
             <div class="detail-photo" style="background-image: url('../assets/photos/placeholder.png');"></div>
+        </div>
+        <div class="side-panel-inner">
             <section class="side-panel-inner-section">
                 <div class="media-header">
-                    <div class="tags">
-                        Tags:
-                        <span class="label label-danger">TOEIC</span>
-                        <span class="label label-primary">English</span>
+                    <div class="row row-height-category">
+                        <div class="col-xs-12 col-md-6">
+                            <strong>Tags:&nbsp</strong>
+                            <span class="label label-danger">TOEIC</span>&nbsp
+                            <span class="label label-primary">English</span>
+                        </div>
                     </div>
-                    <div class="share">
-                        Share:
-                        <div class="btn-group btn-group-flat">
-                            <button type="button" class="btn btn-icon btn-pure btn-default"><i class="icon bd-twitter" aria-hidden="true"></i></button>
-                            <button type="button" class="btn btn-icon btn-pure btn-default"><i class="icon bd-facebook" aria-hidden="true"></i></button>
-                            <button type="button" class="btn btn-icon btn-pure btn-default"><i class="icon bd-dribbble" aria-hidden="true"></i></button>
+                    <div class="row row-height-category">
+                        <div class="col-xs-12">
+                            <strong>Stars:&nbsp</strong>
+                            <div class="row">
+                                <div class="col-xs-6 col-md-4">
+                                <input-stars max="5" ng-model="stars"></input-stars> <strong class="star-text-size">{{stars}}</strong>
+                                </div>
+                                <div class="col-xs-6">
+                                    aaa
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -39,24 +50,31 @@
             </section>
             <!-- for comments -->
             <section class="side-panel-inner-section">
-                <div class="media-header">
-                    <div class="pull-right">
-                        <div class="time">3 minutes ago</div>
-                    </div>
-                    <a class="avatar margin-right-10">
-                        <img src="../assets/portraits/2.jpg" alt="...">
-                    </a>
-                    <span class="name">Seevisual</span>
-                </div>
-                <div class="media-content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam.
-                        Aliquam sollicitudin venenatis ipsum ac feugiat. Vestibulum ullamcorper
-                        sodales nisi nec condimentum. Mauris convallis mauris at pellentesque volutpat.
-                        Phasellus at ultricies neque, quis malesuada augue. Donec eleifend condimentum
-                        nisl eu consectetur. </p>
-                </div>
+                <h5>Review</h5>
+                <ul class="media-list">
+                    <li class="media">
+                        <div class="media-header">
+                            <div class="pull-right">
+                                <div class="time">3 minutes ago</div>
+                            </div>
+                            <a class="avatar margin-right-10">
+                                <img src="../assets/portraits/2.jpg" alt="...">
+                            </a>
+                            <span class="name">Seevisual</span>
+                        </div>
+                        <div class="media-content">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam.
+                                Aliquam sollicitudin venenatis ipsum ac feugiat. Vestibulum ullamcorper
+                                sodales nisi nec condimentum. Mauris convallis mauris at pellentesque volutpat.
+                                Phasellus at ultricies neque, quis malesuada augue. Donec eleifend condimentum
+                                nisl eu consectetur. </p>
+                        </div>
+                    </li>
+                </ul>
             </section>
             <div class="side-panel-comment">
+                <h5>Create a review</h5>
+                <input-stars max="5" ng-model="stars"></input-stars>
                 <textarea class="maxlength-textarea form-control mb-sm margin-bottom-20" rows="4"></textarea>
                 <button class="btn btn-primary" type="button">Reply</button>
             </div>

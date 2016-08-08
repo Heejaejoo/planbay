@@ -1,5 +1,5 @@
 'use strict';
-angular.module('planBay', ['ui.router','ngResource','ngAnimate'])
+angular.module('planBay', ['ui.router','ngResource','ngAnimate','angular-input-stars'])
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
             // route for the landing page
@@ -62,7 +62,6 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate'])
                     }
                 }
             })
-        
             //route for the login page
             .state('app.login', {
                 url:'login',
