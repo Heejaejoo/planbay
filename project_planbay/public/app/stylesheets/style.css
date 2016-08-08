@@ -188,6 +188,7 @@
   }
 
 }
+
 .view-side-panel .side-panel {
   position: fixed;
   top: 0;
@@ -437,5 +438,14 @@
   margin-top: 20px;
   padding: 20px;
   height: 300px;
+}
+
+.page-slide {
+          height: 100%;
+          overflow: scroll;
+}
+
+.form-inline {
+  margin-bottom:2px
 }
 
