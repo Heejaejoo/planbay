@@ -10,10 +10,7 @@ var User = new Schema({
 			unique: true
 			},
 	password: {
-		type: String,
-		set: function(newValue) {
-		return Hash.isHashed(newValue) ? newValue : Hash.generate(newValue);
-		}
+		type: String
 	},
 	OauthId: {
 		type:String
@@ -49,4 +46,5 @@ User.methods.comparePassword = function(attemptedPassword, callback) {
 };
 
 User.plugin(passportLocalMongoose);
-module.exports = mongoose.model('User',User);
+var Users = Mongoose.model('User', User);
+module.exports = Mongoose.model('User',Users);
