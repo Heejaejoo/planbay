@@ -208,23 +208,12 @@
   overflow: auto;
   background: #fff;
 }
-<<<<<<< HEAD
 @media screen and (max-width:768px){
   .view-side-panel .content{
     width:100%;
   }
 }
-||||||| merged common ancestors
 
-=======
-
-@media screen and (max-width:767px) {
-    .view-side-panel .content {
-        width: 100%;
-    }
-}
-
->>>>>>> b85b67c859bcdc8a65cf1e21a48b5b27f6b9b5b6
 .view-side-panel .background {
   background: #000;
   opacity: .8;
