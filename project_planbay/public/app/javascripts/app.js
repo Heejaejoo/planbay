@@ -1,5 +1,17 @@
 'use strict';
 angular.module('planBay', ['ui.router','ngResource','ngAnimate','angular-input-stars'])
+    .filter('range', function() {
+        return function(input, total) {
+            total = parseInt(total);
+
+            for (var i=0; i<total; i++) {
+                input.push(i);
+            }
+
+            return input;
+        };
+    })
+
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
             // route for the landing page
@@ -113,7 +125,18 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','angular-input-s
                         controller  : 'MyplanController'
                     }
                 }
-            });
+            })
+
+            .state('app.edit', {
+                url:'edit',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/plan-edit.html',
+                        controller  : 'EditController'
+                    }
+                }
+            })
+
         $urlRouterProvider.otherwise('/');
 
     });

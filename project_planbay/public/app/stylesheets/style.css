@@ -188,6 +188,7 @@
   }
 
 }
+
 .view-side-panel .side-panel {
   position: fixed;
   top: 0;
@@ -207,11 +208,23 @@
   overflow: auto;
   background: #fff;
 }
+<<<<<<< HEAD
 @media screen and (max-width:768px){
   .view-side-panel .content{
     width:100%;
   }
 }
+||||||| merged common ancestors
+
+=======
+
+@media screen and (max-width:767px) {
+    .view-side-panel .content {
+        width: 100%;
+    }
+}
+
+>>>>>>> b85b67c859bcdc8a65cf1e21a48b5b27f6b9b5b6
 .view-side-panel .background {
   background: #000;
   opacity: .8;
@@ -444,4 +457,12 @@
 .star-text-size{
   margin-left:3px;
   font-size:15px;
+}
+.page-slide {
+          height: 100%;
+          overflow: scroll;
+}
+
+.form-inline {
+  margin-bottom:2px
 }
