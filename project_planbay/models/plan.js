@@ -56,7 +56,10 @@ var planSchema = new Schema({
 
     image: String,
 
-    tasks: [taskSchema],
+    tasks: [{
+        type:ObjectId,
+        ref: 'Task'
+    }],
 
     ratings: [ratingSchema],
 
@@ -69,10 +72,10 @@ var planSchema = new Schema({
 }, {
     timestamps: true
 });
-
 // the schema is useless so far
 // we need to create a model using it
 var Plans = mongoose.model('Plan', planSchema);
 
 // make this available to our Node applications
+
 module.exports = Plans;
