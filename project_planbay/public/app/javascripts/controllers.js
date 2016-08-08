@@ -5,7 +5,7 @@ angular.module('planBay')
         $scope.size = '100px';
 
         $scope.toggle = function() {
-            $scope.checked = !$scope.checked
+            $scope.checked = !$scope.checked;
         }
     }])
     .controller('LandingController', ['$scope',function($scope) {
@@ -35,6 +35,9 @@ angular.module('planBay')
             email:"",
             password:""
         }
+    
+    }])
+
         
     .controller('MypageController',  ['$scope',function($scope) {
         
@@ -42,7 +45,23 @@ angular.module('planBay')
         
     .controller('MyplanController',  ['$scope',function($scope) {
         
+
+    }])
+
+    .controller('ProfileController',  ['$scope',function($scope) {
+        
+        $scope.showPassword = false;
+        $scope.togglePassword = function () {
+            $scope.showPassword = !$scope.showPassword;
+        };
+        
+        $scope.showInfo=false;
+        $scope.toggleInfo = function () {
+            $scope.showInfo = !$scope.showInfo;
+        };
+        
+       
     }])
         
-    }]);
+    ;
 

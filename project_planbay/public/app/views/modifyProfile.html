@@ -1,0 +1,71 @@
+<br><br>
+
+<div class="container row center-block" ng-controller="ProfileController">
+<!--<div class="col-lg-4 col-md-6">
+              <div class="panel landing-panel">
+                <div class="panel-body">
+          
+        <i class="icon md-account-circle font-size-50 pull-left"></i>
+      
+      <p class="locked-user">User name</p>
+      <form method="post" role="form">
+        <div class="input-group">
+          <input type="password" class="form-control last" id="inputPassword" name="password"
+          placeholder="Enter password">
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-primary" ng-click="toggleInfo()"><i class="icon md-lock-open" aria-hidden="true"></i>
+              <span class="sr-only">unLock</span>
+            </button>
+          </span>
+        </div>
+      </form>
+      <p>Enter your password to modify your profile</p>
+          </div>
+              </div>
+          </div>-->
+
+
+
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel"  ng-controller="RegistrationController">
+                <div class="panel-body">
+                    <h3 class="text-center">기본 정보</h3>
+                    <form name="registrationForm">
+                        <div class="form-group form-material" ng-class="{'has-error': registrationForm.name.$error.required && !registrationForm.name.$pristine,
+                                                                         'has-success': registrationForm.name.$valid && !registrationForm.name.$pristine}">
+                            <label class="control-label" for="name">이름</label>
+                            <input type="text" class="form-control" id="name" name="name" ng-model="registerForm.name" required placeholder="이름을 입력하세요">
+                        </div>
+                        <div class="form-group form-material" ng-class="{'has-error': registrationForm.email.$invalid && !registrationForm.email.$pristine,
+                                                                         'has-success': registrationForm.email.$valid && !registrationForm.email.$pristine}">
+                            <label class="control-label" for="email">이메일</label>
+                            <div>asfag@gmail.com</div>
+                        </div>
+                        <div class="form-group form-material" ng-class="{'has-error': registrationForm.password.$invalid && !registrationForm.password.$pristine,
+                                                                         'has-success': registrationForm.password.$valid && !registrationForm.password.$pristine}">
+                            <label class="control-label" for="password">비밀번호</label>
+                            <input type="password" class="form-control" id="password" name="password" ng-model="registerForm.password" ng-minlength="6" ng-pattern="re" placeholder="최소 6자리, 영문과 숫자 반드시 포함">
+                        </div>
+                        <div class="form-group form-material"
+                                    ng-class="{'has-error': (registerForm.password != registerForm.confirmPassword) && !registrationForm.confirmPassword.$pristine,
+                                               'has-success': (registerForm.password === registerForm.confirmPassword) && !registrationForm.confirmPassword.$pristine && registrationForm.password.$valid}">
+                            <label class="control-label" for="confirmPassword">비밀번호 확인</label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" ng-model="registerForm.confirmPassword" placeholder="비밀번호를 다시 입력하세요">
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-block" ng-disabled="registrationForm.$invalid"><b>정보수정</b></button>
+                    </form>
+                    <div><hr></div>
+                    
+                    <h3 class="text-center">일정 관리</h3>
+                    
+                    <input type="checkbox" name="chk_info" value="GoogleCalender"> Google Calender      
+                    <br><br>
+                    <input type="checkbox" name="chk_info" value="Wunderlist"> Wunderlist
+                    <br><br>
+                    <button type="submit" class="btn btn-warning btn-block" ng-disabled="registrationForm.$invalid"><b>정보수정</b></button>
+                    
+                </div>
+                </div>
+            </div>
+
+</div>

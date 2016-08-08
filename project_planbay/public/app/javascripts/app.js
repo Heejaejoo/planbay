@@ -107,12 +107,13 @@ angular.module('planBay', ['ui.router','ngResource','pageslide-directive'])
                 }
             })
         
-            .state('app.myplan', {
-                url:'myplan',
+        
+            .state('app.profile', {
+                url:'profile',
                 views: {
                     'content@': {
-                        templateUrl : 'views/myplan.html',
-                        controller  : 'MyplanController'
+                        templateUrl : 'views/modifyProfile.html',
+                        controller  : 'ProfileController'
                     }
                 }
             })
