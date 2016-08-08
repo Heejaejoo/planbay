@@ -1,5 +1,17 @@
 'use strict';
-angular.module('planBay', ['ui.router','ngResource','pageslide-directive'])
+angular.module('planBay', ['ui.router','ngResource','ngAnimate','angular-input-stars'])
+    .filter('range', function() {
+        return function(input, total) {
+            total = parseInt(total);
+
+            for (var i=0; i<total; i++) {
+                input.push(i);
+            }
+
+            return input;
+        };
+    })
+
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
             // route for the landing page
@@ -15,10 +27,6 @@ angular.module('planBay', ['ui.router','ngResource','pageslide-directive'])
                     },
                     'footer': {
                         templateUrl: 'views/footer.html'
-                    },
-                    'detail': {
-                        templateUrl: 'views/detail.html',
-                        controller: 'DetailController'
                     }
                 }
             })
@@ -26,10 +34,14 @@ angular.module('planBay', ['ui.router','ngResource','pageslide-directive'])
                 url: 'detail',
                 views: {
                     'content@' : {
-                        templateUrl:'views/plandetail.html',
-                        controller: 'DetailController'
+                        templateUrl:'views/plandetail.html'
                     }
                 }
+            })
+            .state('app.detail.details', {
+                url: '/details',
+                templateUrl: 'views/detail.html',
+                controller: 'DetailController'
             })
             //route for the home page
             .state('app.home', {
@@ -52,7 +64,6 @@ angular.module('planBay', ['ui.router','ngResource','pageslide-directive'])
                     }
                 }
             })
-
             //route for the more
             .state('app.more', {
                 url:'more',
@@ -63,7 +74,6 @@ angular.module('planBay', ['ui.router','ngResource','pageslide-directive'])
                     }
                 }
             })
-        
             //route for the login page
             .state('app.login', {
                 url:'login',
@@ -117,7 +127,16 @@ angular.module('planBay', ['ui.router','ngResource','pageslide-directive'])
                     }
                 }
             })
-        ;
+
+            .state('app.edit', {
+                url:'edit',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/plan-edit.html',
+                        controller  : 'EditController'
+                    }
+                }
+            })
 
         $urlRouterProvider.otherwise('/');
 
