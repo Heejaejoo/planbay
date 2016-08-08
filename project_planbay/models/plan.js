@@ -36,8 +36,8 @@ var taskSchema = new Schema({
         required: true
     },
     time: String,
-    detail: String,
-    file: Buffer
+    detail: String
+    //file: Buffer
 });
 
 //순서, 작성자가 기입해야하는 정보 - 남들이 기입해야하는 정보 - 자동으로 Update되는 정보
@@ -54,7 +54,7 @@ var planSchema = new Schema({
         required: true
     },
 
-    image: Buffer,
+    image: String,
 
     tasks: [taskSchema],
 
