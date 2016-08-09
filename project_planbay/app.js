@@ -16,8 +16,10 @@ db.once('open', function() {
     console.log("Connected correctly to server");
 });
 
+var routes = require('./routes/index');
 var users = require('./routes/users');
 var plans = require('./routes/plans');
+var wunderlists = require('./routes/wunderlists')
 
 var app = express();
 
@@ -30,8 +32,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(passport.initialize());
 
+app.use('/', routes);
 app.use('/users', users);
 app.use('/plans', plans);
+app.use('/wunderlists', wunderlists);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
