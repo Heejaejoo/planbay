@@ -13,6 +13,30 @@
         </div>
         <div class="page-content">
             <ul class="blocks blocks-100 blocks-xlg-4 blocks-md-3 blocks-sm-2" data-plugin="masonry" style="position: relative;">
+                <li class="masonry-item" style="width: 275px" ng-repeat="plan in plans">
+                    <div class="widget widget-article widget-shadow">
+                        <div class="widget-header cover">
+                            <img class="cover-image" src="../assets/photos/placeholder.png" alt="...">
+                        </div>
+                        <div class="widget-body">
+                            <h4 class="widget-title">{{plan.title}}</h4>
+                            <p class="widget-metas type-link">
+                                By
+                                <a href="javascript:void(0)">{{plan.postedBy.username}}</a>
+                                <a href="javascript:void(0)">{{plan.createdAt}}</a>
+                            </p>
+                            <p>{{plan.description}}</p>
+                            <div class="widget-body-footer">
+                                <div class="widget-actions pull-right">
+                                        <span>{{plan.commentsNum}}</span> Comments
+                                        <i class="icon md-stars" aria-hidden="true"></i>
+                                        <span>{{plan.ratingsNum==0?0:plan.ratingsSum/plan.ratingsNum}}/5.0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                
                 <li class="masonry-item" style="width: 275px">
                     <div class="widget widget-article widget-shadow">
                         <div class="widget-header cover">

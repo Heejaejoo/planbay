@@ -27,8 +27,16 @@ angular.module('planBay')
         $scope.re= /[a-zA-Z][0-9]/;
     }])
 
-    .controller('HomeController',  ['$scope',function($scope) {
-
+    .controller('HomeController',  ['$scope', 'planFactory',function($scope, planFactory) {
+            planFactory.getPlans().query(
+            function(response){
+                    $scope.plans = response;
+                    console.log(response);
+                    $scope.ratingnum = response.length;
+                 },
+            function(response){
+                    $scope.message = "Error: " + response.status + " "+ response.statusText;
+            });
     }])
 
     .controller('MoreController',  ['$scope',function($scope) {
@@ -73,6 +81,16 @@ angular.module('planBay')
             var index = tasks.indexOf(task);
             tasks.splice(index, 1);
         };
+    }])
+    
+    .controller('WunderController',  ['$scope', 'wunderAccessFactory', function($scope, wunderAccessFactory) {
+        var token;
+        $scope.getToken = function() {
+            console.log("oh!");
+            token = wunderAccessFactory.getTokens();
+            console.log(token);
+        };
+        
     }])
 
     ;

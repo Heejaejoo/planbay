@@ -9,6 +9,7 @@ var passport = require('passport');
 var config = require('./config');
 var authenticate = require('./authenticate');
 
+
 mongoose.connect(config.mongoUrl);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -30,6 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
+
 app.use(passport.initialize());
 
 app.use('/', routes);

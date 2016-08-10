@@ -60,7 +60,7 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','angular-input-s
                 views: {
                     'content@': {
                         templateUrl : 'views/category.html',
-                        controller  : 'HomeController'
+                        controller  : 'MyplanController'
                     }
                 }
             })
@@ -135,6 +135,12 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','angular-input-s
                         controller  : 'EditController'
                     }
                 }
+            })
+            
+            //for wunderlist
+            .state('app.wunderlist', {
+                url: 'wunderlist',
+                
             })
 
         $urlRouterProvider.otherwise('/');

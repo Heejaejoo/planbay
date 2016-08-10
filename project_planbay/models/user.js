@@ -24,6 +24,8 @@ var User = new Schema({
 	}
 });
 
+
+
 //override password change function
 User.pre('save', function(next){
 	var user = this;
@@ -46,5 +48,4 @@ User.methods.comparePassword = function(attemptedPassword, callback) {
 };
 
 User.plugin(passportLocalMongoose);
-var Users = Mongoose.model('User', User);
-module.exports = Mongoose.model('User',Users);
+module.exports = Mongoose.model('User',User);

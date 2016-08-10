@@ -31,12 +31,25 @@ var ratingSchema = new Schema({
 });
 
 var taskSchema = new Schema({
-    name: {
+    task: {
         type: String,
         required: true
     },
-    time: String,
+    duration: String,
     detail: String
+})
+
+var daySchema = new Schema({
+    day: {
+        type: Number,
+        required: true
+    },
+    tasks: [taskSchema],
+    tasksNum: {
+        type:Number,
+        default: 0
+    },
+    description: String
     //file: Buffer
 });
 
@@ -56,20 +69,42 @@ var planSchema = new Schema({
 
     image: String,
 
-    tasks: [taskSchema],
+    days: [daySchema],
 
     ratings: [ratingSchema],
-
+    
+    ratingsNum: {
+        type:Number,
+        default: 0
+    },
+    
+    ratingsSum: {
+        type:Number,
+        default: 0
+    },
+    
     comments: [commentSchema],
+    
+    commentsNum: {
+        type:Number,
+        default: 0
+    },
 
     //the number of download
-    download: Number
-
+    download: {
+        type: Number,
+        default: 0
+    },
+    
+    postedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
     //TODO: Version Control
 }, {
     timestamps: true
 });
 
-
+//attach additional functions
 var Plans = mongoose.model('Plan', planSchema);
 module.exports = Plans;
