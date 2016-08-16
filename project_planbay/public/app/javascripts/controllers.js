@@ -1,10 +1,34 @@
 angular.module('planBay')
-    .controller('DetailController', ['$scope','$location', function($scope, $location) {
-        $scope.abc = true;
+    .controller('DetailController', ['$scope','$state','$stateParams','planFactory','cmtFactory','$location', function($scope,$state,$stateParams,planFactory, cmtFactory, $location) {
+        
+        $scope.plan = {};
+        $scope.showPlan = false;
+        $scope.message = "Loading ...";
+        $scope.stars = 0;
+        $scope.plan = planFactory.get({
+                id: $stateParams.planId
+        })
+        .$promise.then(
+            function (response) {
+                $scope.plan = response;
+                $scope.showPlan = true;
+                $scope.stars = $scope.plan.ratingsNum==0?0:$scope.plan.ratingsSum/$scope.plan.ratingsNum;
+            },function (response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
+            }
+        );            
+        
         $scope.goback = function (before) {
             $location.path(before);
-            $scope.stars = 0;
-        }
+        };
+        $scope.ratingInput = 0;
+    
+        $scope.commentSubmit = function () {
+             cmtFactory.save({id:$stateParams.planId}, $scope.inputText);
+             $state.go($state.current, {}, {reload: true});
+             $scope.commentForm.$setPristine();
+             $scope.inputText='';
+            };
     }])
 
     .controller('AnimateController', ['$scope', function($scope){
@@ -15,7 +39,7 @@ angular.module('planBay')
 
     }])
 
-    .controller('RegistrationController', ['$scope',function($scope) {
+    .controller('RegistrationController', ['$scope', '$localStorage', 'AuthFactory', function($scope, $localStorage, AuthFactory) {
 
         $scope.registerForm = {
             name:"",
@@ -25,14 +49,20 @@ angular.module('planBay')
         };
 
         $scope.re= /[a-zA-Z][0-9]/;
+        
+        $scope.doRegister = function() {
+        console.log('Doing registration', $scope.registerForm);
+
+        AuthFactory.register($scope.registerForm);
+
+    };
+        
     }])
 
     .controller('HomeController',  ['$scope', 'planFactory',function($scope, planFactory) {
-            planFactory.getPlans().query(
+            planFactory.query(
             function(response){
                     $scope.plans = response;
-                    console.log(response);
-                    $scope.ratingnum = response.length;
                  },
             function(response){
                     $scope.message = "Error: " + response.status + " "+ response.statusText;
@@ -43,16 +73,25 @@ angular.module('planBay')
 
     }])
 
-    .controller('LoginController', ['$scope',function($scope) {
+    .controller('LoginController', ['$scope', '$localStorage', 'AuthFactory', function($scope, $localStorage, AuthFactory) {
 
         $scope.loginForm = {
             email:"",
             password:""
-        }
+        };
+        
+        $localStorage.getObject('userinfo','{}');
+        
+        $scope.doLogin = function() {
+        
+        AuthFactory.login($scope.loginForm);
+
+        };
+        
     }])
 
-    .controller('MypageController',  ['$scope',function($scope) {
-
+    .controller('MypageController',  ['$scope', function($scope) {
+        
     }])
 
     .controller('MyplanController',  ['$scope',function($scope) {
@@ -83,14 +122,8 @@ angular.module('planBay')
         };
     }])
     
-    .controller('WunderController',  ['$scope', 'wunderAccessFactory', function($scope, wunderAccessFactory) {
-        var token;
-        $scope.getToken = function() {
-            console.log("oh!");
-            token = wunderAccessFactory.getTokens();
-            console.log(token);
-        };
-        
+    .controller('WunderController',  ['$scope', function($scope) {
+        $scope.token='';
     }])
 
     ;

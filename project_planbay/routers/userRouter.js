@@ -1,11 +1,11 @@
 var express = require('express');
-var router = express.Router();
+var userRouter = express.Router();
 var passport = require('passport');
 var User = require('../models/user');
 var Verify = require('./verify');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+userRouter.get('/', function(req, res, next) {
   User.find({},function(err, found){
     if(err)
       throw err;
@@ -13,7 +13,8 @@ router.get('/', function(req, res, next) {
     res.json(found);
   });
 });
-router.post('/register', function(req, res){
+
+userRouter.post('/register', function(req, res){
   User.register(new User({username: req.body.username, email: req.body.email}),
       req.body.password, function(err, user) {
         if(err){
@@ -33,7 +34,8 @@ router.post('/register', function(req, res){
         });
       });
 });
-router.post('/login', function(req, res, next){
+
+userRouter.post('/login', function(req, res, next){
   passport.authenticate('local', function(err, user, info){
     if(err) {
       return next(err);
@@ -55,7 +57,7 @@ router.post('/login', function(req, res, next){
       console.log('User in users: ', user);
 
       //valid user-> could generate token
-      var token = Verify.getToken(user);
+      var token = Verify.getToken({"email":user.email, "_id":user._id});
 
       res.status(200).json({
         status: 'Login successful!',
@@ -65,18 +67,19 @@ router.post('/login', function(req, res, next){
     });
   })(req, res, next);
 });
-router.get('/logout', function(req, res){
+
+userRouter.get('/logout', function(req, res){
   req.logout();
   res.status(200).json({
     status:'Bye!'
   });
 });
 
-router.delete('/',function (req, res, next) {
+userRouter.delete('/',function (req, res, next) {
     User.remove({}, function (err, resp) {
         if (err) next(err);
         res.json(resp);
     });
 });
 
-module.exports = router;
+module.exports = userRouter;

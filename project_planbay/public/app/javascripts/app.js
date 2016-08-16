@@ -1,7 +1,7 @@
 'use strict';
-angular.module('planBay', ['ui.router','ngResource','ngAnimate','angular-input-stars'])
+angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angular-input-stars'])
     .filter('range', function() {
-        return function(input, total) {
+        return function(input, total) {cd 
             total = parseInt(total);
 
             for (var i=0; i<total; i++) {
@@ -19,7 +19,8 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','angular-input-s
                 url: '/',
                 views: {
                     'header': {
-                        templateUrl: 'views/header.html'
+                        templateUrl: 'views/header.html',
+                        controller: 'WunderController'
                     },
                     'content': {
                         templateUrl: 'views/landing.html',
@@ -29,19 +30,6 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','angular-input-s
                         templateUrl: 'views/footer.html'
                     }
                 }
-            })
-            .state('app.detail', {
-                url: 'detail',
-                views: {
-                    'content@' : {
-                        templateUrl:'views/plandetail.html'
-                    }
-                }
-            })
-            .state('app.detail.details', {
-                url: '/details',
-                templateUrl: 'views/detail.html',
-                controller: 'DetailController'
             })
             //route for the home page
             .state('app.home', {
@@ -53,6 +41,12 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','angular-input-s
                     }
                 }
             })
+            
+            .state('app.home.details', {
+                url: '/:planId',
+                templateUrl:'views/detail.html',
+                controller:'DetailController'
+            })
 
             //route for the category
             .state('app.category', {
@@ -60,7 +54,7 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','angular-input-s
                 views: {
                     'content@': {
                         templateUrl : 'views/category.html',
-                        controller  : 'MyplanController'
+                        controller  : 'HomeController'
                     }
                 }
             })
@@ -137,12 +131,21 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','angular-input-s
                 }
             })
             
-            //for wunderlist
-            .state('app.wunderlist', {
-                url: 'wunderlist',
-                
-            })
-
         $urlRouterProvider.otherwise('/');
 
+})
+
+.run(function ($rootScope, $location) {
+
+    var history = [];
+
+    $rootScope.$on('$routeChangeSuccess', function() {
+        history.push($location.$$path);
     });
+
+    $rootScope.back = function () {
+        var prevUrl = history.length > 1 ? history.splice(-2)[0] : "/";
+        $location.path(prevUrl);
+    };
+
+});

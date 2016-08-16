@@ -16,7 +16,9 @@
                 <li class="masonry-item" style="width: 275px" ng-repeat="plan in plans">
                     <div class="widget widget-article widget-shadow">
                         <div class="widget-header cover">
-                            <img class="cover-image" src="../assets/photos/placeholder.png" alt="...">
+                            <a ui-sref="app.home.details({planId : plan._id})">
+                                <img class="cover-image" src="../assets/photos/placeholder.png" alt="...">
+                            </a>
                         </div>
                         <div class="widget-body">
                             <h4 class="widget-title">{{plan.title}}</h4>
@@ -32,123 +34,6 @@
                                         <i class="icon md-stars" aria-hidden="true"></i>
                                         <span>{{plan.ratingsNum==0?0:plan.ratingsSum/plan.ratingsNum}}/5.0</span>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                
-                <li class="masonry-item" style="width: 275px">
-                    <div class="widget widget-article widget-shadow">
-                        <div class="widget-header cover">
-                            <img class="cover-image" src="../assets/photos/placeholder.png" alt="...">
-                        </div>
-                        <div class="widget-body">
-                            <h4 class="widget-title">열혈 C 30일 완성</h4>
-                            <p class="widget-metas type-link">
-                                By
-                                <a href="javascript:void(0)">Nathan Watts</a>
-                                <a href="javascript:void(0)">05, 2016</a>
-                            </p>
-                            <p>Dolemus late utriusque fore eveniet provincia spernat dissentiet.
-                                Fit intemperantes.</p>
-                            <div class="widget-body-footer">
-                                <div class="widget-actions pull-right">
-                                    <a href="javascript:void(0)">
-                                        <span>3</span> Comments</a>
-                                    <a href="javascript:void(0)">
-                                        <i class="icon md-favorite" aria-hidden="true"></i>
-                                        <span>108</span>
-                                    </a>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="masonry-item" style="width: 275px">
-                    <div class="widget widget-article widget-shadow">
-                        <div class="widget-header cover">
-                            <img class="cover-image" src="../assets/photos/placeholder.png" alt="...">
-                        </div>
-                        <div class="widget-body">
-                            <h4 class="widget-title">Beatus Nature</h4>
-                            <p class="widget-metas type-link">
-                                By
-                                <a href="javascript:void(0)">Heather Harper</a>
-                                <a href="javascript:void(0)">04, 2016</a>
-
-                            </p>
-                            <p>Antipatrum autem aegritudine, torquate seque etiam iucunditatem bello
-                                multa feramus.</p>
-                            <div class="widget-body-footer">
-                                <div class="widget-actions pull-right">
-                                    <a href="javascript:void(0)">
-                                        <span>2</span> Comments</a>
-                                    <a href="javascript:void(0)">
-                                        <i class="icon md-favorite" aria-hidden="true"></i>
-                                        <span>120</span>
-                                    </a>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="masonry-item" style="width: 275px">
-                    <div class="widget widget-article widget-shadow">
-                        <div class="widget-header cover">
-                            <img class="cover-image" src="../assets/photos/placeholder.png" alt="...">
-                        </div>
-                        <div class="widget-body">
-                            <h4 class="widget-title">Restincto Multi</h4>
-                            <p class="widget-metas type-link">
-                                By
-                                <a href="javascript:void(0)">Edward Fletcher</a>
-                                <a href="javascript:void(0)">05, 2016</a>
-
-                            </p>
-                            <p>Modice accuratius physicis supplicii divinum pariatur graviter horribiles
-                                sunt, genus.</p>
-                            <div class="widget-body-footer">
-                                <div class="widget-actions pull-right">
-                                    <a href="javascript:void(0)">
-                                        <span>2</span> Comments</a>
-                                    <a href="javascript:void(0)">
-                                        <i class="icon md-favorite" aria-hidden="true"></i>
-                                        <span>130</span>
-                                    </a>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="masonry-item" style="width: 275px">
-                    <div class="widget widget-article widget-shadow">
-                        <div class="widget-header cover">
-                            <img class="cover-image" src="../assets/photos/placeholder.png" alt="...">
-                        </div>
-                        <div class="widget-body">
-                            <h4 class="widget-title">Contentam Sumus</h4>
-                            <p class="widget-metas type-link">
-                                By
-                                <a href="javascript:void(0)">June Lane</a>
-                                <a href="javascript:void(0)">05, 2016</a>
-
-                            </p>
-                            <p>Sit doctus adoptionem nudus voluptatem fugiendum assentior, copulationes
-                                consedit poetis.</p>
-                            <div class="widget-body-footer">
-                                <div class="widget-actions pull-right">
-                                    <a href="javascript:void(0)">
-                                        <span>2</span> Comments</a>
-                                    <a href="javascript:void(0)">
-                                        <i class="icon md-favorite" aria-hidden="true"></i>
-                                        <span>120</span>
-                                    </a>
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -284,6 +169,7 @@
                     </div>
                 </li>
             </ul>
+            <div ui-view class="view-side-panel"></div>
         </div>
     </div>
-</div> 
+</div> 

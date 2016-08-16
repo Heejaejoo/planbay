@@ -8,8 +8,9 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var config = require('./config');
 var authenticate = require('./authenticate');
+var cors = require('cors');
 
-
+// mongoose 
 mongoose.connect(config.mongoUrl);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -17,10 +18,10 @@ db.once('open', function() {
     console.log("Connected correctly to server");
 });
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var plans = require('./routes/plans');
-var wunderlists = require('./routes/wunderlists')
+var indexRouter = require('./routers/indexRouter');
+var userRouter = require('./routers/userRouter');
+var planRouter = require('./routers/planRouter');
+var wunderlistRouter = require('./routers/wunderlistRouter')
 
 var app = express();
 
@@ -30,14 +31,18 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+//app.use(cors({origin: '*'}));
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.use(passport.initialize());
 
-app.use('/', routes);
-app.use('/users', users);
-app.use('/plans', plans);
-app.use('/wunderlists', wunderlists);
+app.use('/', indexRouter);
+app.use('/users', userRouter);
+app.use('/plans', planRouter);
+app.use('/wunderlists', wunderlistRouter);
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

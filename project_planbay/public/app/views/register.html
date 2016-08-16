@@ -6,7 +6,7 @@
                 <div class="panel"  ng-controller="RegistrationController">
                 <div class="panel-body">
                     <h3 class="text-center">지금 가입하세요!</h3>
-                    <form name="registrationForm">
+                    <form name="registrationForm" ng-submit="doRegister()">
                         <div class="form-group form-material" ng-class="{'has-error': registrationForm.name.$error.required && !registrationForm.name.$pristine,
                                                                          'has-success': registrationForm.name.$valid && !registrationForm.name.$pristine}">
                             <label class="control-label" for="name">이름</label>

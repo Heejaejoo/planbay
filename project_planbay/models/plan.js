@@ -106,5 +106,5 @@ var planSchema = new Schema({
 });
 
 //attach additional functions
-var Plans = mongoose.model('Plan', planSchema);
-module.exports = Plans;
+var Plan = mongoose.model('Plan', planSchema);
+module.exports = Plan;

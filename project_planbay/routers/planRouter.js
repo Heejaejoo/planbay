@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var Plans = require('../models/plans');
+var plan = require('../models/plan');
 var Verify = require('./verify');
 
 var planRouter = express.Router();
@@ -11,7 +11,7 @@ planRouter.use(bodyParser.json());
 //TODO : add user verification
 planRouter.route('/')
     .get(function(req,res,next){
-        Plans.find({})
+        plan.find({})
             .populate('postedBy')
             .populate('comments.postedBy')
             .populate('ratings.postedBy')
@@ -21,7 +21,7 @@ planRouter.route('/')
             });
     })
     .post(function(req,res,next){
-        Plans.create(req.body, function(err, plan) {
+        plan.create(req.body, function(err, plan) {
             if(err) return next(err);
             console.log("Plan created!");
             var id = plan._id;
@@ -33,16 +33,16 @@ planRouter.route('/')
     })
     .delete(function(req,res,next){
         //collection becomes empty
-        Plans.remove({}, function(err, resp) {
+        plan.remove({}, function(err, resp) {
             if(err) throw err;
-            //resp : how many Plans are deleted
+            //resp : how many plan are deleted
             res.json(resp);
         });
     });
 
 planRouter.route('/:planId')
     .get(function(req,res,next){
-        Plans.findById(req.params.planId)
+        plan.findById(req.params.planId)
             .populate('postedBy')
             .populate('comments.postedBy')
             .populate('ratings.postedBy')
@@ -52,7 +52,7 @@ planRouter.route('/:planId')
             });
     })
     .put(function(req,res,next){
-        Plans.findByIdAndUpdate(req.params.planId, {
+        plan.findByIdAndUpdate(req.params.planId, {
             $set: req.body
         }, {
             new: true
@@ -63,7 +63,7 @@ planRouter.route('/:planId')
         });
     })
     .delete(function(req,res,next){
-        Plans.findByIdAndRemove(req.params.planId, function(err, resp){
+        plan.findByIdAndRemove(req.params.planId, function(err, resp){
             if(err) throw err;
             res.json(resp);
         });
@@ -71,7 +71,7 @@ planRouter.route('/:planId')
     
 planRouter.route('/:planId/comments')
 	.get(function(req,res,next){
-		Plans.findById(req.params.planId)
+		plan.findById(req.params.planId)
 		.populate('comments.postedBy') 
 		.exec(function(err, plan){
 			if(err) next(err);
@@ -79,14 +79,16 @@ planRouter.route('/:planId/comments')
 		});
 	})
 	.post(function(req, res, next){
-		Plans.findById(req.params.planId, function(err, plan){
-			if(err) next(err);
+		plan.findById(req.params.planId, function(err, plan){
+			if(err) {
+				next(err)
+				};
+			req.body.postedBy = '57aae0d52600f88fad909a9c';
 	//		req.body.postedBy = req.decoded._id;
 			plan.comments.push(req.body);
 			plan.commentsNum+=1;
 			plan.save(function (err, plan){
 				if(err) next(err);
-				console.log('Updated Comments!');
 				res.json(plan);
 			});
 		});
@@ -94,7 +96,7 @@ planRouter.route('/:planId/comments')
 	
 planRouter.route('/:planId/comments/:commentId')
 	.get(function(req,res,next){
-		Plans.findById(req.params.planId)
+		plan.findById(req.params.planId)
 		.populate('comments.postedBy')
 		.exec(function(err, plan){
 			if(err) next(err);
@@ -102,7 +104,7 @@ planRouter.route('/:planId/comments/:commentId')
 		});
 	})
 	.put(function(req, res,next){
-		Plans.findById(req.params.planId, function(err, plan){
+		plan.findById(req.params.planId, function(err, plan){
 			if(err) next(err);
 
 			plan.comments.id(req.params.commentId).remove();
@@ -117,7 +119,7 @@ planRouter.route('/:planId/comments/:commentId')
 		});
 	})
 	.delete(function(req, res, next){
-		Plans.findById(req.params.planId, function(err,plan){
+		plan.findById(req.params.planId, function(err,plan){
 	/*		if(plan.comments.id(req.params.commentId).postedBy != req.decoded._id){
 				var err = new Error('You are not authorized to perform this operation');
 				err.status = 403;
@@ -133,7 +135,7 @@ planRouter.route('/:planId/comments/:commentId')
 	
 planRouter.route('/:planId/ratings')
 	.get(function(req,res,next){
-		Plans.findById(req.params.planId)
+		plan.findById(req.params.planId)
 		.populate('ratings.postedBy')
 		.exec(function(err, plan){
 			if(err) next(err);
@@ -142,7 +144,7 @@ planRouter.route('/:planId/ratings')
 		});
 	})
 	.post(function(req, res, next){
-		Plans.findById(req.params.planId, function(err, plan){
+		plan.findById(req.params.planId, function(err, plan){
 			if(err) next(err);
 		//	req.body.postedBy = req.decoded._id;
 			plan.ratings.push(req.body);
@@ -156,7 +158,7 @@ planRouter.route('/:planId/ratings')
 		});
 	})
 	.delete(function(req, res, next){
-	    Plans.findById(req.params.planId, function(err, plan){
+	    plan.findById(req.params.planId, function(err, plan){
 			if(err) next(err);
 			for(var i = 0; i<plan.ratings.length; i++){
 				plan.ratings.id(plan.ratings[i]._id).remove();
@@ -173,7 +175,7 @@ planRouter.route('/:planId/ratings')
 
 planRouter.route('/:planId/ratings/:ratingId')
 	.get(function(req,res,next){
-		Plans.findById(req.params.planId)
+		plan.findById(req.params.planId)
 		.populate('ratings.postedBy')
 		.exec(function(err, plan){
 			if(err) next(err);
@@ -181,7 +183,7 @@ planRouter.route('/:planId/ratings/:ratingId')
 		});
 	})
 	.put(function(req, res,next){
-		Plans.findById(req.params.planId, function(err, plan){
+		plan.findById(req.params.planId, function(err, plan){
 			if(err) next(err);
 			
 			var currentRating = plan.ratings.id(req.params.ratingId);
@@ -198,7 +200,7 @@ planRouter.route('/:planId/ratings/:ratingId')
 		});
 	})
 	.delete(function(req, res, next){
-		Plans.findById(req.params.planId, function(err,plan){
+		plan.findById(req.params.planId, function(err,plan){
 	/*		if(plan.comments.id(req.params.commentId).postedBy != req.decoded._id){
 				var err = new Error('You are not authorized to perform this operation');
 				err.status = 403;
