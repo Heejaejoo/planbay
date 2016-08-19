@@ -14,16 +14,16 @@
                 <div class="panel landing-panel"  ng-controller="RegistrationController">
                 <div class="panel-body">
                     <h3 class="text-center">지금 가입하세요!</h3>
-                    <form name="registrationForm">
+                    <form name="registrationForm" ng-submit="doRegister()">
                         <div class="form-group form-material" ng-class="{'has-error': registrationForm.name.$error.required && !registrationForm.name.$pristine,
                                                                          'has-success': registrationForm.name.$valid && !registrationForm.name.$pristine}">
                             <label class="control-label" for="name">이름</label>
                             <input type="text" class="form-control" id="name" name="name" ng-model="registerForm.name" required placeholder="이름을 입력하세요">
                         </div>
-                        <div class="form-group form-material" ng-class="{'has-error': registrationForm.email.$invalid && !registrationForm.email.$pristine,
-                                                                         'has-success': registrationForm.email.$valid && !registrationForm.email.$pristine}">
-                            <label class="control-label" for="email">이메일</label>
-                            <input type="email" class="form-control" id="email" name="email" ng-model="registerForm.email" required placeholder="이메일을 입력하세요">
+                        <div class="form-group form-material" ng-class="{'has-error': registrationForm.username.$invalid && !registrationForm.username.$pristine,
+                                                                         'has-success': registrationForm.username.$valid && !registrationForm.username.$pristine}">
+                            <label class="control-label" for="username">이메일</label>
+                            <input type="email" class="form-control" id="username" name="username" ng-model="registerForm.username" required placeholder="이메일을 입력하세요">
                         </div>
                         <div class="form-group form-material" ng-class="{'has-error': registrationForm.password.$invalid && !registrationForm.password.$pristine,
                                                                          'has-success': registrationForm.password.$valid && !registrationForm.password.$pristine}">

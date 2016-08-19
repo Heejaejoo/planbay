@@ -1,4 +1,4 @@
-<nav class="site-navbar navbar navbar-inverse navbar-fixed-top navbar-mega" role="navigation">
+<nav class="site-navbar navbar navbar-inverse navbar-fixed-top navbar-mega planbay-header" role="navigation">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle hamburger hamburger-close navbar-toggle-left hided"
                 data-toggle="menubar">
@@ -23,7 +23,7 @@
         <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
             <!-- Navbar Toolbar -->
             <ul class="nav navbar-toolbar">
-                <li class="hidden-float" id="toggleMenubar">
+                <li ng-show="loggedIn" class="hidden-float" id="toggleMenubar">
                     <a data-toggle="menubar" role="button">
                         <i class="icon hamburger hamburger-arrow-left">
                             <span class="sr-only">Toggle menubar</span>
@@ -31,8 +31,8 @@
                         </i>
                     </a>
                 </li>
-                <li class="hidden-float">
-                    <a class="icon md-search" data-toggle="collapse" href="#" data-target="#site-navbar-search"
+                <li ng-show="loggedIn" class="hidden-float">
+                    <a class="icon md-search" data-toggle="collapse" data-target="#site-navbar-search"
                        role="button">
                         <span class="sr-only">Toggle Search</span>
                     </a>
@@ -41,32 +41,26 @@
             <!-- End Navbar Toolbar -->
             <!-- Navbar Toolbar Right -->
             <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
-                <li class="dropdown">
-                    <a class="navbar-avatar dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"
+                <li ng-show="loggedIn" class="dropdown">
+                    <a class="navbar-avatar dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
                        data-animation="scale-up" role="button">
                   <span class="avatar avatar-online">
-                 <img src="../assets/portraits/5.jpg" alt="...">
+                 <img ng-src="{{userinfo.picture}}" alt="...">
                   <i></i>
                 </span>
                     </a>
-                    <ul class="dropdown-menu" role="menu">
+                    <ul ng-show="loggedIn" class="dropdown-menu" role="menu">
                         <li role="presentation">
-                            <a href="javascript:void(0)" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Profile</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="javascript:void(0)" role="menuitem"><i class="icon md-card" aria-hidden="true"></i> Billing</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="javascript:void(0)" role="menuitem"><i class="icon md-settings" aria-hidden="true"></i> Settings</a>
+                            <a ui-sref="app.mypage" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> My Account</a>
                         </li>
                         <li class="divider" role="presentation"></li>
                         <li role="presentation">
-                            <a href="javascript:void(0)" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
+                            <a ng-click="logOut()" href="javascript:void(0)" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
                         </li>
                     </ul>
                 </li>
             </ul>
-            <a ui-sref="app.login"><button class="btn btn-warning navbar-right navbar-btn waves-effect waves-light">Login</button></a>
+            <a ng-show="!loggedIn" ui-sref="app.login"><button class="btn btn-warning navbar-right navbar-btn waves-effect waves-light">Login</button></a>
             
             <!-- End Navbar Toolbar Right -->
             <div class="navbar-brand navbar-brand-center">
@@ -106,11 +100,11 @@
             <div class="overlay-panel vertical-align overlay-background">
                 <div class="vertical-align-middle">
                     <a class="avatar avatar-lg" href="javascript:void(0)">
-                        <img src="../assets/portraits/1.jpg" alt="">
+                        <img ng-src="{{userinfo.picture}}" alt="">
                     </a>
                     <div class="site-menubar-info">
-                        <h5 class="site-menubar-user">Machi</h5>
-                        <p class="site-menubar-email">machidesign@gmail.com</p>
+                        <h5 class="site-menubar-user">{{userinfo.name}}</h5>
+                        <p class="site-menubar-email">{{username}}</p>
                     </div>
                 </div>
             </div>

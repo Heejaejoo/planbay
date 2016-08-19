@@ -12,7 +12,7 @@
   "authors": [
     "Heejae Joo",
     "Sungbin Doo",
-    "Jaegwan Kim", 
+    "Jaegwan Kim",
     "Se-eun Choi"
   ],
   "license": "MIT",
@@ -34,7 +34,9 @@
     "angular-mocks": "^1.5.6",
     "angular-input-stars": "latest",
     "angular-animate": "latest",
-    "ng-dialog": "latest"
+    "ng-dialog": "latest",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.37",
+    "angular-datepicker": "^2.0.3"
   },
   "resolutions": {
     "angular": "~1.4.7"

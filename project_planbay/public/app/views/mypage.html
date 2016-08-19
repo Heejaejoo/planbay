@@ -1,109 +1,160 @@
 <!-- Page -->
 
-    <div class="page-header">
+    <div class="page-header mypage-header">
+      <div class="pull-left">
       <h1 class="page-title">My page</h1>
       <ol class="breadcrumb">
         <li><a href="index.html">Home</a></li>
         <li class="active">My page</li>
       </ol>
-      
+      </div>
+            
+      <a href="index.html#/profile" class="btn btn-warning btn-lg active pull-right" role="button">
+        <i class="icon md-settings"></i>
+      </a>
     </div>
     
     <div class="page-content container-fluid">
       <div class="row" data-plugin="matchHeight" data-by-row="true">
         
-        <div class="col-lg-3 col-sm-6">
-          <!-- Widget Linearea One-->
-            
-          <div class="widget widget-shadow" id="widgetLineareaOne">
-            <div class="widget-content">
-              <div class="padding-20 padding-top-20">
-                <div class="clearfix">
-                  <div class="grey-800 text-center padding-vertical-10">
-                        <button type="button" class="btn-raised btn btn-info btn-floating">
-                    <i class="icon md-account font-size-30"></i>                    
-                         </button>
-                    </div>
-                </div>
-                <div class="text-center margin-bottom-20 grey-700 font-size-24">
-                 나의 정보
-                </div>
-            
-              </div>
-            </div>
-          </div>
-          <!-- End Widget Linearea One -->
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <!-- Widget Linearea Two -->
-          <div class="widget widget-shadow" id="widgetLineareaTwo">
-            <div class="widget-content">
-              <div class="padding-20 padding-top-20">
-                <div class="clearfix">
-                  <div class="grey-800 text-center padding-vertical-10">
-                      <a href="index.html#/myplan" class="btn btn-primary btn-lg active" role="button">
-                      <!--<button type="button" class="btn-raised btn btn-info btn-floating">-->
-                    <i class="icon md-calendar-note font-size-30"></i>
-                      </a>
-                  </div>
-                </div>
-                <div class="text-center margin-bottom-20 grey-700 font-size-24">
-                    나의 계획
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Widget Linearea Two -->
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <!-- Widget Linearea Three -->
-          <div class="widget widget-shadow" id="widgetLineareaThree">
-            <div class="widget-content">
-              <div class="padding-20 padding-top-20">
-                <div class="clearfix">
-                  <div class="grey-800 text-center padding-vertical-10">
-                      <button type="button" class="btn-raised btn btn-info btn-floating">
-                    <i class="icon md-settings font-size-30"></i>
-                      </button>    
-                  </div>
-                </div>
-                <div class="text-center margin-bottom-20 grey-700 font-size-24">
-                    설정
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Widget Linearea Three -->
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <!-- Widget Linearea Four -->
-          <div class="widget widget-shadow" id="widgetLineareaFour">
-            <div class="widget-content">
-              <div class="padding-20 padding-top-20">
-                <div class="clearfix">
-                  <div class="grey-800 text-center padding-vertical-10">
-                      <button type="button" class="btn-raised btn btn-info btn-floating">
-                    <i class="icon md-view-list font-size-30"></i>                    
-                      </button>
-                  </div>
-                </div>
-                <div class="text-center margin-bottom-20 grey-700 font-size-24">
-                  뭐하지
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Widget Linearea Four -->
-        </div>
-          
-          
         </div>
         
-        <div class="col-xlg-5">
+
+      
+
+<div class="col-xlg-5">
           <!-- Panel Projects -->
           <div class="panel" id="projects">
             <div class="panel-heading">
-              <h3 class="panel-title">최근 등록 계획</h3>
+              <h3 class="panel-title">개인 계획</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th class="width-50">
+                          <span class="checkbox-custom checkbox-primary">
+                            <input class="selectable-all" type="checkbox">
+                            <label></label>
+                          </span>
+                        </th>
+                      
+                    <td>분류</td>
+                    <td>계획</td>
+                    <td>설명</td>
+                    <td>수정 및 삭제</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                          <span class="checkbox-custom checkbox-primary">
+                            <input class="selectable-item" type="checkbox" id="row-619" value="619">
+                            <label for="row-619"></label>
+                          </span>
+                    </td>
+                      
+                    <td>The sun climbing plan</td>
+                    <td>
+                      <span data-plugin="peityPie" data-skin="red">7/10</span>
+                    </td>
+                    <td>Jan 1, 2015</td>
+                    <td>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
+                      data-original-title="Edit">
+                        <i class="icon md-wrench" aria-hidden="true"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
+                      data-original-title="Delete">
+                        <i class="icon md-close" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <span class="checkbox-custom checkbox-primary">
+                            <input class="selectable-item" type="checkbox" id="row-620" value="620">
+                            <label for="row-620"></label>
+                          </span>
+                        </td>
+                    <td>Lunar probe project</td>
+                    <td>
+                      <span data-plugin="peityPie" data-skin="blue">3/10</span>
+                    </td>
+                    <td>Feb 12, 2015</td>
+                    <td>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
+                      data-original-title="Edit">
+                        <i class="icon md-wrench" aria-hidden="true"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
+                      data-original-title="Delete">
+                        <i class="icon md-close" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Dream successful plan</td>
+                    <td>
+                      <span data-plugin="peityPie" data-skin="green">9/10</span>
+                    </td>
+                    <td>Apr 9, 2015</td>
+                    <td>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
+                      data-original-title="Edit">
+                        <i class="icon md-wrench" aria-hidden="true"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
+                      data-original-title="Delete">
+                        <i class="icon md-close" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Office automatization</td>
+                    <td>
+                      <span data-plugin="peityPie" data-skin="orange">5/10</span>
+                    </td>
+                    <td>May 15, 2015</td>
+                    <td>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
+                      data-original-title="Edit">
+                        <i class="icon md-wrench" aria-hidden="true"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
+                      data-original-title="Delete">
+                        <i class="icon md-close" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Open strategy</td>
+                    <td>
+                      <span data-plugin="peityPie" data-skin="brown">2/10</span>
+                    </td>
+                    <td>Jun 2, 2015</td>
+                    <td>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
+                      data-original-title="Edit">
+                        <i class="icon md-wrench" aria-hidden="true"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
+                      data-original-title="Delete">
+                        <i class="icon md-close" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- End Panel Projects -->
+        </div>
+        <div class="col-xlg-7">
+          <!-- Panel Projects -->
+          <div class="panel" id="projects">
+            <div class="panel-heading">
+              <h3 class="panel-title">공유 계획</h3>
             </div>
             <div class="table-responsive">
               <table class="table table-striped">
@@ -117,15 +168,14 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>운동</td>
+                    <td>The sun climbing plan</td>
                     <td>
-                      <img class="img-responsive pull-left" src="" alt="image">
-                     Diet plan
+                      <span data-plugin="peityPie" data-skin="red">7/10</span>
                     </td>
-                    <td>주1회, 한달</td>
+                    <td>Jan 1, 2015</td>
                     <td>
                       <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-placement="top" title="Hooray!" data-original-title="Edit">
+                      data-original-title="Edit">
                         <i class="icon md-wrench" aria-hidden="true"></i>
                       </button>
                       <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
@@ -134,17 +184,15 @@
                       </button>
                     </td>
                   </tr>
-                    
-                    <tr>
-                    <td>영어</td>
+                  <tr>
+                    <td>Lunar probe project</td>
                     <td>
-                      <img class="img-responsive pull-left" src="" alt="image">
-                     Toeic 완성
+                      <span data-plugin="peityPie" data-skin="blue">3/10</span>
                     </td>
-                    <td>주3회, 한달</td>
+                    <td>Feb 12, 2015</td>
                     <td>
                       <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-placement="top" title="Hooray!" data-original-title="Edit">
+                      data-original-title="Edit">
                         <i class="icon md-wrench" aria-hidden="true"></i>
                       </button>
                       <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
@@ -153,65 +201,64 @@
                       </button>
                     </td>
                   </tr>
-                  
+                  <tr>
+                    <td>Dream successful plan</td>
+                    <td>
+                      <span data-plugin="peityPie" data-skin="green">9/10</span>
+                    </td>
+                    <td>Apr 9, 2015</td>
+                    <td>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
+                      data-original-title="Edit">
+                        <i class="icon md-wrench" aria-hidden="true"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
+                      data-original-title="Delete">
+                        <i class="icon md-close" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Office automatization</td>
+                    <td>
+                      <span data-plugin="peityPie" data-skin="orange">5/10</span>
+                    </td>
+                    <td>May 15, 2015</td>
+                    <td>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
+                      data-original-title="Edit">
+                        <i class="icon md-wrench" aria-hidden="true"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
+                      data-original-title="Delete">
+                        <i class="icon md-close" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Open strategy</td>
+                    <td>
+                      <span data-plugin="peityPie" data-skin="brown">2/10</span>
+                    </td>
+                    <td>Jun 2, 2015</td>
+                    <td>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
+                      data-original-title="Edit">
+                        <i class="icon md-wrench" aria-hidden="true"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
+                      data-original-title="Delete">
+                        <i class="icon md-close" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
           </div>
           <!-- End Panel Projects -->
         </div>
-        <div class="col-xlg-7">
-          <!-- Panel Projects Status -->
-          <div class="panel" id="projects-status">
-            <div class="panel-heading">
-              <h3 class="panel-title">
-                관심 계획
-                <span class="badge badge-info">5</span>
-              </h3>
-            </div>
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <td>분류</td>
-                    <td>계획</td>
-                    <td>설명</td>
-                    <td>삭제</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>운동</td>
-                    <td>
-                      <img class="img-responsive pull-left" src="" alt="image">
-                     Diet plan
-                    </td>
-                    <td>주1회, 한달</td>
-                    <td>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Delete">
-                        <i class="icon md-close" aria-hidden="true"></i>
-                      </button>
-                    </td>
-                  </tr>
-                
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      <span class="label label-primary"></span>
-                    </td>
-                    <td>
-                     
-                    </td>
-                  </tr>
-                  
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <!-- End Panel Projects Stats -->
-        </div>
+
       </div>
 
           

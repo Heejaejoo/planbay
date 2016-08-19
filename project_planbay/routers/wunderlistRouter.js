@@ -13,10 +13,10 @@ wunderlistRouter.get('/', function(req, res, next) {
     var url_parts = url.parse(req.url, true);
     var query = url_parts.query;
     console.log(query.code);
-    if(query.code === undefined && query.token === undefined) {
+    if(query.code === undefined) {
         console.log("I don't have code");
         res.redirect('https://www.wunderlist.com/oauth/authorize?client_id=' + wunder_config.client_id + '&redirect_uri=https://planbay-heejae-joo.c9users.io/wunderlists/');
-    } else if(query.token === undefined) {
+    } else {
         console.log("I have code. go get the access token!");
         request({
             url: 'https://www.wunderlist.com/oauth/access_token',
@@ -26,17 +26,15 @@ wunderlistRouter.get('/', function(req, res, next) {
                 client_secret: wunder_config.client_secret,
                 code: query.code
             }
-        }, function(error, response, body){
+        }, function(error, response, body) {
             if(error) {
                 console.log(error);
             } else {
-                res.redirect("https://planbay-heejae-joo.c9users.io/wunderlists/" + "?token=" + body.access_token);
+                res.redirect("https://planbay-heejae-joo.c9users.io/app/index.html#/wunderlist?token=" + body.access_token);
                 //res.status(response.statusCode).json(body);
                 console.log("get access token!")
             }
         });
-    } else {
-        res.send("hello");
     }
  });
  

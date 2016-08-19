@@ -14,6 +14,18 @@ angular.module('planBay')
                   }
             });
         }])
+        .factory('ratingFactory', ['$resource','baseURL', function($resource, baseURL){
+            return $resource(baseURL+"plans/:id/ratings/:ratingid",{id:"@Id", ratingId: "@RatingId"}, {'update':{
+                      method:'PUT'
+                  }
+            });
+        }])
+        .factory('ProfileFactory', ['$resource','baseURL', function($resource, baseURL){
+            return $resource(baseURL+"users/:id",null, {'update':{
+                      method:'PUT'
+                  }
+            });
+        }])
         .factory('$localStorage', ['$window', function ($window) {
         return {
         store: function (key, value) {
@@ -34,12 +46,13 @@ angular.module('planBay')
         }
         }])
         
-        .factory('AuthFactory', ['$resource', '$http', '$localStorage', '$rootScope', '$window', 'baseURL', 'ngDialog', function($resource, $http, $localStorage, $rootScope, $window, baseURL, ngDialog){
+        .factory('AuthFactory', ['$resource', '$http', '$localStorage', '$rootScope', '$window', 'baseURL', 'ngDialog', '$state', function($resource, $http, $localStorage, $rootScope, $window, baseURL, ngDialog, $state){
     
     var authFac = {};
     var TOKEN_KEY = 'Token';
     var isAuthenticated = false;
     var username = '';
+    var userinfo = {};
     var authToken = undefined;
     
 
@@ -59,6 +72,7 @@ angular.module('planBay')
     isAuthenticated = true;
     username = credentials.username;
     authToken = credentials.token;
+    userinfo = credentials.userinfo;
  
     // Set the token as header for your requests!
     $http.defaults.headers.common['x-access-token'] = authToken;
@@ -67,6 +81,7 @@ angular.module('planBay')
   function destroyUserCredentials() {
     authToken = undefined;
     username = '';
+    userinfo = {};
     isAuthenticated = false;
     $http.defaults.headers.common['x-access-token'] = authToken;
     $localStorage.remove(TOKEN_KEY);
@@ -74,11 +89,12 @@ angular.module('planBay')
      
     authFac.login = function(loginForm) {
         
-        $resource(baseURL + "/login")
+        $resource(baseURL + "users/login")
         .save(loginForm,
            function(response) {
-              storeUserCredentials({email:loginForm.email, token: response.token});
+              storeUserCredentials({username:loginForm.username, token: response.token, userinfo: response.userinfo});
               $rootScope.$broadcast('login:Successful');
+              $state.go('app.home', {}, {reload:true});
            },
            function(response){
               isAuthenticated = false;
@@ -111,12 +127,8 @@ angular.module('planBay')
         .save(registerData,
            function(response) {
               authFac.login({username:registerData.username, password:registerData.password});
-            if (registerData.rememberMe) {
-                $localStorage.storeObject('userinfo',
-                    {username:registerData.username, password:registerData.password});
-            }
-           
               $rootScope.$broadcast('registration:Successful');
+              
            },
            function(response){
             
@@ -139,6 +151,10 @@ angular.module('planBay')
     
     authFac.getUsername = function() {
         return username;  
+    };
+    
+    authFac.getUserinfo = function() {
+        return userinfo;
     };
 
     loadUserCredentials();

@@ -1,7 +1,7 @@
 'use strict';
 angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angular-input-stars'])
     .filter('range', function() {
-        return function(input, total) {cd 
+        return function(input, total) {
             total = parseInt(total);
 
             for (var i=0; i<total; i++) {
@@ -20,7 +20,7 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angu
                 views: {
                     'header': {
                         templateUrl: 'views/header.html',
-                        controller: 'WunderController'
+                        controller: 'HeaderController'
                     },
                     'content': {
                         templateUrl: 'views/landing.html',
@@ -70,7 +70,7 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angu
             })
             //route for the login page
             .state('app.login', {
-                url:'login',
+                url:'users/login',
                 views: {
                     'content@': {
                         templateUrl: 'views/login.html',
@@ -92,7 +92,7 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angu
         
             //route for the registration page
             .state('app.register', {
-                url:'register',
+                url:'users/register',
                 views: {
                     'content@': {
                         templateUrl:'views/register.html',
@@ -111,12 +111,12 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angu
                 }
             })
         
-            .state('app.myplan', {
-                url:'myplan',
+            .state('app.profile', {
+                url:'profile',
                 views: {
                     'content@': {
-                        templateUrl : 'views/myplan.html',
-                        controller  : 'MyplanController'
+                        templateUrl : 'views/profile.html',
+                        controller  : 'ProfileController'
                     }
                 }
             })
@@ -127,6 +127,16 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angu
                     'content@': {
                         templateUrl : 'views/plan-edit.html',
                         controller  : 'EditController'
+                    }
+                }
+            })
+            
+            .state('app.wunderlist', {
+                url:'wunderlist?token',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/wunderlist.html',
+                        controller  : 'WunderController'
                     }
                 }
             })

@@ -9,13 +9,12 @@ userRouter.get('/', function(req, res, next) {
   User.find({},function(err, found){
     if(err)
       throw err;
-    console.log("Users info will be sent to admin user");
     res.json(found);
   });
 });
 
 userRouter.post('/register', function(req, res){
-  User.register(new User({username: req.body.username, email: req.body.email}),
+  User.register(new User({username: req.body.username}),
       req.body.password, function(err, user) {
         if(err){
           return res.status(500).json({err:err});
@@ -23,8 +22,8 @@ userRouter.post('/register', function(req, res){
         //cross-check
         //push username
         
-        if(req.body.email){
-          user.email = req.body.email;
+        if(req.body.name) {
+            user.name = req.body.name;
         }
         
         user.save(function(err, user){
@@ -34,6 +33,19 @@ userRouter.post('/register', function(req, res){
         });
       });
 });
+
+userRouter.put('/:userId', function(req,res,next){
+    
+        User.findByIdAndUpdate(req.params.userId, {
+            $set: req.body
+        }, {
+            new: true
+            
+        }, function(err, user) {
+            if(err) throw err;
+            res.json(user);
+        });
+    });
 
 userRouter.post('/login', function(req, res, next){
   passport.authenticate('local', function(err, user, info){
@@ -57,12 +69,13 @@ userRouter.post('/login', function(req, res, next){
       console.log('User in users: ', user);
 
       //valid user-> could generate token
-      var token = Verify.getToken({"email":user.email, "_id":user._id});
+      var token = Verify.getToken({"username":user.username, "_id":user._id, "admin":user.admin, "name":user.name});
 
       res.status(200).json({
         status: 'Login successful!',
         success: true,
-        token: token
+        token: token,
+        userinfo : user
       });
     });
   })(req, res, next);

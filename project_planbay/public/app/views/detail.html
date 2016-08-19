@@ -34,7 +34,7 @@
                                     <h5>작성자</h5>
                                     <div class="avatar">
                                         <img src="../assets/portraits/1.jpg">
-                                        <strong class="star-text-size">{{plan.postedBy.username}}
+                                        <strong class="star-text-size">{{plan.postedBy.name}}
                                     </strong>
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@
                             <a class="avatar margin-right-10">
                                 <img src="../assets/portraits/2.jpg" alt="...">
                             </a>
-                            <span class="name">{{cmt.postedBy.username}}</span>
+                            <span class="name">{{cmt.postedBy.name}}</span>
                         </div>
                         <div class="media-content margin-top-10">
                             <p>{{cmt.comment}} </p>
@@ -80,11 +80,18 @@
                 </ul>
             </section>
             <div class="side-panel-comment">
-                <h5>리뷰를 남겨보세요!</h5>
-                <input-stars max="5" ng-model="ratingInput"></input-stars>
-                <form ng-submit="commentSubmit()" name="commentForm">
-                    <textarea class="maxlength-textarea form-control mb-sm margin-bottom-20" rows="4" ng-model="inputText"></textarea>
-                    <button class="btn btn-primary" type="submit">제출</button>
+                <h5>이 플랜을 평가해주세요!</h5>
+                <label class="checkbox-inline">
+                            <input type="checkbox" ng-model="ratingOnly">
+                            <strong>리뷰는 쓰지 않을래요!</strong>
+                </label>
+                <form ng-submit="submitComment()">
+                    <div class="form-group">
+                        <input-stars max="5" ng-model="rating.rating"></input-stars>
+                        <strong class="star-text-size">{{rating.rating}}.0 / 5.0</strong>
+                        <textarea class="maxlength-textarea form-control mb-sm margin-bottom-20" rows="4" ng-model="feedback.comment" ng-if="!ratingOnly"></textarea>
+                    </div>
+                                            <button class="btn btn-primary" type="submit">제출</button>
                 </form>
             </div>
         </div>
