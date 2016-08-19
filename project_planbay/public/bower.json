@@ -36,7 +36,8 @@
     "angular-animate": "latest",
     "ng-dialog": "latest",
     "eonasdan-bootstrap-datetimepicker": "^4.17.37",
-    "angular-datepicker": "^2.0.3"
+    "angular-datepicker": "^2.0.3",
+    "angular-upload": "^1.0.12"
   },
   "resolutions": {
     "angular": "~1.4.7"

@@ -83,6 +83,10 @@ var planSchema = new Schema({
         default: 0
     },
     
+    ratingsAvg: {
+        type: Number,
+        default: 0
+    },
     comments: [commentSchema],
     
     commentsNum: {

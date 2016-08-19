@@ -14,12 +14,9 @@
 	<button ng-click="postTask()">Create task!</button>
 </div>
 
-<!--TODO: first day of the plan -->
-<!--TODO: Due date setting -->
-<!--TODO: Due date customizing -->
 <div class="panel">
 	<div class="form-group">
-		<input type="date">		
+		<input type="date" id="start" ng-model="dueDate.start">		
 	</div>
 	<div class="form-group">
 		<h4>계획을 실천할 요일을 선택하세요</h4>
@@ -30,5 +27,8 @@
 		<label class="checkbox-inline"><input type="checkbox" ng-model="dueDate.Fri">금</label>
 		<label class="checkbox-inline"><input type="checkbox" ng-model="dueDate.Sat">토</label>
 		<label class="checkbox-inline"><input type="checkbox" ng-model="dueDate.Sun">일</label>
+	</div>
+	<div>
+		{{dueDate}}
 	</div>
 </div>

@@ -11,7 +11,7 @@ planRouter.use(bodyParser.json());
 //TODO: add query to sort responds
 planRouter.route('/')
     .get(Verify.verifyOrdinaryUser, function(req,res,next){
-        Plan.find({})
+		Plan.find({})
             .populate('postedBy')
             .populate('comments.postedBy')
             .populate('ratings.postedBy')
@@ -39,7 +39,30 @@ planRouter.route('/')
             res.json(resp);
         });
     });
-
+    
+planRouter.route('/top8downloads')
+    .get(Verify.verifyOrdinaryUser, function(req,res,next){
+		Plan.find({})
+			.sort({downloads:-1})
+			.limit(8)
+            .populate('postedBy')
+            .exec(function(err, plan) {
+                if(err) throw err;
+                res.json(plan);
+            });
+    });
+planRouter.route('/top8ratings')
+    .get(Verify.verifyOrdinaryUser, function(req,res,next){
+		Plan.find({})
+			.sort({ratingsAvg:-1})
+			.limit(8)
+            .populate('postedBy')
+            .exec(function(err, plan) {
+                if(err) throw err;
+                res.json(plan);
+            });
+    });
+    
 planRouter.route('/:planId')
     .get(Verify.verifyOrdinaryUser, function(req,res,next){
         Plan.findById(req.params.planId)
@@ -161,6 +184,7 @@ planRouter.route('/:planId/ratings')
 			plan.ratings.push(req.body);
 			plan.ratingsNum+=1;
 			plan.ratingsSum+=req.body.rating;
+			plan.ratingsAvg = plan.ratingsSum/plan.ratingsNum;
 			plan.save(function (err, plan){
 				if(err) next(err);
 				console.log('Added Ratings!');
@@ -174,6 +198,7 @@ planRouter.route('/:planId/ratings')
 			plan.ratings = [];
 			plan.ratingsNum = 0;
 			plan.ratingsSum =0;
+			plan.ratingsAvg = 0;
 			plan.save(function (err, result) {
 				if(err) next(err);
 				res.writeHead(200, {'Content-type': 'text/plain'});
@@ -201,6 +226,7 @@ planRouter.route('/:planId/ratings/:ratingId')
 			var currentRating = plan.ratings.id(req.params.ratingId);
 			plan.ratingsSum -= currentRating.rating;
 			plan.ratingsNum -= 1;
+			plan.ratingsAvg = plan.ratingsSum/plan.ratingsNum;
 			currentRating.remove();
 			plan.save(function (err, resp) {
 				if(err) throw err;
@@ -208,6 +234,5 @@ planRouter.route('/:planId/ratings/:ratingId')
 			});
 		});
 	});
-
 
 module.exports = planRouter;

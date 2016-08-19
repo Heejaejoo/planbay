@@ -2,11 +2,11 @@
 
 <div class="ngdialog-message">
         <div class="">
-            <h3>Login </h3>
+            <h3>Confirm password</h3>
         </div>
         <div class="">&nbsp;</div>
         <div class="">
-            <form ng-submit="unlock()">
+            <form ng-submit="doUnlock()">
                 <div class="form-group">
                     <label class="sr-only" for="username">{{username}}</label>
                 </div>
@@ -40,6 +40,15 @@
                         <div class="form-group form-material">
                             <label class="control-label" for="username">이메일</label>
                             <input type="email" class="form-control" id="username" name="username" ng-model="userinfo.username" disabled>
+                        </div>
+                        <div class="form-group form-material" ng-class="{'has-error': profileEditForm.password.$invalid && !profileEditForm.password.$pristine,
+                                                                         'has-success': profileEditForm.password.$valid && !profileEditForm.password.$pristine}">
+                            <label class="control-label" for="password">비밀번호</label>
+                            <input type="password" class="form-control" id="password" name="password" ng-model="profileForm.password" ng-minlength="6" ng-pattern="re" placeholder="최소 6자리, 영문과 숫자 반드시 포함">
+                        </div>
+                        <div class="btn btn-primary btn-upload" upload-button 
+                             url="/upload" >
+                            File Upload
                         </div>
                         
                         <button type="submit" class="btn btn-warning btn-block" ng-disabled="profileEditForm.$invalid"><b>정보수정</b></button>

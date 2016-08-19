@@ -38,6 +38,7 @@ userRouter.put('/:userId', function(req,res,next){
     
         User.findByIdAndUpdate(req.params.userId, {
             $set: req.body
+            
         }, {
             new: true
             
@@ -46,6 +47,23 @@ userRouter.put('/:userId', function(req,res,next){
             res.json(user);
         });
     });
+
+// userRouter.put('/:userId/', function(req,res,next){
+    
+//     User.findById(req.params.userId,function(err,sanitizedUser){
+//     if (sanitizedUser){
+//         sanitizedUser.setPassword(req.body.password, function(){
+//             sanitizedUser.save();
+//             res.status(200).json({message: 'password reset successful'});
+//         });
+//     } else {
+//         res.status(500).json({message: 'This user does not exist'});
+//     }
+//     },function(err){
+//     console.error(err);
+//     })
+// });
+
 
 userRouter.post('/login', function(req, res, next){
   passport.authenticate('local', function(err, user, info){
@@ -75,7 +93,7 @@ userRouter.post('/login', function(req, res, next){
         status: 'Login successful!',
         success: true,
         token: token,
-        userinfo : user
+        userinfo : {_id: user._id, name: user.name, picture: user.picture}
       });
     });
   })(req, res, next);

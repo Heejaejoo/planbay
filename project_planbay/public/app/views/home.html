@@ -13,7 +13,7 @@
         </div>
         <div class="page-content">
             <ul class="blocks blocks-100 blocks-xlg-4 blocks-md-3 blocks-sm-2" data-plugin="masonry" style="position: relative;">
-                <li class="masonry-item" style="width: 275px" ng-repeat="plan in plans">
+                <li class="masonry-item" style="width: 275px" ng-repeat="plan in plansDownloadOrdered">
                     <div class="widget widget-article widget-shadow">
                         <div class="widget-header cover">
                             <a ui-sref="app.home.details({planId : plan._id})">
@@ -32,7 +32,7 @@
                                 <div class="widget-actions pull-right">
                                         <span>{{plan.commentsNum}}</span> Comments
                                         <i class="fa fa-star" aria-hidden="true"></i>
-                                        <span>{{(plan.ratingsNum==0?0:plan.ratingsSum/plan.ratingsNum).toFixed(1)}} / 5.0</span>
+                                        <span>{{plan.ratingsAvg.toFixed(1)}} / 5.0</span>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +53,7 @@
         </div>
         <div class="page-content">
             <ul class="blocks blocks-100 blocks-xlg-4 blocks-md-3 blocks-sm-2" data-plugin="masonry" style="position: relative;">
-                <li class="masonry-item" style="width: 275px" ng-repeat="plan in plans">
+                <li class="masonry-item" style="width: 275px" ng-repeat="plan in plansRatingsOrdered">
                     <div class="widget widget-article widget-shadow">
                         <div class="widget-header cover">
                             <a ui-sref="app.home.details({planId : plan._id})">

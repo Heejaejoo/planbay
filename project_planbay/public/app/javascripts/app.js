@@ -112,7 +112,7 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angu
             })
         
             .state('app.profile', {
-                url:'profile',
+                url: 'users/:userId',
                 views: {
                     'content@': {
                         templateUrl : 'views/profile.html',

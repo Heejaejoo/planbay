@@ -1,6 +1,6 @@
 <!-- Page -->
 
-    <div class="page-header mypage-header">
+    <div class="page-header mypage-header" ng-controller="ProfileController">
       <div class="pull-left">
       <h1 class="page-title">My page</h1>
       <ol class="breadcrumb">
@@ -9,7 +9,7 @@
       </ol>
       </div>
             
-      <a href="index.html#/profile" class="btn btn-warning btn-lg active pull-right" role="button">
+      <a ui-sref="app.profile({userId : userinfo._id})" class="btn btn-warning btn-lg active pull-right" role="button">
         <i class="icon md-settings"></i>
       </a>
     </div>

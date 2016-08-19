@@ -20,7 +20,7 @@ angular.module('planBay')
             function (response) {
                 $scope.plan = response;
                 $scope.showPlan = true;
-                $scope.stars = $scope.plan.ratingsNum===0?0:($scope.plan.ratingsSum/$scope.plan.ratingsNum).toFixed(1);
+                $scope.stars = $scope.plan.ratingsAvg.toFixed(1);
             },function (response) {
                 $scope.message = "Error: " + response.status + " " + response.statusText;
             }
@@ -72,9 +72,15 @@ angular.module('planBay')
     }])
 
     .controller('HomeController',  ['$scope', 'planFactory',function($scope, planFactory) {
-            planFactory.query(
+            planFactory.getOrderOfDownloads(
             function(response){
-                    $scope.plans = response;
+                    $scope.plansDownloadOrdered = response;
+                    planFactory.getOrderOfRatings(
+                        function(resp){
+                            $scope.plansRatingsOrdered = resp;
+                        }, function(resp){
+                            $scope.message = "Error: " + response.status + " " + response.statusText;
+                        });
                  },
             function(response){
                     $scope.message = "Error: " + response.status + " "+ response.statusText;
@@ -106,20 +112,53 @@ angular.module('planBay')
         
     }])
 
-    .controller('ProfileController',  ['$scope', '$routeParams', 'ProfileFactory', 'AuthFactory', function ($scope, $routeParams, ProfileFactory, AuthFactory) {
+    .controller('ProfileController',  ['$scope', '$state', '$rootScope', '$stateParams', 'ProfileFactory', 'AuthFactory', 'ngDialog', function ($scope, $state, $rootScope, $stateParams, ProfileFactory, AuthFactory, ngDialog) {
         
         $scope.profileForm = {
-            name:""
+            name:"",
+            password:""
         };
 
         $scope.userinfo = AuthFactory.getUserinfo();
         
-        var user = ProfileFactory.get({ id:$routeParams.id });
-        
         $scope.doUpdate = function() {
-            ProfileFactory.update({ id:$routeParams.id }, user);
+            ProfileFactory.update({ id:$stateParams.userId }, $scope.profileForm,
+            function(response){
+                AuthFactory.updateUserInfo($scope.profileForm);
+                $rootScope.$broadcast('login:Successful');
+                $state.go('app.mypage', {}, {reload:true});
+            },
+            function(response){
+                
+                var message = '\
+                <div class="ngdialog-message">\
+                <div><h3>Unsuccessful</h3></div>' +
+                  '<div><p>' +  response.data.err.message + 
+                  '</p><p>' + response.data.err.name + '</p></div>';
+
+                ngDialog.openConfirm({ template: message, plain: 'true'});
+                
+            });
+            
+            
         };
 
+    }])
+    
+    .controller('UploadController', ['$scope', 'upload', function($scope, upload) {
+        upload({
+          url: '/upload',
+          method: 'POST',
+          data: {
+            aFile: $scope.myFile, // a jqLite type="file" element, upload() will extract all the files from the input and put them into the FormData object before sending.
+            }
+        }).then(
+          function (response) {
+          console.log(response.data); // will output whatever you choose to return from the server on a successful upload
+        },
+          function (response) {
+          console.error(response); //  Will return if status code is above 200 and lower than 300, same as $http
+        });
     }])
 
     .controller('EditController',  ['$scope',function($scope) {
@@ -185,6 +224,8 @@ angular.module('planBay')
 
     .controller('WunderController', ['$scope', '$stateParams', function($scope, $stateParams) {
         $scope.token = $stateParams.token;
+        $scope.listID;
+        $scope.taskTitle;
         
         var WunderlistSDK = window.wunderlist.sdk;
         var WunderlistAPI = new WunderlistSDK({
@@ -201,22 +242,15 @@ angular.module('planBay')
                 console.error('there was a problem');
             });
         
-        $scope.exportToWunderlist = function(listID) {
-            //TODO: export all the tasks to the list which has this listID
-        };
         
-        $scope.listID;
-        $scope.taskTitle;
-        
-        $scope.postTask = function() {
-            console.log($scope.listID);
-            console.log($scope.taskTitle);
+        function postTask(listID, title, dueDate) {
             WunderlistAPI.http.tasks.create({
-              'list_id': parseInt($scope.listID),
-              'title': $scope.taskTitle
+              'list_id': parseInt(listID),
+              'title': title,
+              'due_date': dueDate.toISOString()
             })
             .done(function (taskData, statusCode) {
-              console.log("post task success!");
+              console.log(taskData);
             })
             .fail(function (resp, code) {
               console.log("post task fail!");
@@ -224,6 +258,7 @@ angular.module('planBay')
         };
         
         $scope.dueDate = {
+            'start': new Date(),
             'Mon': true,
             'Tue': true,
             'Wed': true,
@@ -232,6 +267,92 @@ angular.module('planBay')
             'Sat': true,
             'Sun': true
         };
+        
+        function getNextDayOfWeek(date, dayOfWeek) {
+            var resultDate = new Date(date.getTime());
+            resultDate.setDate(date.getDate() + (7 + dayOfWeek - date.getDay()) % 7);
+            
+            return resultDate;
+        }
+        
+        function getDayStr(dayNum) {
+            var dayStr;
+            
+            switch (dayNum % 7) {
+                case 0:
+                    dayStr = "Sun";
+                    break;
+                case 1:
+                    dayStr = "Mon";
+                    break;
+                case 2:
+                    dayStr = "Tue";
+                    break;
+                case 3:
+                    dayStr = "Wed";
+                    break;
+                case 4:
+                    dayStr = "Thu";
+                    break;
+                case 5:
+                    dayStr = "Fri";
+                    break;
+                case 6:
+                    dayStr = "Sat";
+            }
+            
+            return dayStr;
+        }
+        
+        //this function gives the array of Date which has pattern
+        $scope.dueDateGenerator = function(num, duePattern) {
+            var dueDates = [];
+            var currentDate = duePattern.start;
+            var currentDay = currentDate.getDay();
+            
+            while(num > 0) {
+                if(duePattern[getDayStr(currentDay)]) {
+                    currentDate = getNextDayOfWeek(currentDate, currentDay);
+                    dueDates.push(currentDate);
+                    num--;
+                }
+                
+                currentDay++;
+            }
+            
+            return dueDates;
+        };
+        
+        $scope.exportToWunderlist = function(listID, plan, dueDates) {
+            var num = plan.length;
+            
+            if(num !== dueDates.length) {
+                console.log("invalid plan and dueDates")
+                return;
+            }
+            
+            for(var i = 0; i < num; i++) {
+                for(var j = 0; j < plan[i].length; j++) {
+                    postTask(listID, plan[i][j].title, dueDates[i]);
+                }
+            }
+        };
+        
+        /* for testing
+        $scope.exportToWunderlist(262265036,
+            [[{'title':'a1'}, {'title':'a2'}], [{'title':'b1'}, {'title':'b2'}, {'title':'b3'}], [{'title':'c1'}, {'title':'c2'}]],
+            $scope.dueDateGenerator(3, {
+                'start': new Date(),
+                'Mon': false,
+                'Tue': true,
+                'Wed': true,
+                'Thu': false,
+                'Fri': true,
+                'Sat': false,
+                'Sun': true
+            })
+        );
+        */
         
     }])
 

@@ -3,9 +3,20 @@
 angular.module('planBay')
        .constant("baseURL","https://planbay-heejae-joo.c9users.io/")
        .factory('planFactory', ['$resource','baseURL', function($resource, baseURL){
-            return $resource(baseURL+"plans/:id",null, {'update':{
+            return $resource(baseURL+"plans/:id",null, {
+                'update':{
                       method:'PUT'
-                  }
+                  },
+                 'getOrderOfDownloads': {
+                    url: baseURL + 'plans/top8downloads',
+                    method: 'GET',
+                    isArray: true
+                 },
+                 'getOrderOfRatings': {
+                     url: baseURL + 'plans/top8ratings',
+                     method: 'GET',
+                     isArray: true
+                 }
             });
         }])
         .factory('cmtFactory', ['$resource','baseURL', function($resource, baseURL){
@@ -155,6 +166,10 @@ angular.module('planBay')
     
     authFac.getUserinfo = function() {
         return userinfo;
+    };
+    
+    authFac.updateUserInfo = function(newinfo) {
+        Object.assign(userinfo, newinfo);
     };
 
     loadUserCredentials();
