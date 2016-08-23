@@ -324,15 +324,16 @@ angular.module('planBay')
         };
         
         $scope.exportToWunderlist = function(listID, plan, dueDates) {
-            var num = plan.length;
+            var numDay = plan.length;
             
-            if(num !== dueDates.length) {
+            if(numDay !== dueDates.length) {
                 console.log("invalid plan and dueDates")
                 return;
             }
             
-            for(var i = 0; i < num; i++) {
-                for(var j = 0; j < plan[i].length; j++) {
+            for(var i = 0; i < numDay; i++) {
+                var numTask = plan[i].length;
+                for(var j = 0; j < numTask; j++) {
                     postTask(listID, plan[i][j].title, dueDates[i]);
                 }
             }
