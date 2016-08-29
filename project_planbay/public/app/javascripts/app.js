@@ -142,6 +142,26 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angu
                 }
             })
             
+            .state('app.make', {
+                url:'make',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/make.html',
+                        controller  : 'MakeController'
+                    }
+                }
+            })
+            
+            .state('app.export', {
+                url:'export?token',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/export.html',
+                        controller  : 'ExportController'
+                    }
+                }
+            })
+            
         $urlRouterProvider.otherwise('/');
 
 })

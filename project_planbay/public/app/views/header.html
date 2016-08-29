@@ -1,7 +1,9 @@
 <nav class="site-navbar navbar navbar-inverse navbar-fixed-top navbar-mega planbay-header" role="navigation">
     <div class="navbar-header">
+        <div data-toggle="testelement">
         <button type="button" class="navbar-toggle hamburger hamburger-close navbar-toggle-left hided"
                 data-toggle="menubar">
+        </div>
             <span class="sr-only">Toggle navigation</span>
             <span class="hamburger-bar"></span>
         </button>
@@ -24,7 +26,7 @@
             <!-- Navbar Toolbar -->
             <ul class="nav navbar-toolbar">
                 <li ng-show="loggedIn" class="hidden-float" id="toggleMenubar">
-                    <a data-toggle="menubar" role="button">
+                    <a ng-click="changeMenubarState()" data-toggle="menubar" role="button">
                         <i class="icon hamburger hamburger-arrow-left">
                             <span class="sr-only">Toggle menubar</span>
                             <span class="hamburger-bar"></span>
@@ -42,8 +44,7 @@
             <!-- Navbar Toolbar Right -->
             <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
                 <li ng-show="loggedIn" class="dropdown">
-                    <a class="navbar-avatar dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
-                       data-animation="scale-up" role="button">
+                    <a class="navbar-avatar" data-toggle="dropdown" role="button">
                   <span class="avatar avatar-online">
                  <img ng-src="{{userinfo.picture}}" alt="...">
                   <i></i>
@@ -51,11 +52,11 @@
                     </a>
                     <ul ng-show="loggedIn" class="dropdown-menu" role="menu">
                         <li role="presentation">
-                            <a ui-sref="app.mypage" role="menuitem"><i class="icon md-account" aria-hidden="true"></i>마이페이지</a>
+                            <a data-toggle="dropdown" ui-sref="app.mypage" role="menuitem"><i class="icon md-account"></i>마이페이지</a>
                         </li>
                         <li class="divider" role="presentation"></li>
                         <li role="presentation">
-                            <a ng-click="logOut()" ui-sref="app" role="menuitem"><i class="icon md-power" aria-hidden="true"></i>로그아웃</a>
+                            <a ui-sref="app" ng-click="logOut()" data-toggle="dropdown" role="menuitem"><i class="icon md-power"></i>로그아웃</a>
                         </li>
                     </ul>
                 </li>
@@ -127,15 +128,15 @@
                         </a>
                     </li>
                     <li class="site-menu-item">
-                        <a class="animsition-link" ui-sref="app.edit">
+                        <a class="animsition-link" ui-sref="app.make">
                             <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
-                            <span class="site-menu-title">Category 3(EDIT)</span>
+                            <span class="site-menu-title">Category 3(MAKE)</span>
                         </a>
                     </li>
                     <li class="site-menu-item">
-                        <a href="#" ng-click="getToken()">
+                        <a class="animsition-link" ui-sref="app.export">
                             <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
-                            <span class="site-menu-title">Category 4(Wunderlist)</span>
+                            <span class="site-menu-title">Category 4(EXPORT)</span>
                         </a>
                     </li>
                     <li class="site-menu-item">
@@ -159,3 +160,5 @@
         </div>
     </div>
 </div>
+
+<div ng-show="showMenubar" data-toggle="menubar" ng-click="changeMenubarState()" style="z-index: 100; width:100vw; height:100vh; position: fixed;"></div>

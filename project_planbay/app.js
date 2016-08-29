@@ -21,8 +21,7 @@ db.once('open', function() {
 var indexRouter = require('./routers/indexRouter');
 var userRouter = require('./routers/userRouter');
 var planRouter = require('./routers/planRouter');
-var wunderlistRouter = require('./routers/wunderlistRouter')
-
+var wunderlistRouter = require('./routers/wunderlistRouter');
 var app = express();
 
 // uncomment after placing your favicon in /public
@@ -40,9 +39,6 @@ app.use('/', indexRouter);
 app.use('/users', userRouter);
 app.use('/plans', planRouter);
 app.use('/wunderlists', wunderlistRouter);
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -8,7 +8,7 @@ var fs = require('fs');
 var multiparty = require('multiparty');
 
 /* GET users listing. */
-userRouter.get('/', function(req, res, next) {
+userRouter.get('/',Verify.verifyOrdinaryUser, Verify.verifyAdmin, function(req, res, next) {
   User.find({},function(err, found){
     if(err)
       throw err;
@@ -104,33 +104,10 @@ userRouter.route('/:userId')
              console.log(' Reading total  '+byteRead+'/'+byteExpected);
         });
      
-       form.parse(req/*, function(err, fields,files){
-         console.log(files);
-      
-          var body = {};
-          if (fields.name[0])
-            body.name = fields.name[0];
-          if (fields.password[0])
-            var newPasswordString = fields.password[0];
-          User.findByIdAndUpdate(req.params.userId, {
-            $set: body
-            }, {
-            new: false
-            }, function(err, user) {
-              User.findById(req.params.userId).then(
-                function(sanitizedUser){
-                 if (sanitizedUser){
-                    sanitizedUser.setPassword(newPasswordString, function(){
-                    sanitizedUser.save();
-                    });
-                  } 
-              },function(err){  
-                next(err);
-              })
-          });
-       }*/);
+       form.parse(req);
     });
-userRouter.route('/myplan/:userId')
+    
+userRouter.route('/publicplan/:userId')
   .get(Verify.verifyOrdinaryUser, function(req, res, next){
     User.findById(req.params.userId)
     .populate('plans')
@@ -139,6 +116,35 @@ userRouter.route('/myplan/:userId')
               res.json(user.plans);
             });  
   });
+
+userRouter.route('/privateplan/:userId')
+  .get(Verify.verifyOrdinaryUser, function(req, res, next){
+    User.findById(req.params.userId)
+    .populate('privatePlans')
+    .exec(function(err,user){
+              if (err) next(err);
+              res.json(user.privatePlans);
+            });  
+  })
+  
+  .post(Verify.verifyOrdinaryUser, function(req, res, next){
+		User.findById(req.params.userId, function(err, user){
+			if(err) {
+				  next(err)
+				};
+		user.privatePlans.push(req.body);
+		user.save(function (err, user){
+	  		if(err) next(err);
+	  		var response = {
+             status  : 200,
+             success : 'Updated Successfully'
+          }
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(response));
+			});
+		});
+	});
+  
 userRouter.post('/login', function(req, res, next){
   passport.authenticate('local', function(err, user, info){
     if(err) {

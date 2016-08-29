@@ -6,8 +6,7 @@
         <header class="side-panel-header">
             <div class="overlay-panel overlay-background">
                 <div class="side-panel-actions btn-group btn-group-flat" aria-label="actions" role="group">
-                    <button type="button" class="btn btn-pure btn-inverse icon md-chevron-left" aria-hidden="true"></button>
-                    <button type="button" class="btn btn-pure btn-inverse icon md-chevron-right" aria-hidden="true"></button>
+                    <button type="button" class="btn btn-pure btn-inverse icon md-download" aria-hidden="true" ng-click="conFirm()"></button>
                     <button type="button" class="btn btn-pure btn-inverse icon md-close" ng-click=goback($root.previousState)
                             aria-hidden="true"></button>
                 </div>
@@ -42,14 +41,13 @@
                     </div>
                     <div class="row row-height-category">
                         <div class="col-xs-12">
-                            <h5>별점</h5>
                             <div class="row">
-                                <div class="col-xs-7 col-md-4">
-                                <input-stars max="5" ng-model="stars" ng-attr-readonly="true"></input-stars> 
-                                <strong class="star-text-size">{{stars}} / 5.0</strong>
+                                <div class="col-xs-8">
+                                    <h5>별점</h5>
+                                        <input-stars max="5" ng-model="stars" ng-attr-readonly="true"></input-stars> 
+                                        <strong class="star-text-size">{{stars}} / 5.0</strong>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -90,7 +88,7 @@
                         <strong class="star-text-size">{{rating.rating}}.0 / 5.0</strong>
                         <textarea class="maxlength-textarea form-control mb-sm margin-bottom-20" rows="4" ng-model="feedback.comment" ng-if="!ratingOnly"></textarea>
                     </div>
-                                            <button class="btn btn-primary" type="submit">제출</button>
+                    <button class="btn btn-primary" type="submit">제출</button>
                 </form>
             </div>
         </div>

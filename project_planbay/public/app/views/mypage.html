@@ -19,7 +19,6 @@
 
     
 <div class="col-xlg-5">
-  
           <!-- Panel Projects -->
           <div class="panel" id="projects">
             <div class="panel-heading">
@@ -37,7 +36,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="plan in myPlans">
+                  <tr ng-repeat="plan in privatePlans">
                     
                     <td>{{plan.title}}</td>
                     <td>{{plan.category}}</td>
@@ -52,12 +51,7 @@
                         <i class="icon md-close" aria-hidden="true"></i>
                       </button>
                     </td>
-                    
-                    <td>
-                      <a ui-sref="app.mypage.details({planId : plan._id})" class="btn btn-warning btn-lg active pull-right" role="button">
-                      detail
-                      </a>
-                    </td>
+
                   </tr>
                 </tbody>
               </table>

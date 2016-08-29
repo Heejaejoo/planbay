@@ -16,6 +16,10 @@ angular.module('planBay')
                 url: baseURL + 'plans/top8ratings',
                 method: 'GET',
                 isArray: true
+            },
+            'addToPrivatePlan': {
+                url: baseURL + 'users/privateplan/:id',
+                method: 'POST'
             }
         });
     }])
@@ -45,12 +49,27 @@ angular.module('planBay')
     .factory('MypageFactory', ['$resource', 'baseURL', function($resource, baseURL) {
         return $resource(baseURL + "users/:id", null, {
             'getPlans': {
-                url: baseURL + 'users/myplan/:id',
+                url: baseURL + 'users/publicplan/:id',
                 method: 'GET',
                 isArray: true
+            },
+            'getPrivatePlans': {
+                url: baseURL + 'users/privateplan/:id',
+                method: 'GET',
+                isArray: true
+            },
+            'updatePrivatePlan': {
+                url: baseURL + 'users/privateplan/:id',
+                method: 'PUT'
+            },
+            'addPrivatePlan': {
+                url: baseURL + 'users/privateplan/',
+                method: 'POST'
             }
+            
         });
     }])
+    //위아래 팩토리 통합 필요
     
     .factory('ProfileFactory', ['$resource', 'baseURL', function($resource, baseURL) {
         var formDataObject = function(data) {
@@ -219,7 +238,6 @@ angular.module('planBay')
     loadUserCredentials();
 
     return authFac;
-
 }])
 
 .factory('exportFactory',  ['$stateParams', function($stateParams) {
@@ -312,9 +330,5 @@ angular.module('planBay')
     
     return duedateFac;
 })
-
-.factory('EditFactory', ['$resource', 'baseURL', function($resource, baseURL) {
-    
-}])
 
 ;

@@ -25,7 +25,7 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.5",
+    "bootstrap": "^3.3.7",
     "font-awesome": "~4.4.0",
     "angular": "~1.4.7",
     "angular-route": "^1.5.6",
@@ -38,7 +38,8 @@
     "eonasdan-bootstrap-datetimepicker": "^4.17.37",
     "angular-datepicker": "^2.0.3",
     "ng-file-upload": "^12.1.0",
-    "ng-file-upload-shim": "^12.1.0"
+    "ng-file-upload-shim": "^12.1.0",
+    "jquery": "^3.1.0"
   },
   "resolutions": {
     "angular": "~1.4.7"

@@ -1,0 +1,79 @@
+<div class="page-content container-fluid">
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-8">
+            <!-- Panel Static Labels -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">계획 작성</h3>
+    		        <select class="form-control" ng-change="loadPlan()" ng-model="plan" id="editSel" ng-options="p.title for p in plans">
+    		        </select>
+                </div>
+                <div class="panel-body container-fluid">
+                    <form autocomplete="off">
+                        <div class="form-group form-material">
+                            <label class="control-label" for="inputHint">제목</label>
+                            <input type="text" ng-model="plan.title" class="form-control" id="inputHint" name="inputHint">
+                            <div class="hint">전체 계획의 이름을 지어주세요!</div>
+                        </div>
+                        <div class="form-group form-material">
+                            <label class="control-label" for="inputHint">카테고리</label>
+                            <input type="text" ng-model="plan.category" class="form-control" id="inputHint" name="inputHint">
+                            <div class="hint">카테고리의 이름을 지어주세요!</div>
+                        </div>
+                        <div class="form-group form-material">
+                            <label class="control-label" for="textarea">설명</label>
+                            <textarea class="form-control"  ng-model="plan.description" id="textarea" name="textarea" rows="3"></textarea>
+                        </div>
+                        <div class="form-group form-material">
+                            <label class="control-label" for="select">몇 일 짜리 계획인가요?</label>
+                            <input type="number" min="1" max="60" ng-model="plan.day">
+                        </div>
+                    	<button ng-click="savePlan()">임시 저장</button>
+                    	<button ng-click="completePlan()">작성 완료</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-header">
+            </div>
+            <div class="page-content">
+                <ul class="blocks blocks-100 blocks-xlg-5 blocks-lg-3 blocks-md-3 blocks-sm-2" data-plugin="masonry" style="position: relative;">
+                    <li class="masonry-item" ng-repeat="day in [] | range:plan.day">
+                        <div class="widget widget-article widget-shadow">
+                            <div class="widget-body">
+                                <h4 class="widget-title">
+                                    Day {{day+1}}
+                                </h4>
+                                <form class="form-inline" role="form" ng-repeat="task in plan.taskArr[day]">
+                                    <div class="form-group form-material">
+                                        <input type="text" ng-model="task.title" class="form-control" id="todo" name="todo"><div class="hint">할 일을 적어주세요</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <select class="form-control" id="time" ng-model="task.time">
+                                            <option>0:30</option>
+                                            <option>1:00</option>
+                                            <option>1:30</option>
+                                            <option>2:00</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group form-material">
+                                        <button type="button" ng-click="removeTask(day, task)" class="btn btn-icon btn-danger waves-effect waves-round waves-light">
+                                            <i class="icon md-minus" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    {{task}}
+                                </form>
+                                <div class="widget-body-footer">
+                                    <button class="btn btn-info waves-effect waves-light" ng-click="addTask(day)">Add task</button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

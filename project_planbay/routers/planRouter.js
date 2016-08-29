@@ -105,7 +105,6 @@ planRouter.route('/:planId')
         });
     })
     .delete(Verify.verifyOrdinaryUser, function(req,res,next){
-    	
         Plan.findByIdAndRemove(req.params.planId, function(err, resp){
             if(err) throw err;
             res.json(resp);
@@ -186,7 +185,7 @@ planRouter.route('/:planId/comments/:commentId')
 	})
 	.delete(Verify.verifyOrdinaryUser, function(req, res, next){
 		Plan.findById(req.params.planId, function(err,plan){
-	/*		if(plan.comments.id(req.params.commentId).postedBy != req.decoded._id){
+			/*if(plan.comments.id(req.params.commentId).postedBy != req.decoded._id){
 				var err = new Error('You are not authorized to perform this operation');
 				err.status = 403;
 				return next(err);	
@@ -248,9 +247,10 @@ planRouter.route('/:planId/ratings/:ratingId')
 			res.json(plan.ratings.id(req.params.ratingId));
 		});
 	})
+	
 	.delete(Verify.verifyOrdinaryUser, function(req, res, next){
 		Plan.findById(req.params.planId, function(err,plan){
-	/*		if(plan.comments.id(req.params.commentId).postedBy != req.decoded._id){
+			/*if(plan.comments.id(req.params.commentId).postedBy != req.decoded._id){
 				var err = new Error('You are not authorized to perform this operation');
 				err.status = 403;
 				return next(err);	
