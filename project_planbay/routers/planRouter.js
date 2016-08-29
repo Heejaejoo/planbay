@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Plan = require('../models/plan');
+var User = require('../models/user');
 var Verify = require('./verify');
 
 var planRouter = express.Router();
@@ -20,11 +21,26 @@ planRouter.route('/')
                 res.json(plan);
             });
     })
-    .post(Verify.verifyOrdinaryUser, Verify.verifyAdmin, function(req,res,next){
+    .post(Verify.verifyOrdinaryUser, function(req,res,next){
+    	console.log("posting");
+    	req.body.postedBy = req.decoded._id;
         Plan.create(req.body, function(err, plan) {
-            if(err) return next(err);
+        	console.log(req.body);
+            if(err) {
+            	console.log(err);
+            	return next(err);
+            }
             console.log("Plan created!");
-            var id = plan._id;
+            var id = plan._id; 
+            
+            User.findById(req.decoded._id, function(err,user){
+            	if(err) throw err;
+            	user.plans.push(id);
+            	user.save(function (err, user) {
+            	if (err) throw err;
+            	console.log('Update');
+        		});
+            });
             res.writeHead(200, {
                 'Content-Type': 'text/plain'
             });
@@ -75,23 +91,39 @@ planRouter.route('/:planId')
             });
     })
     .put(Verify.verifyOrdinaryUser, function(req,res,next){
-    
+		console.log("putting");
         Plan.findByIdAndUpdate(req.params.planId, {
             $set: req.body
         }, {
             new: true
             //return updated plan value
         }, function(err, plan) {
+			console.log("putting2");
+        	console.log(err);
             if(err) throw err;
             res.json(plan);
         });
     })
     .delete(Verify.verifyOrdinaryUser, function(req,res,next){
+    	
         Plan.findByIdAndRemove(req.params.planId, function(err, resp){
             if(err) throw err;
             res.json(resp);
+            User.findById(req.decoded._id, function(err,user){
+            	if(err) throw err;
+            	for(var i=0; i<user.plans.length; i+=1){
+            		if(user.plans[i] == req.params.planId){
+            			user.plans.splice(i,1);
+            		}
+            	}
+            	user.save(function (err, user) {
+            	if (err) throw err;
+            	
+        		});
+            });
         });
     });
+
 planRouter.route('/:planId/comments')
 	.get(Verify.verifyOrdinaryUser, function(req,res,next){
 		Plan.findById(req.params.planId)

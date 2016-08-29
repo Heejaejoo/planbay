@@ -31,30 +31,20 @@ var ratingSchema = new Schema({
 });
 
 var taskSchema = new Schema({
-    task: {
-        type: String,
-        required: true
+    title: {
+        type: String
     },
     duration: String,
     detail: String
 })
 
-var daySchema = new Schema({
-    day: {
-        type: Number,
-        required: true
-    },
-    tasks: [taskSchema],
-    tasksNum: {
-        type:Number,
-        default: 0
-    },
-    description: String
-    //file: Buffer
-});
-
 //순서, 작성자가 기입해야하는 정보 - 남들이 기입해야하는 정보 - 자동으로 Update되는 정보
 var planSchema = new Schema({
+    personal: {
+        type: Boolean,
+        default: false
+    },
+    
     title: {
         type: String,
         required: true
@@ -69,7 +59,9 @@ var planSchema = new Schema({
 
     image: String,
 
-    days: [daySchema],
+    taskArr: [[taskSchema]],
+    
+    dueDates: [{type: Date}],
 
     ratings: [ratingSchema],
     
@@ -87,6 +79,7 @@ var planSchema = new Schema({
         type: Number,
         default: 0
     },
+    
     comments: [commentSchema],
     
     commentsNum: {

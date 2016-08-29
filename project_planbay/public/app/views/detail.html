@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <div class="side-panel">
     <div class="content" ng-if="!showPlan">
        <h4>{{message}}</h4>
@@ -9,7 +8,7 @@
                 <div class="side-panel-actions btn-group btn-group-flat" aria-label="actions" role="group">
                     <button type="button" class="btn btn-pure btn-inverse icon md-chevron-left" aria-hidden="true"></button>
                     <button type="button" class="btn btn-pure btn-inverse icon md-chevron-right" aria-hidden="true"></button>
-                    <button type="button" class="btn btn-pure btn-inverse icon md-close" ui-sref="app.home"
+                    <button type="button" class="btn btn-pure btn-inverse icon md-close" ng-click=goback($root.previousState)
                             aria-hidden="true"></button>
                 </div>
                 <h4>{{plan.title}}</h4>
@@ -96,5 +95,5 @@
             </div>
         </div>
     </div>
-    <div class="background" ng-click="goback('/home')"></div>
+    <div class="background" ng-click="goback($root.previousState)"></div>
 </div>

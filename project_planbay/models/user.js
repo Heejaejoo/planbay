@@ -1,6 +1,6 @@
-var Mongoose = require('mongoose');
+var mongoose = require('mongoose');
 var passportLocalMongoose = require('passport-local-mongoose');
-var Schema = Mongoose.Schema;
+var Schema = mongoose.Schema;
 
 var User = new Schema({
     username: { 
@@ -17,12 +17,24 @@ var User = new Schema({
 		type: String,
 		default: 'images/default-profile.png'
 	},
+	
+	plans: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Plan'
+    }],
+    
 	OauthId: {
 		type:String
 	},
+	
 	OauthToken: {
 		type:String
 	},
+	
+	wunderlistToken: {
+		type:String
+	},
+	
 	admin: {
 		type:Boolean,
 		default: false
@@ -30,4 +42,4 @@ var User = new Schema({
 });
 
 User.plugin(passportLocalMongoose);
-module.exports = Mongoose.model('User', User);
+module.exports = mongoose.model('User', User);

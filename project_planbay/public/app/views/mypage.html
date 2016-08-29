@@ -14,15 +14,12 @@
       </a>
     </div>
     
-    <div class="page-content container-fluid">
-      <div class="row" data-plugin="matchHeight" data-by-row="true">
-        
-        </div>
+    <div class="page-content container-fluid" ng-controller="MypageController">
         
 
-      
-
+    
 <div class="col-xlg-5">
+  
           <!-- Panel Projects -->
           <div class="panel" id="projects">
             <div class="panel-heading">
@@ -32,121 +29,40 @@
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th class="width-50">
-                          <span class="checkbox-custom checkbox-primary">
-                            <input class="selectable-all" type="checkbox">
-                            <label></label>
-                          </span>
-                        </th>
-                      
+                    <td>이름</td>
                     <td>분류</td>
-                    <td>계획</td>
                     <td>설명</td>
+                    
                     <td>수정 및 삭제</td>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>
-                          <span class="checkbox-custom checkbox-primary">
-                            <input class="selectable-item" type="checkbox" id="row-619" value="619">
-                            <label for="row-619"></label>
-                          </span>
-                    </td>
-                      
-                    <td>The sun climbing plan</td>
-                    <td>
-                      <span data-plugin="peityPie" data-skin="red">7/10</span>
-                    </td>
-                    <td>Jan 1, 2015</td>
+                  <tr ng-repeat="plan in myPlans">
+                    
+                    <td>{{plan.title}}</td>
+                    <td>{{plan.category}}</td>
+                    <td>{{plan.description}}</td>
+                    
                     <td>
                       <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
                       data-original-title="Edit">
                         <i class="icon md-wrench" aria-hidden="true"></i>
                       </button>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Delete">
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" ng-click = "delete(plan._id)">
                         <i class="icon md-close" aria-hidden="true"></i>
                       </button>
                     </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <span class="checkbox-custom checkbox-primary">
-                            <input class="selectable-item" type="checkbox" id="row-620" value="620">
-                            <label for="row-620"></label>
-                          </span>
-                        </td>
-                    <td>Lunar probe project</td>
+                    
                     <td>
-                      <span data-plugin="peityPie" data-skin="blue">3/10</span>
-                    </td>
-                    <td>Feb 12, 2015</td>
-                    <td>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Edit">
-                        <i class="icon md-wrench" aria-hidden="true"></i>
-                      </button>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Delete">
-                        <i class="icon md-close" aria-hidden="true"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Dream successful plan</td>
-                    <td>
-                      <span data-plugin="peityPie" data-skin="green">9/10</span>
-                    </td>
-                    <td>Apr 9, 2015</td>
-                    <td>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Edit">
-                        <i class="icon md-wrench" aria-hidden="true"></i>
-                      </button>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Delete">
-                        <i class="icon md-close" aria-hidden="true"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Office automatization</td>
-                    <td>
-                      <span data-plugin="peityPie" data-skin="orange">5/10</span>
-                    </td>
-                    <td>May 15, 2015</td>
-                    <td>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Edit">
-                        <i class="icon md-wrench" aria-hidden="true"></i>
-                      </button>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Delete">
-                        <i class="icon md-close" aria-hidden="true"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Open strategy</td>
-                    <td>
-                      <span data-plugin="peityPie" data-skin="brown">2/10</span>
-                    </td>
-                    <td>Jun 2, 2015</td>
-                    <td>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Edit">
-                        <i class="icon md-wrench" aria-hidden="true"></i>
-                      </button>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Delete">
-                        <i class="icon md-close" aria-hidden="true"></i>
-                      </button>
+                      <a ui-sref="app.mypage.details({planId : plan._id})" class="btn btn-warning btn-lg active pull-right" role="button">
+                      detail
+                      </a>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
+            <div ui-view class="view-side-panel"></div>
           </div>
           <!-- End Panel Projects -->
         </div>
@@ -167,89 +83,26 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>The sun climbing plan</td>
-                    <td>
-                      <span data-plugin="peityPie" data-skin="red">7/10</span>
-                    </td>
-                    <td>Jan 1, 2015</td>
-                    <td>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Edit">
-                        <i class="icon md-wrench" aria-hidden="true"></i>
-                      </button>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Delete">
-                        <i class="icon md-close" aria-hidden="true"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Lunar probe project</td>
-                    <td>
-                      <span data-plugin="peityPie" data-skin="blue">3/10</span>
-                    </td>
-                    <td>Feb 12, 2015</td>
+                  <tr ng-repeat="plan in publicPlans">
+                    
+                    <td>{{plan.title}}</td>
+                    <td>{{plan.category}}</td>
+                    <td>{{plan.description}}</td>
+                    
                     <td>
                       <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
                       data-original-title="Edit">
                         <i class="icon md-wrench" aria-hidden="true"></i>
                       </button>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Delete">
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" ng-click = "delete(plan._id)">
                         <i class="icon md-close" aria-hidden="true"></i>
                       </button>
                     </td>
-                  </tr>
-                  <tr>
-                    <td>Dream successful plan</td>
+                    
                     <td>
-                      <span data-plugin="peityPie" data-skin="green">9/10</span>
-                    </td>
-                    <td>Apr 9, 2015</td>
-                    <td>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Edit">
-                        <i class="icon md-wrench" aria-hidden="true"></i>
-                      </button>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Delete">
-                        <i class="icon md-close" aria-hidden="true"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Office automatization</td>
-                    <td>
-                      <span data-plugin="peityPie" data-skin="orange">5/10</span>
-                    </td>
-                    <td>May 15, 2015</td>
-                    <td>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Edit">
-                        <i class="icon md-wrench" aria-hidden="true"></i>
-                      </button>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Delete">
-                        <i class="icon md-close" aria-hidden="true"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Open strategy</td>
-                    <td>
-                      <span data-plugin="peityPie" data-skin="brown">2/10</span>
-                    </td>
-                    <td>Jun 2, 2015</td>
-                    <td>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Edit">
-                        <i class="icon md-wrench" aria-hidden="true"></i>
-                      </button>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
-                      data-original-title="Delete">
-                        <i class="icon md-close" aria-hidden="true"></i>
-                      </button>
+                      <a ui-sref="app.mypage.details({planId : plan._id})" class="btn btn-warning btn-lg active pull-right" role="button">
+                      detail
+                      </a>
                     </td>
                   </tr>
                 </tbody>

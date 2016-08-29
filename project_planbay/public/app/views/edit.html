@@ -1,0 +1,115 @@
+<div class="page-content container-fluid" ng-controller="EditController">
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-8">
+            <!-- Panel Static Labels -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">계획 작성</h3>
+    		        <select class="form-control" ng-model="loadedPlan" id="editSel" ng-options="p.title for p in plans">
+    		        </select>
+    		        <button ng-click="loadPlan()">Load Plan</button>
+                </div>
+                <div class="panel-body container-fluid">
+                    <form autocomplete="off">
+                        <div class="form-group form-material">
+                            <label class="control-label" for="inputHint">제목</label>
+                            <input type="text" ng-model="plan.title" class="form-control" id="inputHint" name="inputHint">
+                            <div class="hint">전체 계획의 이름을 지어주세요!</div>
+                        </div>
+                        <div class="form-group form-material">
+                            <label class="control-label" for="inputHint">카테고리</label>
+                            <input type="text" ng-model="plan.category" class="form-control" id="inputHint" name="inputHint">
+                            <div class="hint">카테고리의 이름을 지어주세요!</div>
+                        </div>
+                        <div class="form-group form-material">
+                            <label class="control-label" for="textarea">설명</label>
+                            <textarea class="form-control"  ng-model="plan.description" id="textarea" name="textarea" rows="3"></textarea>
+                        </div>
+                        <div class="form-group form-material">
+                            <label class="control-label for="date">언제부터 시작하실 건가요?</label>
+        		            <input type="date" id="start" ng-model="duePattern.start">		
+                    	</div>
+                        <div class="form-group form-material">
+                            <label class="control-label" for="select">몇 일 짜리 계획인가요?</label>
+                            <input type="number" min="1" max="60" ng-model="days">
+                        </div>
+                        <div class="form-group form-material">
+                            <label class="control-label for="checkbox">계획을 실천할 요일을 선택하세요</label><br>
+                            <div class="btn-group">
+                              <button type="button" class="btn btn-success" ng-click="checkWeekdays()">주중</button>
+                              <button type="button" class="btn btn-success" ng-click="checkMonWedFri()">월수금</button>
+                              <button type="button" class="btn btn-success" ng-click="checkTueThu()">화목</button>
+                              <button type="button" class="btn btn-success" ng-click="checkWeekends()">주말</button>
+                            </div>
+                            <br>
+                    		<label class="checkbox-inline"><input type="checkbox" ng-model="duePattern.Mon">월</label>
+                    		<label class="checkbox-inline"><input type="checkbox" ng-model="duePattern.Tue">화</label>
+                    		<label class="checkbox-inline"><input type="checkbox" ng-model="duePattern.Wed">수</label>
+                    		<label class="checkbox-inline"><input type="checkbox" ng-model="duePattern.Thu">목</label>
+                    		<label class="checkbox-inline"><input type="checkbox" ng-model="duePattern.Fri">금</label>
+                    		<label class="checkbox-inline"><input type="checkbox" ng-model="duePattern.Sat">토</label>
+                    		<label class="checkbox-inline"><input type="checkbox" ng-model="duePattern.Sun">일</label>
+                    	</div>
+                    	<button ng-click="plan.dueDates=dueDateGenerator(days, duePattern)">Generate Due Dates!</button>
+                    	<button ng-click="savePlan()">Save this Plan!</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-header">
+            </div>
+            <div class="page-content">
+                <ul class="blocks blocks-100 blocks-xlg-5 blocks-lg-3 blocks-md-3 blocks-sm-2" data-plugin="masonry" style="position: relative;">
+                    <li class="masonry-item" ng-repeat="day in [] | range:days">
+                        <div class="widget widget-article widget-shadow">
+                            <div class="widget-body">
+                                <h4 class="widget-title">
+                                    Day {{day+1}}    		
+                                    <input type="date" ng-model="plan.dueDates[day]">
+                                </h4>
+                                <form class="form-inline" role="form" ng-repeat="task in plan.taskArr[day]">
+                                    <div class="form-group form-material">
+                                        <input type="text" ng-model="task.title" class="form-control" id="todo" name="todo"><div class="hint">할 일을 적어주세요</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <select class="form-control" id="time" ng-model="task.time">
+                                            <option>0:30</option>
+                                            <option>1:00</option>
+                                            <option>1:30</option>
+                                            <option>2:00</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group form-material">
+                                        <button type="button" ng-click="removeTask(day, task)" class="btn btn-icon btn-danger waves-effect waves-round waves-light">
+                                            <i class="icon md-minus" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    {{task}}
+                                </form>
+                                <div class="widget-body-footer">
+                                    <button class="btn btn-info waves-effect waves-light" ng-click="addTask(day)">Add task</button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-8">
+            <div class="panel">
+            	<div class="form-group">
+            		<label for="listSel">어떤 리스트에 할일을 등록하시겠어요?</label>
+            		<select class="form-control" ng-model="listID" id="listSel">
+            			<option ng-repeat="list in lists" ng-value="list.id">{{list.title}}</option>
+            		</select>
+            	</div>
+            	<button ng-click="exportToWunderlist(listID, plan)">Export to Wunderlist!</button>
+            </div>
+        </div>
+    </div>
+</div>

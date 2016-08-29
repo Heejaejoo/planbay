@@ -31,11 +31,11 @@
                 <div class="panel"  ng-controller="ProfileController">
                 <div class="panel-body">
                     <h3 class="text-center">정보수정</h3>
-                    <form name="profileEditForm" ng-submit="doUpdate()">
-                        <div class="form-group form-material" ng-class="{'has-error': profileEditForm.name.$error.required && !profileEditForm.name.$pristine,
-                                                                         'has-success': profileEditForm.name.$valid && !profileEditForm.name.$pristine}">
+                    
+                    <form enctype="multipart/form-data" name="profileEditForm" ng-submit="doUpdate()">
+                        <div class="form-group form-material" ng-class="{'has-success': profileEditForm.name.$valid && !profileEditForm.name.$pristine}">
                             <label class="control-label" for="name">이름</label>
-                            <input type="text" class="form-control" id="name" name="name" ng-model="profileForm.name" required placeholder={{userinfo.name}}>
+                            <input type="text" class="form-control" id="name" name="name" ng-model="profileForm.name" placeholder={{userinfo.name}}>
                         </div>
                         <div class="form-group form-material">
                             <label class="control-label" for="username">이메일</label>
@@ -44,15 +44,18 @@
                         <div class="form-group form-material" ng-class="{'has-error': profileEditForm.password.$invalid && !profileEditForm.password.$pristine,
                                                                          'has-success': profileEditForm.password.$valid && !profileEditForm.password.$pristine}">
                             <label class="control-label" for="password">비밀번호</label>
-                            <input type="password" class="form-control" id="password" name="password" ng-model="profileForm.password" ng-minlength="6" ng-pattern="re" placeholder="최소 6자리, 영문과 숫자 반드시 포함">
+                            <input type="password" class="form-control" id="password" name="password" ng-model="profileForm.password"
+                                   ng-minlength="6" ng-pattern="re" placeholder="최소 6자리, 영문과 숫자 반드시 포함">
                         </div>
-                        <div class="btn btn-primary btn-upload" upload-button 
-                             url="/upload" >
-                            File Upload
+                        <div class="form-group form-material">
+                            <button type="file" ngf-select ng-model="profileForm.file" name="file" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="2MB">업로드하기</button>
+                            <img style="width:100px;" ngf-thumbnail="profileForm.file"/>
+                            <i ng-show="profileEditForm.file.$error.maxSize">File too large 
+                            {{profileForm.file.size / 1000000|number:1}}KB: max 2M</i>
                         </div>
-                        
                         <button type="submit" class="btn btn-warning btn-block" ng-disabled="profileEditForm.$invalid"><b>정보수정</b></button>
                     </form>
+                    
                     <div><hr></div>
                   
                 </div>

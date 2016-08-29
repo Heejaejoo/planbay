@@ -1,5 +1,11 @@
 'use strict';
-angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angular-input-stars'])
+angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angular-input-stars', 'ngFileUpload'])
+    .run(function($rootScope){
+        $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+        $rootScope.previousState = from.name;
+        $rootScope.currentState = to.name;
+        });
+    })
     .filter('range', function() {
         return function(input, total) {
             total = parseInt(total);
@@ -11,8 +17,8 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angu
             return input;
         };
     })
-
     .config(function($stateProvider, $urlRouterProvider) {
+        
         $stateProvider
             // route for the landing page
             .state('app', {
@@ -47,7 +53,7 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angu
                 templateUrl:'views/detail.html',
                 controller:'DetailController'
             })
-
+            
             //route for the category
             .state('app.category', {
                 url:'category',
@@ -110,7 +116,12 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angu
                     }
                 }
             })
-        
+            .state('app.mypage.details', {
+                url: '/:planId',
+                templateUrl:'views/detail.html',
+                controller:'DetailController'
+            })
+            
             .state('app.profile', {
                 url: 'users/:userId',
                 views: {
@@ -122,21 +133,11 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angu
             })
 
             .state('app.edit', {
-                url:'edit',
+                url:'edit?token',
                 views: {
                     'content@': {
-                        templateUrl : 'views/plan-edit.html',
+                        templateUrl : 'views/edit.html',
                         controller  : 'EditController'
-                    }
-                }
-            })
-            
-            .state('app.wunderlist', {
-                url:'wunderlist?token',
-                views: {
-                    'content@': {
-                        templateUrl : 'views/wunderlist.html',
-                        controller  : 'WunderController'
                     }
                 }
             })

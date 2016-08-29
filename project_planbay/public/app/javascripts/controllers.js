@@ -1,44 +1,55 @@
 angular.module('planBay')
-    .controller('DetailController', ['$scope','$state','$stateParams','planFactory','cmtFactory','ratingFactory','$location', function($scope,$state,$stateParams,planFactory, cmtFactory, ratingFactory, $location) {
-        
+    .controller('DetailController', ['$scope', '$state', '$stateParams', 'planFactory', 'cmtFactory', 'ratingFactory', '$location', function($scope, $state, $stateParams, planFactory, cmtFactory, ratingFactory, $location) {
+
         $scope.plan = {};
         $scope.showPlan = false;
         $scope.message = "Loading ...";
         $scope.stars = 0;
         $scope.feedback = {
-            comment:''
+            comment: ''
         }
         $scope.rating = {
             rating: 0
         }
         $scope.ratingOnly = false;
-        
+
         $scope.plan = planFactory.get({
                 id: $stateParams.planId
-        })
-        .$promise.then(
-            function (response) {
-                $scope.plan = response;
-                $scope.showPlan = true;
-                $scope.stars = $scope.plan.ratingsAvg.toFixed(1);
-            },function (response) {
-                $scope.message = "Error: " + response.status + " " + response.statusText;
+            })
+            .$promise.then(
+                function(response) {
+                    $scope.plan = response;
+                    $scope.showPlan = true;
+                    $scope.stars = $scope.plan.ratingsAvg.toFixed(1);
+                },
+                function(response) {
+                    $scope.message = "Error: " + response.status + " " + response.statusText;
+                }
+            );
+
+        $scope.goback = function(before) {
+            if(before)
+            {$state.go(before);
+            }else{
+                $state.go('app.home');
             }
-        );            
-        
-        $scope.goback = function (before) {
-            $location.path(before);
         };
-        
-        $scope.submitComment = function () {
-            if(!($scope.ratingOnly)){
-                cmtFactory.save({id:$stateParams.planId}, $scope.feedback);
+
+        $scope.submitComment = function() {
+            if (!($scope.ratingOnly)) {
+                cmtFactory.save({
+                    id: $stateParams.planId
+                }, $scope.feedback);
             }
-            ratingFactory.save({id:$stateParams.planId}, $scope.rating);
-            $state.go($state.current, {}, {reload: true});
-            if(!($scope.ratingOnly)){
-                $scope.feedback={
-                     comment:'' 
+            ratingFactory.save({
+                id: $stateParams.planId
+            }, $scope.rating);
+            $state.go($state.current, {}, {
+                reload: true
+            });
+            if (!($scope.ratingOnly)) {
+                $scope.feedback = {
+                    comment: ''
                 };
             }
             $scope.rating = {
@@ -47,314 +58,327 @@ angular.module('planBay')
         }
     }])
 
-    .controller('LandingController', ['$scope',function($scope) {
+.controller('LandingController', ['$scope', function($scope) {
 
-    }])
+}])
 
-    .controller('RegistrationController', ['$scope', '$localStorage', 'AuthFactory', function($scope, $localStorage, AuthFactory) {
+.controller('RegistrationController', ['$scope', '$localStorage', 'AuthFactory', function($scope, $localStorage, AuthFactory) {
 
-        $scope.registerForm = {
-            name:"",
-            username:"",
-            password:"",
-            confirmPassword:""
-        };
+    $scope.registerForm = {
+        name: "",
+        username: "",
+        password: "",
+        confirmPassword: ""
+    };
 
-        $scope.re= /[a-zA-Z][0-9]/;
-        
-        $scope.doRegister = function() {
+    $scope.re = /[a-zA-Z][0-9]/;
+
+    $scope.doRegister = function() {
         console.log('Doing registration', $scope.registerForm);
 
         AuthFactory.register($scope.registerForm);
 
     };
-        
-    }])
 
-    .controller('HomeController',  ['$scope', 'planFactory',function($scope, planFactory) {
-            planFactory.getOrderOfDownloads(
-            function(response){
-                    $scope.plansDownloadOrdered = response;
-                    planFactory.getOrderOfRatings(
-                        function(resp){
-                            $scope.plansRatingsOrdered = resp;
-                        }, function(resp){
-                            $scope.message = "Error: " + response.status + " " + response.statusText;
-                        });
-                 },
-            function(response){
-                    $scope.message = "Error: " + response.status + " "+ response.statusText;
-            });
-    }])
+}])
 
-    .controller('MoreController',  ['$scope',function($scope) {
+.controller('HomeController', ['$scope', 'planFactory', function($scope, planFactory) {
+    planFactory.getOrderOfDownloads(
+        function(response) {
+            $scope.plansDownloadOrdered = response;
+            planFactory.getOrderOfRatings(
+                function(resp) {
+                    $scope.plansRatingsOrdered = resp;
+                },
+                function(resp) {
+                    $scope.message = "Error: " + response.status + " " + response.statusText;
+                });
+        },
+        function(response) {
+            $scope.message = "Error: " + response.status + " " + response.statusText;
+        });
+}])
 
-    }])
+.controller('MoreController', ['$scope', function($scope) {
 
-    .controller('LoginController', ['$scope', '$localStorage', 'AuthFactory', function($scope, $localStorage, AuthFactory) {
+}])
 
-        $scope.loginForm = {
-            username:"",
-            password:""
-        };
-        
-        $localStorage.getObject('userinfo','{}');
-        
-        $scope.doLogin = function() {
-        
+.controller('LoginController', ['$scope', '$localStorage', 'AuthFactory', function($scope, $localStorage, AuthFactory) {
+
+    $scope.loginForm = {
+        username: "",
+        password: ""
+    };
+
+    $localStorage.getObject('userinfo', '{}');
+
+    $scope.doLogin = function() {
+
         AuthFactory.login($scope.loginForm);
 
-        };
-        
-    }])
+    };
 
-    .controller('MypageController',  ['$scope', function($scope) {
-        
-    }])
+}])
 
-    .controller('ProfileController',  ['$scope', '$state', '$rootScope', '$stateParams', 'ProfileFactory', 'AuthFactory', 'ngDialog', function ($scope, $state, $rootScope, $stateParams, ProfileFactory, AuthFactory, ngDialog) {
-        
-        $scope.profileForm = {
-            name:"",
-            password:""
-        };
+.controller('MypageController', ['$scope', 'AuthFactory', 'MypageFactory' ,'planFactory','$state', function($scope, AuthFactory,  MypageFactory, planFactory, $state) {
 
-        $scope.userinfo = AuthFactory.getUserinfo();
+    var userid = AuthFactory.getUserinfo()._id;
+    var plans = MypageFactory.getPlans({
+                id: userid
+            })
+            .$promise.then(
+                function(response) {
+                    plans = response;
+                    console.log(plans);
+                },
+                function(response) {
+                    $scope.message = "Error: " + response.status + " " + response.statusText;
+                }
+            );
+    
+    $scope.editingPlans = [];
+    $scope.myPlans = [];
+    $scope.publicPlans = [];
+    var len = plans.length;
+    for(var i = 0; i < len; i++) {
+        if(plans[i].postedBy === userid) //editing===false
+            $scope.myPlans.push(plans[i]);
+        else if (plans[i].postedBy !== userid) //editing===false
+            $scope.publicPlans.push(plans[i]);
+        else
+            $scope.editingPlans.push(plans[i]);
+    }
+    
+    
+    $scope.delete = function(planId){
+        planFactory.delete({id: planId});
+        $state.go($state.current, {}, {
+                reload: true
+            });
+    }
+
+}])
+
+.controller('ProfileController', ['$scope', '$state', 'Upload', '$timeout', '$rootScope', '$stateParams', 'ProfileFactory', 'AuthFactory', 'ngDialog', function($scope, $state, Upload, $timeout, $rootScope, $stateParams, ProfileFactory, AuthFactory, ngDialog) {
+
+    $scope.profileForm = {
+        name: "",
+        password: "",
+        picture:""
+    };
+
+    $scope.userinfo = AuthFactory.getUserinfo();
+
+    $scope.doUpdate = function() {
         
-        $scope.doUpdate = function() {
-            ProfileFactory.update({ id:$stateParams.userId }, $scope.profileForm,
-            function(response){
+        if ($scope.profileForm.file)
+            $scope.profileForm.picture = 'images/' + $scope.userinfo._id + '.' + $scope.profileForm.file.name.split('.').pop();
+        
+        ProfileFactory.update({
+                id: $stateParams.userId
+            }, $scope.profileForm,
+            function(response) {
                 AuthFactory.updateUserInfo($scope.profileForm);
                 $rootScope.$broadcast('login:Successful');
-                $state.go('app.mypage', {}, {reload:true});
+                $state.go('app.mypage', {}, {
+                    reload: true
+                });
             },
-            function(response){
-                
+            function(response) {
+
                 var message = '\
                 <div class="ngdialog-message">\
                 <div><h3>Unsuccessful</h3></div>' +
-                  '<div><p>' +  response.data.err.message + 
-                  '</p><p>' + response.data.err.name + '</p></div>';
+                    '<div><p>' + response.data.err.message +
+                    '</p><p>' + response.data.err.name + '</p></div>';
 
-                ngDialog.openConfirm({ template: message, plain: 'true'});
-                
+                ngDialog.openConfirm({
+                    template: message,
+                    plain: 'true'
+                });
             });
             
-            
-        };
+    };
 
-    }])
-    
-    .controller('UploadController', ['$scope', 'upload', function($scope, upload) {
-        upload({
-          url: '/upload',
-          method: 'POST',
-          data: {
-            aFile: $scope.myFile, // a jqLite type="file" element, upload() will extract all the files from the input and put them into the FormData object before sending.
-            }
-        }).then(
-          function (response) {
-          console.log(response.data); // will output whatever you choose to return from the server on a successful upload
-        },
-          function (response) {
-          console.error(response); //  Will return if status code is above 200 and lower than 300, same as $http
-        });
-    }])
+}])
 
-    .controller('EditController',  ['$scope',function($scope) {
-        $scope.plan = [];
+.controller('HeaderController', ['$scope', '$state', '$rootScope', 'ngDialog', 'AuthFactory','$http','ngDialog', function($scope, $state, $rootScope, ngDialog, AuthFactory,$http,ngDialog) {
 
-        for(var i=1; i <= 30; i++) {
-            $scope.plan.push({id:i, 'tasks':[{id:0, 'time':'1:00'}]});
-        }
+    $scope.loggedIn = false;
+    $scope.username = '';
+    $scope.userinfo = {};
 
-        $scope.days = 12;
+    if (AuthFactory.isAuthenticated()) {
+        $scope.loggedIn = true;
+        $scope.username = AuthFactory.getUsername();
+        $scope.userinfo = AuthFactory.getUserinfo();
+    }
 
-        $scope.addNewTask = function(day) {
-            var tasks = $scope.plan[day].tasks;
-            var lastItem = tasks[tasks.length-1];
-            tasks.push({'id':lastItem.id + 1, 'time':'1:00'});
-        };
-
-        $scope.removeTask = function(day, task) {
-            var tasks = $scope.plan[day].tasks;
-            if(tasks.length < 2)
-                return;
-            var index = tasks.indexOf(task);
-            tasks.splice(index, 1);
-        };
-    }])
-    
-    .controller('HeaderController', ['$scope', '$state', '$rootScope', 'ngDialog', 'AuthFactory', function ($scope, $state, $rootScope, ngDialog, AuthFactory) {
-
+    $scope.logOut = function() {
+        AuthFactory.logout();
         $scope.loggedIn = false;
         $scope.username = '';
         $scope.userinfo = {};
-    
-        if(AuthFactory.isAuthenticated()) {
-            $scope.loggedIn = true;
-            $scope.username = AuthFactory.getUsername();
-            $scope.userinfo = AuthFactory.getUserinfo();
-        }
-    
-        $scope.logOut = function() {
-            AuthFactory.logout();
-            $scope.loggedIn = false;
-            $scope.username = '';
-            $scope.userinfo = {};
-        };
-    
-        $rootScope.$on('login:Successful', function () {
-            $scope.loggedIn = AuthFactory.isAuthenticated();
-            $scope.username = AuthFactory.getUsername();
-            $scope.userinfo = AuthFactory.getUserinfo();
-        });
-        
-        $rootScope.$on('registration:Successful', function () {
-            $scope.loggedIn = AuthFactory.isAuthenticated();
-            $scope.username = AuthFactory.getUsername();
-            $scope.userinfo = AuthFactory.getUserinfo();
-        });
-    
-        $scope.stateis = function(curstate) {
-            return $state.is(curstate);  
-        };
-    
-    }])
+    };
 
-    .controller('WunderController', ['$scope', '$stateParams', function($scope, $stateParams) {
-        $scope.token = $stateParams.token;
-        $scope.listID;
-        $scope.taskTitle;
-        
-        var WunderlistSDK = window.wunderlist.sdk;
-        var WunderlistAPI = new WunderlistSDK({
-          'accessToken': $stateParams.token,
-          'clientID': '3d53d79c4b15cfd87ba0'
-        });
-        
-        WunderlistAPI.http.lists.all()
-            .done(function (lists) {
-                $scope.lists = lists;
-                console.log(lists);
-            })
-            .fail(function () {
-                console.error('there was a problem');
-            });
-        
-        
-        function postTask(listID, title, dueDate) {
-            WunderlistAPI.http.tasks.create({
-              'list_id': parseInt(listID),
-              'title': title,
-              'due_date': dueDate.toISOString()
-            })
-            .done(function (taskData, statusCode) {
-              console.log(taskData);
-            })
-            .fail(function (resp, code) {
-              console.log("post task fail!");
-            });
-        };
-        
-        $scope.dueDate = {
-            'start': new Date(),
-            'Mon': true,
-            'Tue': true,
-            'Wed': true,
-            'Thu': true,
-            'Fri': true,
-            'Sat': true,
-            'Sun': true
-        };
-        
-        function getNextDayOfWeek(date, dayOfWeek) {
-            var resultDate = new Date(date.getTime());
-            resultDate.setDate(date.getDate() + (7 + dayOfWeek - date.getDay()) % 7);
-            
-            return resultDate;
-        }
-        
-        function getDayStr(dayNum) {
-            var dayStr;
-            
-            switch (dayNum % 7) {
-                case 0:
-                    dayStr = "Sun";
-                    break;
-                case 1:
-                    dayStr = "Mon";
-                    break;
-                case 2:
-                    dayStr = "Tue";
-                    break;
-                case 3:
-                    dayStr = "Wed";
-                    break;
-                case 4:
-                    dayStr = "Thu";
-                    break;
-                case 5:
-                    dayStr = "Fri";
-                    break;
-                case 6:
-                    dayStr = "Sat";
-            }
-            
-            return dayStr;
-        }
-        
-        //this function gives the array of Date which has pattern
-        $scope.dueDateGenerator = function(num, duePattern) {
-            var dueDates = [];
-            var currentDate = duePattern.start;
-            var currentDay = currentDate.getDay();
-            
-            while(num > 0) {
-                if(duePattern[getDayStr(currentDay)]) {
-                    currentDate = getNextDayOfWeek(currentDate, currentDay);
-                    dueDates.push(currentDate);
-                    num--;
-                }
-                
-                currentDay++;
-            }
-            
-            return dueDates;
-        };
-        
-        $scope.exportToWunderlist = function(listID, plan, dueDates) {
-            var numDay = plan.length;
-            
-            if(numDay !== dueDates.length) {
-                console.log("invalid plan and dueDates")
-                return;
-            }
-            
-            for(var i = 0; i < numDay; i++) {
-                var numTask = plan[i].length;
-                for(var j = 0; j < numTask; j++) {
-                    postTask(listID, plan[i][j].title, dueDates[i]);
-                }
-            }
-        };
-        
-        /* for testing
-        $scope.exportToWunderlist(262265036,
-            [[{'title':'a1'}, {'title':'a2'}], [{'title':'b1'}, {'title':'b2'}, {'title':'b3'}], [{'title':'c1'}, {'title':'c2'}]],
-            $scope.dueDateGenerator(3, {
-                'start': new Date(),
-                'Mon': false,
-                'Tue': true,
-                'Wed': true,
-                'Thu': false,
-                'Fri': true,
-                'Sat': false,
-                'Sun': true
-            })
-        );
-        */
-        
-    }])
+    $rootScope.$on('login:Successful', function() {
+        $scope.loggedIn = AuthFactory.isAuthenticated();
+        $scope.username = AuthFactory.getUsername();
+        $scope.userinfo = AuthFactory.getUserinfo();
+    });
 
-    ;
+    $rootScope.$on('registration:Successful', function() {
+        $scope.loggedIn = AuthFactory.isAuthenticated();
+        $scope.username = AuthFactory.getUsername();
+        $scope.userinfo = AuthFactory.getUserinfo();
+    });
+
+    $scope.stateis = function(curstate) {
+        return $state.is(curstate);
+    };
+    
+}])
+
+//TODO: make the function to create new List and export to the list
+.controller('EditController', ['$scope', '$stateParams', 'AuthFactory', 'MypageFactory', 'planFactory', 'duedateFactory', 'exportFactory', function($scope, $stateParams, AuthFactory, MypageFactory, planFactory, duedateFactory, exportFactory) {
+    
+    //TODO: if possible, put this lines for getting lists to services.js
+    var WunderlistSDK = window.wunderlist.sdk;
+    var WunderlistAPI = new WunderlistSDK({
+        'accessToken': $stateParams.token,
+        'clientID': '3d53d79c4b15cfd87ba0'
+    });
+    
+    //get lists from wunderlist
+    WunderlistAPI.http.lists.all()
+        .done(function(lists) {
+            console.log("success to get lists");
+            $scope.lists = lists;
+        })
+        .fail(function() {
+            console.error("fail to get lists");
+        });
+    
+   $scope.plans = MypageFactory.getPlans({
+                id: AuthFactory.getUserinfo()._id
+            })
+            .$promise.then(
+                function(response) {
+                    $scope.plans = response;
+                },
+                function(response) {
+                    $scope.message = "Error: " + response.status + " " + response.statusText;
+                }
+            );
+            
+    //default plan
+    $scope.plan = {
+        title: "",
+        category: "",
+        description: "",
+        taskArr: [],
+        dueDates: []
+    }
+    
+    var planId;
+    $scope.loadedPlan;
+    $scope.listID;
+    
+    //define default values
+    $scope.days = 12;
+    $scope.duePattern = {
+        'start': new Date(),
+        'Mon': true, 'Tue': true, 'Wed': true, 'Thu': true, 'Fri': true, 'Sat': true, 'Sun': true
+    };
+    
+    $scope.checkWeekdays = function() {
+        $scope.duePattern = {
+            'start': $scope.duePattern.start,
+            'Mon': true, 'Tue': true, 'Wed': true, 'Thu': true, 'Fri': true, 'Sat': false, 'Sun': false
+        }
+    };
+    
+    $scope.checkMonWedFri = function() {
+        $scope.duePattern = {
+            'start': $scope.duePattern.start,
+            'Mon': true, 'Tue': false, 'Wed': true, 'Thu': false, 'Fri': true, 'Sat': false, 'Sun': false
+        }
+    };
+    
+    $scope.checkTueThu = function() {
+        $scope.duePattern = {
+            'start': $scope.duePattern.start,
+            'Mon': false, 'Tue': true, 'Wed': false, 'Thu': true, 'Fri': false, 'Sat': false, 'Sun': false
+        }
+    };
+    
+    $scope.checkWeekends = function() {
+        $scope.duePattern = {
+            'start': $scope.duePattern.start,
+            'Mon': false, 'Tue': false, 'Wed': false, 'Thu': false, 'Fri': false, 'Sat': true, 'Sun': true
+        }
+    };
+    
+    //bring the core functions
+    $scope.exportToWunderlist = exportFactory.exportToWunderlist;
+    $scope.dueDateGenerator = duedateFactory.dueDateGenerator;
+    
+    //get duedates from current state
+    $scope.plan.dueDates = $scope.dueDateGenerator($scope.days, $scope.duePattern);
+
+    /*
+        TODO: 지금 하는 방식은 일단 60일의 계획을 만들어 놓고
+        days의 값에 따라서 그날들을 보여주거나 안보여주는 방식이다.
+        이걸 바꿔서 days에 연동하여 날짜들 자체가 생성되거나 삭제되게
+        하면 어떨까? 물론 이 방법의 단점이 있다. days를 늘렸다가 줄였다가
+        하다보면 자신이 만들어 놓은 계획이 삭제될 수도 있다.
+    */
+        
+    //the maximum value of days is 60
+    for (var i = 1; i <= 60; i++) {
+        $scope.plan.taskArr.push([{'title': ''}]);
+    }
+
+    $scope.addTask = function(day) {
+        if($scope.taskArr === undefined) {
+            $scope.taskArr = [];
+            for (var i = 1; i <= 60; i++) {
+                $scope.plan.taskArr.push([{'title': ''}]);
+            }
+        } else {
+            var tasks = $scope.plan.taskArr[day];
+            tasks.push({
+                'title': ''
+            });
+        }
+    };
+
+    $scope.removeTask = function(day, task) {
+        var tasks = $scope.plan.taskArr[day];
+        if (tasks.length < 2)
+            return;
+        var index = tasks.indexOf(task);
+        tasks.splice(index, 1);
+    };
+    
+    $scope.savePlan = function() {
+        if(planId === undefined) {
+            console.log("saving!");
+            planFactory.save($scope.plan);
+        } else {
+            planFactory.update({
+                id: planId
+            }, $scope.plan,
+            function(response) {
+                console.log("success to save plan");
+            });
+        }
+    };
+  
+    $scope.loadPlan = function() {
+        $scope.plan = $scope.loadedPlan;
+        planId = $scope.plan._id;
+    };
+}])
+
+;
