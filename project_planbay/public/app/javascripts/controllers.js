@@ -53,6 +53,7 @@ angular.module('planBay')
                 rating: 0
             };
         };
+        
         $scope.addToMyPage = function() {
             var userId = AuthFactory.getUserinfo()._id;
             var privatePlan = {
@@ -63,6 +64,8 @@ angular.module('planBay')
                 origin: $scope.plan._id,
                 day: $scope.plan.day
             };
+            //TODO: 중복된 플랜 애드 안되게, 다운로드 수 업데이트 필요함.
+            
             planFactory.addToPrivatePlan({
                 id: userId
             }, privatePlan).$promise.then(
@@ -94,7 +97,7 @@ angular.module('planBay')
                     plain: true
                 })
             });
-        }
+        };
     }])
 
 .controller('LandingController', ['$scope', function($scope) {
@@ -137,9 +140,57 @@ angular.module('planBay')
             $scope.message = "Error: " + response.status + " " + response.statusText;
         });
 }])
-
-.controller('MoreController', ['$scope', function($scope) {
-
+//TODO: sort분류별로 page reloading
+.controller('MoreController', ['$scope', 'planFactory','$state', function($scope, planFactory,$state) {
+    $scope.currentPage = 1;
+    var sortcriteria = ['download', 'ratingsAvg', 'createdAt'];
+    $scope.sortBy = 0;
+    $scope.setPage = function (pageNo) {
+      $scope.currentPage = pageNo;
+    };
+    
+    $scope.maxSize = 5;
+    
+    planFactory.getWhenInit({
+        page: $scope.currentPage,
+        sort: sortcriteria[$scope.sortBy],
+        cnt: true
+    },
+        function(response) {
+            $scope.plans = response.result;
+            $scope.totalItems = response.count;
+        },
+        function(response) {
+            $scope.message = "Error: " + response.status + " " + response.statusText;
+        }
+    );
+    $scope.pageChanged = function(){
+        planFactory.getWithQuery({
+            page: $scope.currentPage,
+            sort: sortcriteria[$scope.sortBy]
+        },
+        function(response) {
+            $scope.plans = response;
+        },
+        function(response) {
+            $scope.message = "Error: " + response.status + " " + response.statusText;
+        });
+    };
+    
+    $scope.sortTap = function(num) {
+        $scope.sortBy = num;
+        planFactory.getWithQuery({
+            page: $scope.currentPage,
+            sort: sortcriteria[$scope.sortBy]
+        },
+        function(response) {
+            $scope.plans = response;
+        },
+        function(response) {
+            $scope.message = "Error: " + response.status + " " + response.statusText;
+        });
+    };
+    
 }])
 
 .controller('LoginController', ['$scope', '$localStorage', 'AuthFactory', function($scope, $localStorage, AuthFactory) {
@@ -154,12 +205,11 @@ angular.module('planBay')
     $scope.doLogin = function() {
 
         AuthFactory.login($scope.loginForm);
-
     };
 
 }])
 
-.controller('MypageController', ['$scope', 'AuthFactory', 'MypageFactory' ,'planFactory','$state', function($scope, AuthFactory,  MypageFactory, planFactory, $state) {
+.controller('MypageController', ['$scope', 'AuthFactory', 'MypageFactory' ,'planFactory','$state', 'ngDialog', function($scope, AuthFactory,  MypageFactory, planFactory, $state, ngDialog) {
 
     var userid = AuthFactory.getUserinfo()._id;
     MypageFactory.getPrivatePlans({
@@ -173,20 +223,20 @@ angular.module('planBay')
                     $scope.message = "Error: " + response.status + " " + response.statusText;
                 }
             );
-    var plans = MypageFactory.getPlans({
+    MypageFactory.getPlans({
                 id: userid
             })
             .$promise.then(
                 function(response) {
-                    plans = response;
-                    console.log(plans);
+                    $scope.plans = response;
+                    console.log($scope.plans);
                 },
                 function(response) {
                     $scope.message = "Error: " + response.status + " " + response.statusText;
                 }
             );
     
-    $scope.editingPlans = [];
+/*    $scope.editingPlans = [];
     $scope.myPlans = [];
     $scope.publicPlans = [];
     var len = plans.length;
@@ -198,10 +248,32 @@ angular.module('planBay')
         else
             $scope.editingPlans.push(plans[i]);
     }
-    
+*/    
+    $scope.conFirm = function(planId) {
+            ngDialog.openConfirm({            
+                template: '<div>이 계획을 삭제하시겠습니까?<br> <div class="col-xs-offset-1"><button class="btn btn-success" value="confirm" ng-click="confirm()">삭제</button><button class="btn btn-danger" value="close" ng-click="closeThisDialog()">취소</button></div>',
+                plain: true,
+                scope:$scope           
+            }).then(function(value){
+                $scope.delete(planId);
+                $scope.deletePrivate(planId);
+            },function(reject){
+                ngDialog.open({
+                    template: '<div>취소하였습니다.</div>',
+                    plain: true
+                })
+            });
+        };
     
     $scope.delete = function(planId){
         planFactory.delete({id: planId});
+        $state.go($state.current, {}, {
+                reload: true
+            });
+    }
+    
+    $scope.deletePrivate = function(planId){
+        MypageFactory.deletePrivatePlan({id: userid, planId: planId});
         $state.go($state.current, {}, {
                 reload: true
             });
@@ -294,7 +366,8 @@ angular.module('planBay')
     
 }])
 
-//TODO: make the function to create new List and export to the list
+
+//TODO: 사진 업로드
 .controller('EditController', ['$scope', '$stateParams', 'AuthFactory', 'MypageFactory', 'planFactory', 'duedateFactory', 'exportFactory', function($scope, $stateParams, AuthFactory, MypageFactory, planFactory, duedateFactory, exportFactory) {
     
     //TODO: if possible, put this lines for getting lists to services.js
@@ -314,33 +387,22 @@ angular.module('planBay')
             console.error("fail to get lists");
         });
     
-   $scope.plans = MypageFactory.getPlans({
-                id: AuthFactory.getUserinfo()._id
-            })
-            .$promise.then(
-                function(response) {
-                    $scope.plans = response;
-                },
-                function(response) {
-                    $scope.message = "Error: " + response.status + " " + response.statusText;
-                }
-            );
-            
-    //default plan
-    $scope.plan = {
+    var userId = AuthFactory.getUserinfo()._id;
+    var defaultPlan = {
         title: "",
         category: "",
         description: "",
         taskArr: [],
-        dueDates: []
-    }
+        day: 12
+    };
     
-    var planId;
-    $scope.loadedPlan;
+    $scope.plans = MypageFactory.getPrivatePlans({id: userId});
+    
+    $scope.plan = angular.copy(defaultPlan);
+    
     $scope.listID;
     
     //define default values
-    $scope.days = 12;
     $scope.duePattern = {
         'start': new Date(),
         'Mon': true, 'Tue': true, 'Wed': true, 'Thu': true, 'Fri': true, 'Sat': true, 'Sun': true
@@ -379,7 +441,7 @@ angular.module('planBay')
     $scope.dueDateGenerator = duedateFactory.dueDateGenerator;
     
     //get duedates from current state
-    $scope.plan.dueDates = $scope.dueDateGenerator($scope.days, $scope.duePattern);
+    $scope.plan.dueDates = $scope.dueDateGenerator($scope.plan.day, $scope.duePattern);
 
     /*
         TODO: 지금 하는 방식은 일단 60일의 계획을 만들어 놓고
@@ -417,249 +479,23 @@ angular.module('planBay')
     };
     
     $scope.savePlan = function() {
-        if(planId === undefined) {
-            console.log("saving!");
-            planFactory.save($scope.plan);
+        if($scope.plan._id === undefined) {
+            console.log("add");
+            $scope.plan = MypageFactory.addPrivatePlan({id:userId}, $scope.plan);
+            $scope.plans.push($scope.plan);
+            console.log($scope.plan);
         } else {
-            planFactory.update({
-                id: planId
-            }, $scope.plan,
-            function(response) {
-                console.log("success to save plan");
-            });
+            console.log("update");
+            console.log($scope.plan);
+            MypageFactory.updatePrivatePlan({userId:userId, planId:$scope.plan._id}, $scope.plan);
         }
     };
-  
-    $scope.loadPlan = function() {
-        $scope.plan = $scope.loadedPlan;
-        planId = $scope.plan._id;
-    };
-}])
-
-.controller('MakeController', ['$scope', 'AuthFactory', 'MypageFactory', function($scope, AuthFactory, MypageFactory) {
-    var userinfo = AuthFactory.getUserinfo();
-    console.log(userinfo);
-    $scope.plans = MypageFactory.getPrivatePlans({id:userinfo._id});
-    $scope.planId;
-    //default plan
-    $scope.plan = {
-        title: "",
-        category: "",
-        description: "",
-        taskArr: [],
-    }
-    
-    //define default values
-    $scope.days = 12;
-
-    /*
-        TODO: 지금 하는 방식은 일단 60일의 계획을 만들어 놓고
-        days의 값에 따라서 그날들을 보여주거나 안보여주는 방식이다.
-        이걸 바꿔서 days에 연동하여 날짜들 자체가 생성되거나 삭제되게
-        하면 어떨까? 물론 이 방법의 단점이 있다. days를 늘렸다가 줄였다가
-        하다보면 자신이 만들어 놓은 계획이 삭제될 수도 있다.
-    */
-        
-    //the maximum value of days is 60
-    for (var i = 1; i <= 60; i++) {
-        $scope.plan.taskArr.push([{'title': ''}]);
-    }
-
-    $scope.addTask = function(day) {
-        if($scope.taskArr === undefined) {
-            $scope.taskArr = [];
-            for (var i = 1; i <= 60; i++) {
-                $scope.plan.taskArr.push([{'title': ''}]);
-            }
-        } else {
-            var tasks = $scope.plan.taskArr[day];
-            tasks.push({
-                'title': ''
-            });
-        }
-    };
-
-    $scope.removeTask = function(day, task) {
-        var tasks = $scope.plan.taskArr[day];
-        if (tasks.length < 2)
-            return;
-        var index = tasks.indexOf(task);
-        tasks.splice(index, 1);
-    };
-    
-    $scope.savePlan = function(i) {
-        if($scope.planId === undefined) {
-            MypageFactory.addPrivatePlan($scope.plan);
-        } else {
-            MypageFactory.updatePrivatePlan({id:$scope.planId}, $scope.plan);
-        }
-    }
-    
-    /*
-    $scope.loadPlan = function(i) {
-        $scope.plan = userinfo.privatePlans[i];
-    }
-    
-    $scope.savePlan = function() {
-        
-        console.log("here");
-        if(planId === undefined) {
-            console.log("saving!");
-            planFactory.save($scope.plan);
-        } else {
-            planFactory.update({
-                id: planId
-            }, { $set: $scope.plan },
-            function(response) {
-                console.log("success to save plan");
-            });
-        }
-    };
-  
-    $scope.loadPlan = function() {
-        $scope.plan = $scope.loadedPlan;
-        planId = $scope.plan._id;
-    };
-    
-    */
-    
     
     $scope.completePlan = function() {
-        //TODO: validation check + remove this plan in the private plans + save this plan in the public plans
+        planFactory
+        
+        
     }
 }])
 
-.controller('ExportController', ['$scope', '$stateParams', 'AuthFactory', 'MypageFactory', 'planFactory', 'duedateFactory', 'exportFactory', function($scope, $stateParams, AuthFactory, MypageFactory, planFactory, duedateFactory, exportFactory) {
-    
-    if($stateParams.token !== undefined) {
-        //TODO: if possible, put this lines for getting lists to services.js
-        var WunderlistSDK = window.wunderlist.sdk;
-        var WunderlistAPI = new WunderlistSDK({
-            'accessToken': $stateParams.token,
-            'clientID': '3d53d79c4b15cfd87ba0'
-        });
-        
-        //get lists from wunderlist
-        WunderlistAPI.http.lists.all()
-            .done(function(lists) {
-                console.log("success to get lists");
-                $scope.lists = lists;
-            })
-            .fail(function() {
-                console.error("fail to get lists");
-            });
-    }
-            
-    //default plan
-    $scope.plan = {
-        title: "",
-        category: "",
-        description: "",
-        taskArr: [],
-        dueDates: []
-    }
-    
-    var planId;
-    $scope.loadedPlan;
-    $scope.listID;
-    
-    //define default values
-    $scope.days = 12;
-    $scope.duePattern = {
-        'start': new Date(),
-        'Mon': true, 'Tue': true, 'Wed': true, 'Thu': true, 'Fri': true, 'Sat': true, 'Sun': true
-    };
-    
-    $scope.checkWeekdays = function() {
-        $scope.duePattern = {
-            'start': $scope.duePattern.start,
-            'Mon': true, 'Tue': true, 'Wed': true, 'Thu': true, 'Fri': true, 'Sat': false, 'Sun': false
-        }
-    };
-    
-    $scope.checkMonWedFri = function() {
-        $scope.duePattern = {
-            'start': $scope.duePattern.start,
-            'Mon': true, 'Tue': false, 'Wed': true, 'Thu': false, 'Fri': true, 'Sat': false, 'Sun': false
-        }
-    };
-    
-    $scope.checkTueThu = function() {
-        $scope.duePattern = {
-            'start': $scope.duePattern.start,
-            'Mon': false, 'Tue': true, 'Wed': false, 'Thu': true, 'Fri': false, 'Sat': false, 'Sun': false
-        }
-    };
-    
-    $scope.checkWeekends = function() {
-        $scope.duePattern = {
-            'start': $scope.duePattern.start,
-            'Mon': false, 'Tue': false, 'Wed': false, 'Thu': false, 'Fri': false, 'Sat': true, 'Sun': true
-        }
-    };
-    
-    //bring the core functions
-    $scope.exportToWunderlist = exportFactory.exportToWunderlist;
-    $scope.dueDateGenerator = duedateFactory.dueDateGenerator;
-    
-    //get duedates from current state
-    $scope.plan.dueDates = $scope.dueDateGenerator($scope.days, $scope.duePattern);
-
-    /*
-        TODO: 지금 하는 방식은 일단 60일의 계획을 만들어 놓고
-        days의 값에 따라서 그날들을 보여주거나 안보여주는 방식이다.
-        이걸 바꿔서 days에 연동하여 날짜들 자체가 생성되거나 삭제되게
-        하면 어떨까? 물론 이 방법의 단점이 있다. days를 늘렸다가 줄였다가
-        하다보면 자신이 만들어 놓은 계획이 삭제될 수도 있다.
-    */
-        
-    //the maximum value of days is 60
-    for (var i = 1; i <= 60; i++) {
-        $scope.plan.taskArr.push([{'title': ''}]);
-    }
-
-    $scope.addTask = function(day) {
-        if($scope.taskArr === undefined) {
-            $scope.taskArr = [];
-            for (var i = 1; i <= 60; i++) {
-                $scope.plan.taskArr.push([{'title': ''}]);
-            }
-        } else {
-            var tasks = $scope.plan.taskArr[day];
-            tasks.push({
-                'title': ''
-            });
-        }
-    };
-
-    $scope.removeTask = function(day, task) {
-        var tasks = $scope.plan.taskArr[day];
-        if (tasks.length < 2)
-            return;
-        var index = tasks.indexOf(task);
-        tasks.splice(index, 1);
-    };
-    
-    $scope.savePlan = function() {
-        
-        if(planId === undefined) {
-            console.log("saving!");
-            planFactory.save($scope.plan);
-        } else {
-            
-            planFactory.update({
-                id: planId
-            }, $scope.plan,
-            function(response) {
-                console.log("success to save plan");
-            });
-        }
-    };
-  
-    $scope.loadPlan = function() {
-        $scope.plan = $scope.loadedPlan;
-        planId = $scope.plan._id;
-    };
-    
-}])
 ;

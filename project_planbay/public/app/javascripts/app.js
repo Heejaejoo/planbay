@@ -1,5 +1,5 @@
 'use strict';
-angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angular-input-stars', 'ngFileUpload'])
+angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angular-input-stars', 'ngFileUpload','ui.bootstrap'])
     .run(function($rootScope){
         $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
         $rootScope.previousState = from.name;
@@ -74,6 +74,11 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angu
                     }
                 }
             })
+            .state('app.more.details', {
+                url: '/:planId',
+                templateUrl:'views/detail.html',
+                controller:'DetailController'
+            })
             //route for the login page
             .state('app.login', {
                 url:'users/login',
@@ -138,26 +143,6 @@ angular.module('planBay', ['ui.router','ngResource','ngAnimate','ngDialog','angu
                     'content@': {
                         templateUrl : 'views/edit.html',
                         controller  : 'EditController'
-                    }
-                }
-            })
-            
-            .state('app.make', {
-                url:'make',
-                views: {
-                    'content@': {
-                        templateUrl : 'views/make.html',
-                        controller  : 'MakeController'
-                    }
-                }
-            })
-            
-            .state('app.export', {
-                url:'export?token',
-                views: {
-                    'content@': {
-                        templateUrl : 'views/export.html',
-                        controller  : 'ExportController'
                     }
                 }
             })

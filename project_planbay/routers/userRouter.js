@@ -120,31 +120,97 @@ userRouter.route('/publicplan/:userId')
 userRouter.route('/privateplan/:userId')
   .get(Verify.verifyOrdinaryUser, function(req, res, next){
     User.findById(req.params.userId)
-    .populate('privatePlans')
     .exec(function(err,user){
               if (err) next(err);
               res.json(user.privatePlans);
             });  
   })
-  
+  .put(Verify.verifyOrdinaryUser, function(req, res, next){
+      console.log("PUTPUT");
+      User.findById(req.params.userId, function(err, user) {
+        if(err) next(err);
+        console.log(req.body);
+        user.privatePlans = req.body;
+        user.save();
+      })
+  })
+    
   .post(Verify.verifyOrdinaryUser, function(req, res, next){
 		User.findById(req.params.userId, function(err, user){
 			if(err) {
 				  next(err)
 				};
-		user.privatePlans.push(req.body);
-		user.save(function (err, user){
-	  		if(err) next(err);
-	  		var response = {
-             status  : 200,
-             success : 'Updated Successfully'
-          }
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify(response));
-			});
+		  user.privatePlans.push(req.body);
+		  user.save(function (err, user){
+	    	if(err) {
+	    	  next(err);
+	    	} else if(req.body.origin === undefined) {
+          res.json(user.privatePlans[user.privatePlans.length-1]);
+	    	} else {
+  	    	Plan.findById(req.body.origin, function(err, plan){
+  	    	    plan.download+=1;
+  	    	    plan.save(function(err, plan){
+  	    	      if(err) next(err);
+  	    	      var response = {
+                   status  : 200,
+                   success : 'Updated Successfully'
+                }
+                res.writeHead(200, { "Content-Type": "application/json" });
+                res.end(JSON.stringify(response));
+  	    	    });
+  	      	});
+	    	}
+  	    });
 		});
 	});
-  
+	
+userRouter.route('/privateplan/:userId/:planId')
+  .put(Verify.verifyOrdinaryUser, function(req,res,next){
+      User.findById(req.params.userId, function(err,user){
+        if (err) throw err;
+		  	var len = user.privatePlans.length;
+		  	for(var i=0; i < len; i++){
+            		if(user.privatePlans[i]._id == req.params.planId){
+            			user.privatePlans[i] = req.body;
+            			console.log("succeed!");
+            		}
+            	}
+
+		  	user.save(function (err, user) {
+            		if (err) throw err;
+            		var response = {
+            				status  : 200,
+        				    success : 'Updated Successfully'
+    				 }
+        			res.writeHead(200, { "Content-Type": "application/json" });
+        			res.end(JSON.stringify(response));
+        		});
+		});
+})
+
+  .delete(Verify.verifyOrdinaryUser, function(req,res,next){
+      User.findById(req.params.userId, function(err,user){
+        if (err) throw err;
+        var len = user.privatePlans.length;
+		  	for(var i=0; i < len; i++){
+            		if(user.privatePlans[i]._id == req.params.planId){
+            			user.privatePlans.splice(i,1);
+            			console.log("succeed!");
+            		}
+            	}
+
+		  	user.save(function (err, user) {
+            		if (err) throw err;
+            		var response = {
+            				status  : 200,
+        				    success : 'Deleted Successfully'
+    				 }
+        			res.writeHead(200, { "Content-Type": "application/json" });
+        			res.end(JSON.stringify(response));
+        		});
+		});
+});
+	
 userRouter.post('/login', function(req, res, next){
   passport.authenticate('local', function(err, user, info){
     if(err) {

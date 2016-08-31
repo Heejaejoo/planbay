@@ -479,3 +479,10 @@
 .mypage-header {
     margin-bottom: 20px !important;
 }
+
+.paginate-center {
+  display: block;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}

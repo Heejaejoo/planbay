@@ -3,53 +3,48 @@
     <div class="page-header mypage-header" ng-controller="ProfileController">
       <div class="pull-left">
       <h1 class="page-title">My page</h1>
-      <ol class="breadcrumb">
-        <li><a href="index.html">Home</a></li>
-        <li class="active">My page</li>
-      </ol>
       </div>
             
-      <a ui-sref="app.profile({userId : userinfo._id})" class="btn btn-warning btn-lg active pull-right" role="button">
-        <i class="icon md-settings"></i>
+      <a ui-sref="app.profile({userId : userinfo._id})" class="btn btn-warning btn-md active pull-right" role="button">
+       <i class="icon md-settings"></i>개인정보수정
       </a>
     </div>
     
-    <div class="page-content container-fluid" ng-controller="MypageController">
-        
-
-    
-<div class="col-xlg-5">
+    <br>
+    <div class="page-content container-fluid">
+        <div class="col-xlg-7">
           <!-- Panel Projects -->
           <div class="panel" id="projects">
             <div class="panel-heading">
               <h3 class="panel-title">개인 계획</h3>
             </div>
             <div class="table-responsive">
-              <table class="table table-striped">
+              <table class="table table-striped" width="100%" style="table-layout: fixed">
                 <thead>
                   <tr>
                     <td>이름</td>
                     <td>분류</td>
                     <td>설명</td>
-                    
                     <td>수정 및 삭제</td>
                   </tr>
                 </thead>
                 <tbody>
                   <tr ng-repeat="plan in privatePlans">
-                    
                     <td>{{plan.title}}</td>
                     <td>{{plan.category}}</td>
-                    <td>{{plan.description}}</td>
+                    <td class="ellips">{{plan.description}}</td>
                     
                     <td>
                       <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
                       data-original-title="Edit">
                         <i class="icon md-wrench" aria-hidden="true"></i>
                       </button>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" ng-click = "delete(plan._id)">
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" ng-click = "conFirm(plan._id)">
                         <i class="icon md-close" aria-hidden="true"></i>
                       </button>
+                      <a ui-sref="app.mypage.details({planId : plan.origin})" class="btn btn-default btn-sm active" role="button">
+                        origin
+                      </a>
                     </td>
 
                   </tr>
@@ -60,6 +55,7 @@
           </div>
           <!-- End Panel Projects -->
         </div>
+        <br>
         <div class="col-xlg-7">
           <!-- Panel Projects -->
           <div class="panel" id="projects">
@@ -67,7 +63,7 @@
               <h3 class="panel-title">공유 계획</h3>
             </div>
             <div class="table-responsive">
-              <table class="table table-striped">
+              <table class="table table-striped" width="100%" style="table-layout: fixed">
                 <thead>
                   <tr>
                     <td>분류</td>
@@ -77,27 +73,24 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="plan in publicPlans">
-                    
+                  <tr ng-repeat="plan in plans">
                     <td>{{plan.title}}</td>
                     <td>{{plan.category}}</td>
-                    <td>{{plan.description}}</td>
+                    <td class="ellips">{{plan.description}}</td>
                     
                     <td>
                       <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" data-toggle="tooltip"
                       data-original-title="Edit">
                         <i class="icon md-wrench" aria-hidden="true"></i>
                       </button>
-                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" ng-click = "delete(plan._id)">
+                      <button type="button" class="btn btn-sm btn-icon btn-pure btn-default" ng-click = "conFirm(plan._id)">
                         <i class="icon md-close" aria-hidden="true"></i>
                       </button>
-                    </td>
-                    
-                    <td>
-                      <a ui-sref="app.mypage.details({planId : plan._id})" class="btn btn-warning btn-lg active pull-right" role="button">
+                      <a ui-sref="app.mypage.details({planId : plan._id})" class="btn btn-default btn-md active pull-right" role="button">
                       detail
                       </a>
                     </td>
+                    
                   </tr>
                 </tbody>
               </table>

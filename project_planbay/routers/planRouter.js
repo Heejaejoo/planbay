@@ -9,20 +9,48 @@ var planRouter = express.Router();
 planRouter.use(bodyParser.json());
 //parsing the body and convert to JSON
 
-//TODO: add query to sort responds
+//TODO: clarify authorization
 planRouter.route('/')
     .get(Verify.verifyOrdinaryUser, function(req,res,next){
-		Plan.find({})
-            .populate('postedBy')
-            .populate('comments.postedBy')
-            .populate('ratings.postedBy')
-            .exec(function(err, plan) {
-                if(err) throw err;
-                res.json(plan);
-            });
+    	var paginate = 8;
+    	var sortString, page;
+    	if(req.query.sort&&req.query.page){
+    		sortString = req.query.sort;
+			page = Number(req.query.page);
+			var obj = {};
+			obj[sortString] = -1;
+			var curPage = (page-1)*paginate;
+			Plan.find({})
+			.sort(obj)
+			.skip(curPage)
+			.limit(paginate)
+			.populate('postedBy')
+    		.exec(function(err, result) {
+        		if(err) next(err);
+        			if(req.query.cnt){
+        				Plan.count({}, function(err, cnt){
+        					if(err) next(err);
+        					resObj = {
+        						result:result,
+        						count:cnt
+        					}
+        					res.json(resObj);
+        				})	
+        			}else{
+                		res.json(result);
+        			}
+			});
+    	}else{
+    		Plan.find({})
+			.populate('postedBy')
+    		.exec(function(err, result) {
+        	// Write some stuff here
+        		if(err) next(err);
+                	res.json(result);
+			});
+    	}
     })
     .post(Verify.verifyOrdinaryUser, function(req,res,next){
-    	console.log("posting");
     	req.body.postedBy = req.decoded._id;
         Plan.create(req.body, function(err, plan) {
         	console.log(req.body);
@@ -55,11 +83,11 @@ planRouter.route('/')
             res.json(resp);
         });
     });
-    
+
 planRouter.route('/top8downloads')
     .get(Verify.verifyOrdinaryUser, function(req,res,next){
 		Plan.find({})
-			.sort({downloads:-1})
+			.sort({'download':-1})
 			.limit(8)
             .populate('postedBy')
             .exec(function(err, plan) {
@@ -70,7 +98,7 @@ planRouter.route('/top8downloads')
 planRouter.route('/top8ratings')
     .get(Verify.verifyOrdinaryUser, function(req,res,next){
 		Plan.find({})
-			.sort({ratingsAvg:-1})
+			.sort({'ratingsAvg':-1})
 			.limit(8)
             .populate('postedBy')
             .exec(function(err, plan) {
@@ -80,7 +108,7 @@ planRouter.route('/top8ratings')
     });
     
 planRouter.route('/:planId')
-    .get(Verify.verifyOrdinaryUser, function(req,res,next){
+    .get(Verify.verifyOrdinaryUser, function(req, res, next){
         Plan.findById(req.params.planId)
             .populate('postedBy')
             .populate('comments.postedBy')
@@ -90,15 +118,13 @@ planRouter.route('/:planId')
                 res.json(plan);
             });
     })
-    .put(Verify.verifyOrdinaryUser, function(req,res,next){
-		console.log("putting");
+    .put(Verify.verifyOrdinaryUser, function(req, res, next){
         Plan.findByIdAndUpdate(req.params.planId, {
             $set: req.body
         }, {
             new: true
             //return updated plan value
         }, function(err, plan) {
-			console.log("putting2");
         	console.log(err);
             if(err) throw err;
             res.json(plan);
@@ -107,7 +133,7 @@ planRouter.route('/:planId')
     .delete(Verify.verifyOrdinaryUser, function(req,res,next){
         Plan.findByIdAndRemove(req.params.planId, function(err, resp){
             if(err) throw err;
-            res.json(resp);
+   //         res.json(resp);
             User.findById(req.decoded._id, function(err,user){
             	if(err) throw err;
             	for(var i=0; i<user.plans.length; i+=1){
@@ -116,8 +142,13 @@ planRouter.route('/:planId')
             		}
             	}
             	user.save(function (err, user) {
-            	if (err) throw err;
-            	
+            		if (err) throw err;
+            		var response = {
+            				status  : 200,
+        				    success : 'Deleted Successfully'
+    				 }
+        			res.writeHead(200, { "Content-Type": "application/json" });
+        			res.end(JSON.stringify(response));
         		});
             });
         });
@@ -185,11 +216,11 @@ planRouter.route('/:planId/comments/:commentId')
 	})
 	.delete(Verify.verifyOrdinaryUser, function(req, res, next){
 		Plan.findById(req.params.planId, function(err,plan){
-			/*if(plan.comments.id(req.params.commentId).postedBy != req.decoded._id){
+			if(plan.comments.id(req.params.commentId).postedBy != req.decoded._id){
 				var err = new Error('You are not authorized to perform this operation');
 				err.status = 403;
 				return next(err);	
-			}*/
+			}
 			plan.comments.id(req.params.commentId).remove();
 			plan.save(function (err, resp) {
 				if(err) throw err;
@@ -204,8 +235,7 @@ planRouter.route('/:planId/ratings')
 		.populate('ratings.postedBy')
 		.exec(function(err, plan){
 			if(err) next(err);
-			res.json(
-			    plan.ratings);
+			res.json(plan.ratings);
 		});
 	})
 	.post(Verify.verifyOrdinaryUser, function(req, res, next){
@@ -213,8 +243,8 @@ planRouter.route('/:planId/ratings')
 			if(err) next(err);
 			req.body.postedBy = req.decoded._id;
 			plan.ratings.push(req.body);
-			plan.ratingsNum+=1;
-			plan.ratingsSum+=req.body.rating;
+			plan.ratingsNum += 1;
+			plan.ratingsSum += req.body.rating;
 			plan.ratingsAvg = plan.ratingsSum/plan.ratingsNum;
 			plan.save(function (err, plan){
 				if(err) next(err);
@@ -250,11 +280,6 @@ planRouter.route('/:planId/ratings/:ratingId')
 	
 	.delete(Verify.verifyOrdinaryUser, function(req, res, next){
 		Plan.findById(req.params.planId, function(err,plan){
-			/*if(plan.comments.id(req.params.commentId).postedBy != req.decoded._id){
-				var err = new Error('You are not authorized to perform this operation');
-				err.status = 403;
-				return next(err);	
-			}*/
 			var currentRating = plan.ratings.id(req.params.ratingId);
 			plan.ratingsSum -= currentRating.rating;
 			plan.ratingsNum -= 1;

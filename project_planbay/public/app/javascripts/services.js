@@ -7,6 +7,13 @@ angular.module('planBay')
             'update': {
                 method: 'PUT'
             },
+            'getWhenInit': {
+                method:'GET'
+            },
+            'getWithQuery': {
+              method: 'GET',
+              isArray: true
+            },
             'getOrderOfDownloads': {
                 url: baseURL + 'plans/top8downloads',
                 method: 'GET',
@@ -59,14 +66,17 @@ angular.module('planBay')
                 isArray: true
             },
             'updatePrivatePlan': {
-                url: baseURL + 'users/privateplan/:id',
+                url: baseURL + 'users/privateplan/:userId/:planId',
                 method: 'PUT'
             },
             'addPrivatePlan': {
-                url: baseURL + 'users/privateplan/',
+                url: baseURL + 'users/privateplan/:id',
                 method: 'POST'
+            },
+            'deletePrivatePlan': {
+                url: baseURL + 'users/privateplan/:id/:planId',
+                method: 'DELETE'
             }
-            
         });
     }])
     //위아래 팩토리 통합 필요

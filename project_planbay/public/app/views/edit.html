@@ -1,13 +1,12 @@
-<div class="page-content container-fluid" ng-controller="EditController">
+<div class="page-content container-fluid">
     <div class="row">
         <div class="col-sm-offset-2 col-sm-8">
             <!-- Panel Static Labels -->
             <div class="panel">
                 <div class="panel-heading">
                     <h3 class="panel-title">계획 작성</h3>
-    		        <select class="form-control" ng-model="loadedPlan" id="editSel" ng-options="p.title for p in plans">
+    		        <select class="form-control" ng-model="plan" id="editSel" ng-options="p.title for p in plans">
     		        </select>
-    		        <button ng-click="loadPlan()">Load Plan</button>
                 </div>
                 <div class="panel-body container-fluid">
                     <form autocomplete="off">
@@ -31,7 +30,7 @@
                     	</div>
                         <div class="form-group form-material">
                             <label class="control-label" for="select">몇 일 짜리 계획인가요?</label>
-                            <input type="number" min="1" max="60" ng-model="days">
+                            <input type="number" min="1" max="60" ng-model="plan.day">
                         </div>
                         <div class="form-group form-material">
                             <label class="control-label for="checkbox">계획을 실천할 요일을 선택하세요</label><br>
@@ -51,7 +50,8 @@
                     		<label class="checkbox-inline"><input type="checkbox" ng-model="duePattern.Sun">일</label>
                     	</div>
                     	<button ng-click="plan.dueDates=dueDateGenerator(days, duePattern)">Generate Due Dates!</button>
-                    	<button ng-click="savePlan()">Save this Plan!</button>
+                    	<button ng-click="savePlan()">임시 저장</button>
+                    	<button ng-click="completePlan()">작성 완료</button>
                     </form>
                 </div>
             </div>
@@ -63,7 +63,7 @@
             </div>
             <div class="page-content">
                 <ul class="blocks blocks-100 blocks-xlg-5 blocks-lg-3 blocks-md-3 blocks-sm-2" data-plugin="masonry" style="position: relative;">
-                    <li class="masonry-item" ng-repeat="day in [] | range:days">
+                    <li class="masonry-item" ng-repeat="day in [] | range:plan.day">
                         <div class="widget widget-article widget-shadow">
                             <div class="widget-body">
                                 <h4 class="widget-title">
